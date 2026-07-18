@@ -73,7 +73,7 @@ CREATE TABLE usuarios (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
 -- Direcciones de envío
-CREATE TABLE direcciones (
+/*CREATE TABLE direcciones (
   id BINARY(16) NOT NULL,
   usuario_id BINARY(16) NOT NULL,
   calle VARCHAR(150) NOT NULL,
@@ -85,26 +85,27 @@ CREATE TABLE direcciones (
   PRIMARY KEY (id),
   KEY idx_dir_usuario (usuario_id),
   CONSTRAINT fk_dir_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;*/
 
 -- Ventas (cabecera)
 CREATE TABLE ventas (
   id BINARY(16) NOT NULL,
   usuario_id BINARY(16) DEFAULT NULL,
-  direccion_id BINARY(16) DEFAULT NULL,
   nombre VARCHAR(100) NOT NULL,
   email VARCHAR(100) NOT NULL,
   telefono VARCHAR(20) DEFAULT NULL,
+  direccion_calle VARCHAR(150) DEFAULT NULL,
+  direccion_ciudad VARCHAR(100) DEFAULT NULL,
+  direccion_provincia VARCHAR(100) DEFAULT NULL,
+  direccion_cp VARCHAR(20) DEFAULT NULL,
   total INT NOT NULL DEFAULT 0,
   estado ENUM('pendiente','pagado','enviado','entregado','cancelado') NOT NULL DEFAULT 'pendiente',
   fecha DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   KEY idx_venta_usuario (usuario_id),
-  CONSTRAINT fk_venta_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE SET NULL,
-  CONSTRAINT fk_venta_direccion FOREIGN KEY (direccion_id) REFERENCES direcciones(id) ON DELETE SET NULL
+  CONSTRAINT fk_venta_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
--- Detalle de venta (line items — antes era un varchar de ids)
 CREATE TABLE detalle_ventas (
   id BINARY(16) NOT NULL,
   venta_id BINARY(16) NOT NULL,
