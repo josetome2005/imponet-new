@@ -7,13 +7,12 @@ import { fileURLToPath } from "url";
 
 import { createProductoRouter } from './routes/productos.js';
 import { createAuthRouter } from './routes/auth.js';
-//import { createMarcaRouter } from './routes/marcas.js';
-//import { createCategoriaRouter } from './routes/categorias.js';
-// import { createUsuarioRouter } from './routes/usuarios.js';
-// import { createDireccionRouter } from './routes/direcciones.js';
-// import { createVentaRouter } from './routes/ventas.js';
+import { createMarcaRouter } from './routes/marcas.js';
+import { createCategoriaRouter } from './routes/categorias.js';
+import { createUsuarioRouter } from './routes/usuarios.js';
+import { createVentaRouter } from './routes/ventas.js';
 // import { createDetalleVentaRouter } from './routes/detalle_ventas.js';
-// import { createAuthRouter } from './routes/auth.js';
+// import { createDireccionRouter } from './routes/direcciones.js';
 
 console.log("app.mjs cargando...")
 
@@ -58,13 +57,12 @@ export const createApp = (
 
     app.use('/productos', createProductoRouter({ productoModel }))
     app.use('/auth', createAuthRouter())
-    //app.use('/marcas', createMarcaRouter({ marcaModel }))
-    //app.use('/categorias', createCategoriaRouter({ categoriaModel }))
-    // app.use('/usuarios', createUsuarioRouter({ usuarioModel }))
-    // app.use('/direcciones', createDireccionRouter({ direccionModel }))
-    // app.use('/ventas', createVentaRouter({ ventaModel }))
+    app.use('/marcas', createMarcaRouter({ marcaModel }))
+    app.use('/categorias', createCategoriaRouter({ categoriaModel }))
+    app.use('/usuarios', createUsuarioRouter({ usuarioModel }))
+    app.use('/ventas', createVentaRouter({ ventaModel }))
     // app.use('/detalle-ventas', createDetalleVentaRouter({ detalleVentaModel }))
-    // app.use('/auth', createAuthRouter())
+    // app.use('/direcciones', createDireccionRouter({ direccionModel }))
 
     app.use("/uploads", express.static(path.resolve("uploads")))
 
