@@ -1,0 +1,35 @@
+.marcas{
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.marcas__container{
+    display: flex; 
+    align-items: center;
+    justify-content: flex-start;
+    gap: 50px;
+    background-color: #333333;
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; /* IE y Edge antiguo */
+    cursor: grab;
+    user-select: none;
+}
+
+.marcas__container.dragging {
+    cursor: grabbing;
+}
+
+.marcas__container::-webkit-scrollbar {
+    display: none;/* Chrome, Edge, Safari */
+}
+
+.marcas__container img{
+    width: 175px;
+    flex: 0 0 auto;
+    -webkit-user-drag: none;
+    user-drag: none;
+    pointer-events: none;
+}
+
