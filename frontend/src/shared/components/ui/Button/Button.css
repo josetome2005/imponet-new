@@ -1,0 +1,32 @@
+.button{
+    border: 2px solid transparent;
+    outline: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    padding: 0.4rem 1.625rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s all;
+}
+
+.button--default{
+    background-color: var(--main-blue);
+    color: #ffffff;
+}
+
+.button--default:hover{
+    border: 2px solid var(--main-blue);
+    background-color: #ffffff;
+    color: var(--main-blue);
+}
+
+.button.reverse{
+    flex-direction: row-reverse;
+}
+
+.button .icon{
+    font-size: 1.5rem;
+    width: 1.5rem;
+}

@@ -1,0 +1,24 @@
+.categorias__destacadas{
+    width: 100%;
+    padding: 80px var(--lateral-padding);
+}
+
+.categorias__container{
+    width: 100%;
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.categorias__container > *{
+    width: 21%;
+}
+
+.categorias__destacadas .button__container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
