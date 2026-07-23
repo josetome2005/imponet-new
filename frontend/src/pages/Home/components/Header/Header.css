@@ -1,0 +1,111 @@
+.top__header{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 1rem;
+    height: 40px;
+    width: 100%;
+    background-color: var(--main-blue);
+    padding: 10px var(--lateral-padding);
+    color: #ffffff;
+}
+
+.top__header .icon{
+    width: 1.125rem;
+    font-size: 1.125rem;
+    margin-top: 1px;
+}
+
+.top__header a{
+    font-weight: 700;
+    font-size: 0.875rem;
+}
+
+/*///////////////////////////////////////////////////////////////////////////////////*/
+
+.header{
+    width: 100%;
+    padding: 1.5rem var(--lateral-padding);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/*-----------------------------------------------*/
+
+.header .header__logo{
+    width: 50px;
+}
+
+/*-----------------------------------------------*/
+
+.searchbar__container{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 4px;
+    border-bottom: 1px solid var(--grey-blue);
+}
+
+.searchbar__container input{
+    width: 525px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    outline: none;
+    border: none;
+}
+
+.searchbar__container span{
+    font-size: 1.5rem;
+    width: 1rem;
+    color: var(--main-blue);
+    margin-right: 1rem;
+}
+
+/*-----------------------------------------------*/
+
+.cart__container{
+    position: relative;
+}
+
+.cart__container .icon{
+    width: 1.75rem;
+    font-size: 1.75rem;
+}
+
+.cart__container .cart__amount{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    background-color: var(--main-blue);
+    color: #ffffff;
+    font-size: 0.875rem;
+    text-align: center;
+    font-weight: 700;
+    border-radius: 9999px;
+    right: -8px;
+    top: -8px;
+}
+
+/*///////////////////////////////////////////////////////////////////////////////////////*/
+
+.bottom__header{
+    height: 50px;
+    width: 100%;
+    background-color: var(--main-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.bottom__header span{
+    color: #ffffff;
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+.bottom__header .link__products{
+    position: absolute;
+    left: var(--lateral-padding);
+}
