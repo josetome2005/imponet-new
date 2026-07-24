@@ -1,0 +1,48 @@
+.img__container{
+    width: 100%;
+    background-color: var(--muted-pink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px 0 35px 0;
+    border-radius: 10px 10px 0px 0px;
+    margin-bottom: 10px;
+}
+
+.img__container img{
+    width: 65%;
+}
+
+.producto__categoria{
+    font-size: 0.75rem;
+    color: var(--grey-blue);
+    display: block;
+    margin-bottom: 0.125rem;
+}
+
+.producto__name{
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    font-size: 0.875rem;
+    color: #222222;
+    margin-bottom: 0.5rem;
+}
+
+.producto__precio{
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #222222;
+}
+
+.producto__descuento{
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--grey-blue);
+    text-decoration: line-through;
+}

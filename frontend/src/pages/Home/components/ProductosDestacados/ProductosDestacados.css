@@ -1,0 +1,20 @@
+.productos__destacadas{
+    padding: 80px var(--lateral-padding);
+}
+
+.productos__container{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+.productos__container > *{
+    width: 19%;
+}
+
+.button__container{
+    width: 100%;
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
