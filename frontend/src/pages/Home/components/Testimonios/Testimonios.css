@@ -1,0 +1,14 @@
+.testimonios{
+    background-color: #f0f0f0;
+    padding: 80px var(--lateral-padding) 100px var(--lateral-padding);
+}
+
+.testimonios__container{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+}
+
+.testimonios__container > *{
+    width: 30%;
+}

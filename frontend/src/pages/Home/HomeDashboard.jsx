@@ -1,9 +1,13 @@
 import "./HomeDashboard.css"
-import { Header } from "./components/Header/Header"
+import { Header } from "../../shared/components/layout/Header/Header"
 import { Hero } from "./components/Hero/Hero"
-import { PropiedadesDestacadas } from "./components/PropiedadesDestacadas/PropiedadesDestacadas"
 import { CategoriasDestacadas } from "./components/CategoriasDestacadas/CategoriasDestacadas"
 import { Marcas } from "./components/Marcas/Marcas"
+import { ProductosDestacados } from "./components/ProductosDestacados/ProductosDestacados"
+import { Testimonios } from "./components/Testimonios/Testimonios"
+import { Ofertas } from "./components/Ofertas/Ofertas"
+import { Footer } from "../../shared/components/layout/Footer/Footer"
+
 
 export function HomeDashboard(){
 
@@ -15,8 +19,10 @@ export function HomeDashboard(){
             <Hero />
             <CategoriasDestacadas />
             <Marcas />
-            <PropiedadesDestacadas />
-            
+            <ProductosDestacados />
+            <Testimonios />
+            <Ofertas />
+            <Footer />
         </>
 
     )
