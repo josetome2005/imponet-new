@@ -1,0 +1,46 @@
+.container__flag__matrix{
+    width: 100%;
+    margin-top: 15px;
+}
+
+.flag__matrix__row{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.flag__matrix__label{
+    width: 50px;
+    font-size: 14px;
+    color: #666;
+}
+
+.flag__matrix__header .flag__matrix__label{
+    text-align: center;
+}
+
+.flag__matrix__row .flag__matrix__item{
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+
+.flag__matrix__item input{
+    width: auto;
+    margin: 0; 
+    cursor: pointer;
+}
+
+.flag__matrix__row .flag__matrix__first__item{
+    width: 75px;
+    text-align: left;
+    margin-right: 15px;
+}
+
+input[type="checkbox"]:focus {
+    outline: none;
+    box-shadow: none;
+}

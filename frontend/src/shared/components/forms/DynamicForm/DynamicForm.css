@@ -1,0 +1,140 @@
+/*--- Labels e inputs base -------------------------------------------*/
+
+.dynamic__form label {
+    font-size: 14px;
+    color: #111;
+}
+
+.dynamic__form label .mandatory_mark {
+    font-size: 16px;
+    color: red;
+}
+
+.dynamic__form input,
+.dynamic__form textarea {
+    width: 100%;
+    display: block;
+    margin: 8px 0 20px 0;
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 5px;
+}
+
+.dynamic__form input:focus {
+    transition: 0.5s all;
+    outline: 2px solid #005CAD;
+}
+
+.dynamic__form input[type="file"] {
+    display: none;
+}
+
+.dynamic__form .error {
+    font-size: 13px;
+    font-weight: 500;
+    color: #b40000;
+}
+
+/*--- File upload ----------------------------------------------------*/
+
+.input__file__label {
+    display: block;
+    width: 100%;
+    padding: 24px;
+    border: 2px dashed #e5e7eb;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    cursor: pointer;
+}
+
+.input__file__label img {
+    display: block;
+    width: 40px;
+    margin: 0 auto 8px auto;
+}
+
+.input__file__label span {
+    display: block;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.input__file__label .button__select__file {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background-color: #fff;
+    margin-top: 10px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.input__file__label .button__select__file:hover {
+    background-color: #eceef1;
+    transition: all 0.3s;
+}
+
+/*--- Botones --------------------------------------------------------*/
+
+.dynamic__form .button__container {
+    width: 50%;
+    margin-left: 50%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.dynamic__form .button__container button {
+    width: 50%;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    border: 2px solid transparent;
+}
+
+.dynamic__form .submit__button {
+    background-color: #005CAD;
+    color: #fff;
+    border: 2px solid #005CAD;
+}
+
+.dynamic__form .submit__button:hover {
+    background-color: #fff;
+    color: #005CAD;
+    border: 2px solid #005CAD;
+    transition: 0.3s all;
+}
+
+.dynamic__form .submit__button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.dynamic__form .exit__button {
+    background-color: #fff;
+    border: 2px solid #e5e7eb;
+    color: #333;
+}
+
+.dynamic__form .exit__button:hover {
+    background-color: #005CAD;
+    color: #fff;
+    border: 2px solid #005CAD;
+    transition: 0.3s all;
+}

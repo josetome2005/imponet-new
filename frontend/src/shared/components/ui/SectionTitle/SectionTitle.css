@@ -1,0 +1,15 @@
+.section__title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.section__title .button{
+    padding: 0.4rem 0.875rem;
+    font-size: 0.875rem;
+}
+
+.section__title .button .icon{
+    font-size: 1.25rem;
+}

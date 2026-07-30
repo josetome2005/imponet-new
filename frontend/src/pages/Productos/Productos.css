@@ -1,0 +1,33 @@
+.productos__header{
+    width: calc(100% - 2*var(--lateral-padding));
+    padding: 40px 0 15px 0;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--grey-blue);
+    margin-bottom: 20px;
+}
+
+.productos__header h3{
+    font-size: 1.875rem;
+    color: #111111;
+    font-weight: 600;
+}
+
+/*-------------------------------------------------*/
+
+.productos__header .select__order{
+    display: flex;
+    align-items: center;
+}
+
+.productos__header .select__order span{
+    white-space: nowrap;
+    font-size: 0.875rem;
+    color: #222222;
+}
+
+.productos__header .select__order .select__container{
+    width: 150px;
+}

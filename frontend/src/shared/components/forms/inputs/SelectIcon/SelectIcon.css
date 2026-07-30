@@ -1,0 +1,35 @@
+.select__icon__container{
+    width: 100%;
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 8px;
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    max-height: 120px;
+    overflow-y: scroll;
+    margin-bottom: 20px;
+}
+
+.option__icon{
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.option__icon img{
+    width: 20px;
+}
+
+.option__icon:hover{
+    background-color: #0a55cda2;
+}
+
+.option__icon--active{
+    background-color: #0a55cda2;
+}

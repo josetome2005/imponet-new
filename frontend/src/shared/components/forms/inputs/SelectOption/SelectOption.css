@@ -1,0 +1,110 @@
+.select__input{
+    width: 100%;
+    position: relative;
+}
+
+.select__header{
+    width: 100%;
+    display: block;
+    padding: 8px 12px;
+    font-size: 16px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    background-color: #fafafa;
+}
+
+.select__header .icon{
+    width: 1.125rem;
+    font-size: 1.125rem;
+    transition: all 0.3s;
+}
+
+.select__header .icon.open{
+    transform: rotate(180deg);
+}
+
+/*----------------------------------------------------------------*/
+
+
+.select_input--disabled .select__header{ 
+    cursor: not-allowed;
+    background-color: #efefef;
+    color: #666;
+}
+
+
+/*-----------------------------------------------------------------*/
+
+.dropdown__menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border: 1px solid #dadada;
+    border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    padding: 10px;
+    z-index: 200;
+    opacity: 0;
+    transform: translateY(-5px);
+    pointer-events: none;
+    transition: all .2s cubic-bezier(.22,.61,.36,1);
+    max-height: 200px;
+    overflow-y: scroll;
+}
+
+
+.select__input.open .dropdown__menu {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.dropdown__menu .select__option{
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background .15s ease;
+    border-radius: 8px;
+}
+
+.dropdown__menu .select__option:hover{
+    background-color:var(--main-blue);
+    color: #fff;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.selected__option{
+    color: var(--grey-blue);
+}
+
+/*------------------*/
+
+.dropdown__menu .select__option--add-option{
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.dropdown__menu .select__option--add-option input{
+    margin: 0;
+}
+
+.dropdown__menu .select__option--add-option:hover{
+    background-color: transparent;
+    color: inherit;
+}
+
+.message_no_options{
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: #970404;
+}

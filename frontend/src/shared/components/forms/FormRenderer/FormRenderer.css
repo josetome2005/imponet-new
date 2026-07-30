@@ -1,0 +1,49 @@
+.form__inputs__container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.form__section {
+    width: 100%;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.form__section__title {
+    color: #333;
+    margin-bottom: 16px;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.25rem;
+}
+
+.form__section__inputs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+}
+
+.form__item {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form__item--100 {
+    width: 100%;
+    max-width: 100%;
+}
+
+.form__item--50 {
+    flex: 1 1 calc(50% - 2rem);
+    max-width: calc(50% - 2rem);
+}
+
+.form__item--33 {
+    flex: 1 1 calc(33% - 2rem);
+    max-width: calc(33% - 2rem);
+}
