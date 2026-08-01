@@ -10,7 +10,7 @@ const sections = [
 ]
 
 export function AdminDashboard(){
-
+ 
     return(
 
         <div className="admin__dashboard">
