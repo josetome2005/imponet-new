@@ -49,4 +49,9 @@ export class MarcaController {
         if (deleted) return res.status(204).end()
         res.status(404).json({ message: "Marca not found" })
     }
+
+    getAllWithCount = async (req, res) => {
+        const marcas = await this.marcaModel.getAllWithCount()
+        res.json(marcas)
+    }
 }

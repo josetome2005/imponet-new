@@ -49,4 +49,9 @@ export class CategoriaController {
         if (deleted) return res.status(204).end()
         res.status(404).json({ message: "Categoria not found" })
     }
+
+    getAllWithCount = async (req, res) => {
+        const categorias = await this.categoriaModel.getAllWithCount()
+        res.json(categorias)
+    }
 }

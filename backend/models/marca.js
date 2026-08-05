@@ -51,4 +51,16 @@ export class MarcaModel {
         )
         return result.affectedRows > 0
     }
+
+    static async getAllWithCount() {
+        const [marcas] = await pool.query(`
+            SELECT BIN_TO_UUID(m.id) id, m.nombre, m.created_at,
+                   COUNT(p.id) cantidad_productos
+            FROM marcas m
+            LEFT JOIN productos p ON p.marca_id = m.id
+            GROUP BY m.id, m.nombre, m.created_at
+            ORDER BY m.nombre
+        `)
+        return marcas
+    }
 }

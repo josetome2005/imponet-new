@@ -51,4 +51,16 @@ export class CategoriaModel {
         )
         return result.affectedRows > 0
     }
+
+    static async getAllWithCount() {
+        const [categorias] = await pool.query(`
+            SELECT BIN_TO_UUID(c.id) id, c.nombre, c.created_at,
+                   COUNT(pc.producto_id) cantidad_productos
+            FROM categorias c
+            LEFT JOIN producto_categorias pc ON pc.categoria_id = c.id
+            GROUP BY c.id, c.nombre, c.created_at
+            ORDER BY c.nombre
+        `)
+        return categorias
+    }
 }

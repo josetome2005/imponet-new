@@ -5,7 +5,7 @@ import { NavLink, Outlet } from "react-router-dom"
 const sections = [
     { label: "Dashboard",  value: "dashboard",  icon: "dashboard",  to: "/admin" },
     { label: "Productos",  value: "productos",  icon: "package_2",  to: "/admin/productos" },
-    { label: "Categorías", value: "categorias", icon: "layers",     to: "/admin/categorias" },
+    { label: "Categorías", value: "categorias", icon: "stacks",     to: "/admin/categorias" },
     { label: "Marcas",     value: "marcas",     icon: "sell",       to: "/admin/marcas" },
 ]
 

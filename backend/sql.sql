@@ -76,9 +76,6 @@ CREATE TABLE usuarios (
 INSERT INTO usuarios (id, nombre, email, password, telefono, rol) VALUES
 (UUID_TO_BIN(UUID()), "José Tomé", "josetome@gmail.com", "$2a$12$FQDOlWPYow/58dD/HXg6UueQ2xa4HLdaOLiw9TnfSsO9tzEDqc6me", "3513747022", "admin");
 
-SELECT * from usuarios;
-
-
 -- Direcciones de envío
 /*CREATE TABLE direcciones (
   id BINARY(16) NOT NULL,

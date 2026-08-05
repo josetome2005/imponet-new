@@ -3,8 +3,7 @@ import { useEffect, useState } from "react"
 import { SectionTitle } from "../../shared/components/ui/SectionTitle/SectionTitle"
 import { TableContainer } from "../../shared/components/table/TableContainer/TableContainer"
 import { getProductosAdmin, getProductos } from "../../shared/services/productos.services"
-import { productos_columns } from "./data/productos.columns"
-import { searchFields, filters } from "./data/productos.columns"
+import { searchFields, filters, productos_columns } from "./data/productos.config"
 
 export function AdminProductos() {
 
