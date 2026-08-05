@@ -22,8 +22,6 @@ export function AdminProductos() {
     
         getProds();
     }, []);
-
-    console.log(productos)
     
     return (
 
