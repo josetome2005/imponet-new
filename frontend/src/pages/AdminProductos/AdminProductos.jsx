@@ -1,10 +1,29 @@
 import "./AdminProductos.css"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { SectionTitle } from "../../shared/components/ui/SectionTitle/SectionTitle"
+import { TableContainer } from "../../shared/components/table/TableContainer/TableContainer"
+import { getProductosAdmin, getProductos } from "../../shared/services/productos.services"
+import { productos_columns } from "./data/productos.columns"
+import { searchFields, filters } from "./data/productos.columns"
 
 export function AdminProductos() {
 
     const [productos, setProductos] = useState([])
+
+    useEffect(() => {
+        async function getProds() {
+            try {
+                const prods = await getProductosAdmin();
+                setProductos(prods);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    
+        getProds();
+    }, []);
+
+    console.log(productos)
     
     return (
 
@@ -13,6 +32,15 @@ export function AdminProductos() {
                 title={"Productos"}
                 subtitle={`${productos.length} productos en tu catálogo.`}
                 buttonText={"Nuevo Producto"}/>
+
+            <TableContainer 
+                data={productos}
+                columns={productos_columns}
+                searchFields={searchFields}
+                filters={filters}
+                placeholderInput={"Buscar por nombre o SKU"}
+                messageNoSearch={"Aún no tienes cargados productos"}
+            />
         </div>
     )
 

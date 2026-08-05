@@ -85,13 +85,13 @@
 }
 
 .admin__section__title{
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     color: #222222;
     font-weight: 600;
     margin-bottom: 0.25rem;
 }
 
 .admin__section__subtitle{
-    font-size: 0.875rem;
+    font-size: 1rem;
     color: var(--grey-blue);
 }

@@ -1,0 +1,61 @@
+.dashboard__module--table{
+    width: 100%;
+    margin: 24px auto;
+    padding: 0;
+}
+
+.row__table{
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(125px, 3fr);
+    padding: 16px;
+    align-items: center;
+    min-height: 56px;
+}
+
+.data__row__table:hover{
+    cursor: pointer;
+    background-color: #f8f8f8;
+}
+
+.row__table div{
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    font-size: 14px;
+    color: #333;
+    padding-right: 10px;
+}
+
+.row__table div:first-child{
+    color: #111;
+}
+
+.header__table div{
+    color: #666;
+}
+
+.no__elems__text{
+    display: block;
+    width: 100%;
+    padding: 32px 0;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+}
+
+
+/*-----------------------*/
+
+.row__table .actions__container{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 1rem;
+}
+
+.row__table .actions__container img{
+    width: 18px;
+}

@@ -1,0 +1,23 @@
+.table__tabs__container{
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background-color: none;
+    margin-bottom: 25px;
+}
+
+.table__tab{
+    font-size: 13px;
+    color: #111;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.table__tab--active{
+    transition: all 0.25s all;
+    background-color: #005DAC;
+    color: #fff;
+
+}

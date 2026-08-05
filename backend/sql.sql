@@ -23,6 +23,7 @@ CREATE TABLE marcas (
 -- Productos (ya sin listas *-separadas)
 CREATE TABLE productos (
   id BINARY(16) NOT NULL,
+  sku VARCHAR(50),
   marca_id BINARY(16) DEFAULT NULL,
   nombre VARCHAR(150) NOT NULL,
   descripcion TEXT,
@@ -71,6 +72,12 @@ CREATE TABLE usuarios (
   PRIMARY KEY (id),
   UNIQUE KEY uq_usuario_email (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+
+INSERT INTO usuarios (id, nombre, email, password, telefono, rol) VALUES
+(UUID_TO_BIN(UUID()), "José Tomé", "josetome@gmail.com", "$2a$12$FQDOlWPYow/58dD/HXg6UueQ2xa4HLdaOLiw9TnfSsO9tzEDqc6me", "3513747022", "admin");
+
+SELECT * from usuarios;
+
 
 -- Direcciones de envío
 /*CREATE TABLE direcciones (

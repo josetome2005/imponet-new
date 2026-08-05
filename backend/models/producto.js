@@ -3,7 +3,7 @@ import { pool } from "../config/connection_db.js"
 const SELECT_FIELDS = `
     SELECT BIN_TO_UUID(p.id) id, BIN_TO_UUID(p.marca_id) marca_id, m.nombre marca_nombre,
            p.nombre, p.descripcion, p.precio, p.descuento, p.stock,
-           p.dimensiones, p.extra, p.activo, p.created_at, p.updated_at
+           p.dimensiones, p.extra, p.activo, p.created_at, p.updated_at, p.sku
     FROM productos p
     LEFT JOIN marcas m ON m.id = p.marca_id
 `
@@ -41,7 +41,7 @@ export class ProductoModel {
     }
 
     static async create({ object }) {
-        const { nombre, descripcion, precio, descuento, stock, dimensiones, extra, activo, marca_id, categoria_ids, imagenes } = object
+        const { nombre, descripcion, precio, descuento, stock, dimensiones, extra, activo, marca_id, categoria_ids, imagenes, sku } = object
 
         const [uuidResult] = await pool.query("SELECT UUID() uuid")
         const [{ uuid }] = uuidResult
@@ -51,9 +51,9 @@ export class ProductoModel {
             await conn.beginTransaction()
 
             await conn.query(
-                `INSERT INTO productos (id, marca_id, nombre, descripcion, precio, descuento, stock, dimensiones, extra, activo)
-                 VALUES (UUID_TO_BIN(?), UUID_TO_BIN(?), ?, ?, ?, ?, ?, ?, ?, ?)`,
-                [uuid, marca_id ?? null, nombre, descripcion ?? null, precio, descuento ?? 0, stock ?? 0, dimensiones ?? null, extra ?? null, activo ?? true]
+                `INSERT INTO productos (id, marca_id, nombre, descripcion, precio, descuento, stock, dimensiones, extra, activo, sku)
+                 VALUES (UUID_TO_BIN(?), UUID_TO_BIN(?), ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                [uuid, marca_id ?? null, nombre, descripcion ?? null, precio, descuento ?? 0, stock ?? 0, dimensiones ?? null, extra ?? null, activo ?? true, sku]
             )
 
             if (categoria_ids?.length) {
