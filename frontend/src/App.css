@@ -29,6 +29,7 @@ img{
 .x-center{ justify-content: center; }
 .flex--4{ display: flex; gap: 4px; }
 .flex--8{ display: flex; gap: 8px; }
+.flex--12{ display: flex; gap: 12px; }
 .flex--16{ display: flex; gap: 16px; }
 .flex--24{ display: flex; gap: 24px; }
 .flex--32{ display: flex; gap: 32px; }
