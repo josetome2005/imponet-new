@@ -2,7 +2,7 @@ export const searchFields = [
     "nombre",
 ]
 
-export const categorias_columns = [
+export const categorias_columns = (onEdit, onDelete) => [
     {
         key: "nombre",
         name: "CATEGORÍA",
@@ -22,12 +22,12 @@ export const categorias_columns = [
     {
         key: "actions",
         name: "",
-        render: p => (
+        render: (p) => (
             <div className="flex--16 y-center actions__container">
-                <span className="material-symbols-outlined icon edit__icon">
+                <span className="material-symbols-outlined icon edit__icon" onClick={() => onEdit(p)}>
                     edit
                 </span>
-                <span className="material-symbols-outlined icon delete__icon">
+                <span className="material-symbols-outlined icon delete__icon" onClick={() => onDelete(p.id)}>
                     delete
                 </span>
             </div>

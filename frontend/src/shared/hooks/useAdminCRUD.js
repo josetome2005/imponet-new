@@ -1,0 +1,117 @@
+import { useState, useEffect } from "react";
+import { useConfirm } from "./useConfirm";
+import { useToast } from "../components/toast/ToastContext";
+
+export function useAdminCRUD({
+    getAll,
+    create,
+    update,
+    remove,
+    entityName,
+    inputsConfig
+}){
+
+    const [items, setItems] = useState([])
+    const [showNewElemForm, setShowNewElemForm] = useState(false)
+    const [showEditForm, setShowEditForm] = useState(false)
+    const [editingElem, setEditingElem] = useState(null)
+
+    const { state, confirm, handleCancel, handleConfirm } = useConfirm()
+    const toast = useToast()
+
+    useEffect(() => {
+        async function fetchAll() {
+            const data = await getAll()
+            setItems(data)
+        }
+        fetchAll()
+    }, [getAll])
+
+    const openNewForm = () => setShowNewElemForm(true)
+    const closeNewForm = () => setShowNewElemForm(false)
+    const closeEditForm = () => {
+        setShowEditForm(false)
+        setEditingElem(null)
+    }
+
+    const handleDelete = async (id) => {
+        const ok = await confirm(`Esta acción no se puede deshacer. ¿Estás seguro que quieres eliminar esta ${entityName}?`)
+        if (!ok) return;
+
+        const index = items.findIndex(it => it.id === id)
+        if (index === -1) return;
+
+        const removedItem = items[index]
+
+        setItems(prev => prev.filter(it => it.id !== id))
+
+        try {
+            await remove(id)
+            toast.success(`Se ha eliminado la ${entityName} correctamente.`)
+        } catch (e) {
+            console.log(e)
+            setItems(prev => [
+                ...prev.slice(0, index),
+                removedItem,
+                ...prev.slice(index)
+            ])
+            toast.error(`Ha ocurrido un error al eliminar la ${entityName}.`)
+        }
+    }
+
+    const handleRequestEdit = (elem) => {
+        setEditingElem({
+            id: elem.id ?? "",
+            inputs: inputsConfig.map(input => ({
+                ...input,
+                value: elem[input.mappedProp]
+            }))
+        })
+        setShowEditForm(true)
+    }
+
+    const handleSubmitEdit = async (formData) => {
+        const { id, ...rest } = formData
+
+        try {
+            const updated = await update({ id, ...rest })
+            setItems(prev => prev.map(it =>
+                it.id === id ? { ...it, ...rest, ...updated } : it
+            ))
+            toast.success(`Se ha editado la ${entityName} correctamente.`)
+        } catch (e) {
+            console.log(e)
+            toast.error(`Ha ocurrido un error al editar la ${entityName}.`)
+        }
+    }
+
+    const handleSubmitNew = async (formData) => {
+        try {
+            const nuevoItem = await create(formData)
+            setItems(prev => [...prev, nuevoItem])
+            toast.success(`Se ha creado la ${entityName} correctamente.`)
+        } catch (e) {
+            console.log(e)
+            toast.error(`Ha ocurrido un error creando la ${entityName}.`)
+        }
+    }
+
+    return {
+        items,
+        showNewElemForm,
+        showEditForm,
+        editingElem,
+        confirmState: state,
+        handleCancel,
+        handleConfirm,
+        openNewForm,
+        closeNewForm,
+        closeEditForm,
+        handleDelete,
+        handleRequestEdit,
+        handleSubmitEdit,
+        handleSubmitNew,
+    }
+
+
+}
