@@ -17,14 +17,30 @@
 }
 
 .admin__categorias .actions__container span{
-    width: 1.5rem;
-    font-size: 1.5rem;
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.375rem;
+    border-radius: 9999px;
+    transition: 0.3s all;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .admin__categorias .actions__container .edit__icon{
     color: #333333;
 }
 
+.admin__categorias .actions__container .edit__icon:hover{
+    background-color: #333333;
+    color: #ffffff;
+}
+
 .admin__categorias .actions__container .delete__icon{
     color: #980000;
+}
+
+.admin__categorias .actions__container .delete__icon:hover {
+    background-color: #980000;
+    color: #ffffff;
 }
