@@ -5,11 +5,22 @@ import { ListOfCheckOptions } from "../inputs/ListOfCheckOptions/ListOfCheckOpti
 import { FlagMatrix } from "../inputs/FlagMatrix/FlagMatrix";
 import { SelectIcon } from "../inputs/SelectIcon/SelectIcon";
 import { ToggleInput } from "../inputs/ToggleInput/ToggleInput";
-import { FieldOptionsEditor } from "../inputs/FieldOptionsEditor/FieldOptionsEditor";
 
-import { getInputOptions } from "../../../services/defineDependentSelectOptions";
 import { shouldShowInput } from "../../../hooks/useFormState";
 import { MoneyInput } from "../inputs/MoneyInput/MoneyInput";
+
+const getInputOptions = (item, formData) => {
+
+    if (!item.dependsOn) return item.options || [];
+
+    const allInputs = formData.sections?.flatMap(section => section.inputs) || [];
+
+    const parentValue = allInputs.find(
+        i => i.name === item.dependsOn
+    )?.value;
+
+    return item.getOptions?.(parentValue) || item.options || [];
+};
 
 export function FormRenderer({ formData, handlers, mainCategory, formMode, flex = false }) {
 
@@ -20,9 +31,6 @@ export function FormRenderer({ formData, handlers, mainCategory, formMode, flex 
         handlePermissionsChange,
         handleChangeSelectIcon,
         handleChangeToggleInput,
-        handleSubmitNewOption,
-        handleDeleteOption,
-        handleReorderOptions,
         handleChangeMoneyValue
     } = handlers;
 
@@ -112,17 +120,6 @@ export function FormRenderer({ formData, handlers, mainCategory, formMode, flex 
                 </label>
 
                 {renderControl(item)}
-
-                {formMode === "schema" &&
-                    (item.value === "Elegir una opción" || item.type === "Elegir varias opciones") &&
-                    <FieldOptionsEditor
-                        name_input={item.name}
-                        options={formData.options}
-                        onSubmitNewOption={handleSubmitNewOption}
-                        onDeleteOption={handleDeleteOption}
-                        onReorderOptions={handleReorderOptions}
-                    />
-                }
             </div>
         );
     };

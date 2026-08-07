@@ -31,7 +31,8 @@
 }
 
 .form__new__elem .img__close__form {
-    width: 16px;
+    font-size: 24px;
+    width: 24px;
     position: absolute;
     top: 20px;
     right: 20px;

@@ -4,12 +4,9 @@ function getInitial(string){
     return String(string)[0]
 }
 
-export function MarcaItem({marca}){
+export function MarcaItem({ marca, onEdit, onDelete }){
 
     const { nombre, cantidad_productos } = marca
-
-    console.log(marca)
-
     
     return(
         <div className="marca__item">
@@ -22,10 +19,10 @@ export function MarcaItem({marca}){
                     </div>
                 </div>
                 <div className="actions__container">
-                    <span className="material-symbols-outlined edit__icon">
+                    <span className="material-symbols-outlined edit__icon" onClick={() => onEdit(marca)}>
                         edit
                     </span>
-                    <span className="material-symbols-outlined delete__icon">
+                    <span className="material-symbols-outlined delete__icon" onClick={() => onDelete(marca.id)}>
                         delete
                     </span>
                 </div>

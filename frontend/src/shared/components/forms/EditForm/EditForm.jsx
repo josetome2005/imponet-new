@@ -12,8 +12,13 @@ export function EditForm({ title, editingElem, onSubmit, onExit, mode, width = 3
         <div className="layout__form__edit__elem">
             <div className="form__edit__elem" style={{ width: width + "%" }}>
 
-                <img src="/img/close_333.png" className="img__close__form" alt="Cerrar Formulario" onClick={onExit} />
-                <h3>{title}</h3>
+                <span
+                    className="material-symbols-outlined img__close__form"
+                    alt="Cerrar Formulario"
+                    onClick={onExit}
+                >
+                    close
+                </span>                <h3>{title}</h3>
 
                 <DynamicForm
                     initialData={editingElem}

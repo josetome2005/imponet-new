@@ -38,6 +38,26 @@
     color: var(--main-pink);
 }
 
+.button--red {
+    background-color: #e80000;
+    color: #ffffff;
+}
+
+.button--red:hover {
+    border: 2px solid #e80000;
+    background-color: #ffffff00;
+    color: #e80000;
+}
+
+.button--grey {
+    background-color: #e8e8e8;
+    color: #222222;
+}
+
+.button--grey:hover {
+    background-color: #d8d8d8;
+    color: #222222;
+}
 /*---------------------------------------------*/
 
 .button.reverse{

@@ -14,8 +14,14 @@ export function NewElemForm({ handleSubmit, handleExit, title, inputs, sections,
     return (
         <div className="layout__form__new__elem">
             <div className="form__new__elem" style={{ width: width + "%" }}>
-
-                <img src="/img/close_333.png" className="img__close__form" alt="Cerrar Formulario" onClick={handleExit} />
+                
+                <span 
+                    className="material-symbols-outlined img__close__form" 
+                    alt="Cerrar Formulario" 
+                    onClick={handleExit}
+                >
+                    close
+                </span>
                 <h3>{title}</h3>
 
                 <DynamicForm

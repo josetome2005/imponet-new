@@ -50,6 +50,7 @@
 .marca__item .actions__container span{
     font-size: 1.375rem;
     width: 1.375rem;
+    cursor: pointer;
 }
 
 .marca__item .actions__container .edit__icon{
