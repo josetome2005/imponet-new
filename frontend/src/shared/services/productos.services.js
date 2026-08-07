@@ -42,7 +42,10 @@ export const createProducto = async({object, imagenes = []}) => {
 
 }
 
-export const updateProducto = async ({ id, object, imagenes = [] }) => {
+// object: campos básicos { nombre, precio, ... }
+// imagenesOrden: array de strings ("url existente" o "NEW") en el orden final
+// archivosNuevos: array de File, en el mismo orden que aparecen los "NEW" en imagenesOrden
+export const updateProducto = async ({ id, object, imagenesOrden, archivosNuevos = [] }) => {
 
     const formData = new FormData();
 
@@ -55,8 +58,10 @@ export const updateProducto = async ({ id, object, imagenes = [] }) => {
         }
     })
 
-    imagenes.forEach((file) => formData.append("imagenes", file))
-
+    if (imagenesOrden) {
+        formData.append("imagenes_orden", JSON.stringify(imagenesOrden));
+    }
+    archivosNuevos.forEach((file) => formData.append("imagenes", file));
     const res = await fetch(`${API_URL}/productos/${id}`, {
         method: "PATCH",
         headers: authHeaders(),

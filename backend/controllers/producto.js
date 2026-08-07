@@ -63,8 +63,14 @@ export class ProductoController {
 
         const dataToUpdate = { ...result.data }
 
-        if (req.files?.length) {
-            dataToUpdate.imagenes = req.files.map(file => `/uploads/productos/${file.filename}`)
+        // "imagenes_orden" = array de strings: URL existente, o "NEW" como placeholder de una imagen nueva
+        // en el orden final deseado. Los archivos nuevos llegan en req.files en el mismo orden
+        // en que aparecen sus placeholders "NEW".
+        if (body.imagenes_orden) {
+            const orden = JSON.parse(body.imagenes_orden)
+            const nuevosArchivos = req.files?.map(f => `/uploads/productos/${f.filename}`) ?? []
+            let cursor = 0
+            dataToUpdate.imagenes = orden.map(item => item === "NEW" ? nuevosArchivos[cursor++] : item)
         }
 
         const updatedProducto = await this.productoModel.update({ id, object: dataToUpdate })

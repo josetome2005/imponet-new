@@ -26,7 +26,7 @@ export const filters = [
     },  
 ]
 
-export const productos_columns = [
+export const buildProductosColumns = ({onEdit, onDelete}) => [
     {   
         key: "nombre",
         name: "Producto",
@@ -79,10 +79,10 @@ export const productos_columns = [
         name: "",
         render: p => (
             <div className="flex--16 y-center actions__container">
-                <span className="material-symbols-outlined icon edit__icon">
+                <span className="material-symbols-outlined icon edit__icon" onClick={() => onEdit(p)}>
                     edit
                 </span>
-                <span className="material-symbols-outlined icon delete__icon">
+                <span className="material-symbols-outlined icon delete__icon" onClick={() => onDelete(p.id)}>
                     delete
                 </span>
             </div>
@@ -97,3 +97,21 @@ function parsePrecio(precio){
         currency: 'ARS'
     });
 }
+
+export const buildProductoInputs = ({ marcas, categorias }) => [
+    { id: "nombre", name: "nombre", type: "text", label: "Nombre", mappedProp: "nombre", is_mandatory: true },
+    { id: "sku", name: "sku", type: "text", label: "SKU", mappedProp: "sku" },
+    { id: "descripcion", name: "descripcion", type: "textarea", label: "Descripción", mappedProp: "descripcion" },
+    { id: "precio", name: "precio", type: "number", label: "Precio", mappedProp: "precio", is_mandatory: true },
+    { id: "descuento", name: "descuento", type: "number", label: "Descuento (%)", mappedProp: "descuento" },
+    { id: "stock", name: "stock", type: "number", label: "Stock", mappedProp: "stock", is_mandatory: true },
+    {
+        id: "marca_id", name: "marca_id", type: "select", label: "Marca", mappedProp: "marca_id",
+        options: marcas.map((m) => ({ label: m.nombre, value: m.id }))
+    },
+    {
+        id: "categoria_ids", name: "categoria_ids", type: "checkbox_list", label: "Categorías", mappedProp: "categoria_ids",
+        options: categorias.map((c) => ({ label: c.nombre, value: c.id }))
+    },
+    { id: "activo", name: "activo", type: "boolean", label: "Producto activo", mappedProp: "activo" }
+]
