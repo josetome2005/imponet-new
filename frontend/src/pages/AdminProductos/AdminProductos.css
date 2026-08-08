@@ -6,6 +6,24 @@
     grid-template-columns: 3fr 1.2fr 1fr 1fr 0.8fr 1fr 0.5fr;
 }
 
+.admin__productos .row__table{
+    grid-template-columns:
+            2.5fr
+            /* Producto (ícono + nombre) */
+            1.2fr
+            /* SKU */
+            1fr
+            /* Marca */
+            1fr
+            /* Precio */
+            0.7fr
+            /* Stock */
+            1fr
+            /* Estado */
+            0.8fr;
+            /* Acciones */
+}
+
 .admin__productos .nombre__producto__container .icon{
     font-size: 1.375rem;
     width: 1.375rem;
@@ -41,8 +59,33 @@
     color: #444444;
 }
 
-.admin__productos .actions__container .icon{
-    font-size: 1.5rem;
-    width: 1.5rem;
+/*-------------------------------------------------*/
 
+.admin__productos .actions__container span {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.375rem;
+    border-radius: 9999px;
+    transition: 0.3s all;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin__productos .actions__container .edit__icon {
+    color: #333333;
+}
+
+.admin__productos .actions__container .edit__icon:hover {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+.admin__productos .actions__container .delete__icon {
+    color: #980000;
+}
+
+.admin__productos .actions__container .delete__icon:hover {
+    background-color: #980000;
+    color: #ffffff;
 }

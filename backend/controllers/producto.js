@@ -35,7 +35,9 @@ export class ProductoController {
         if (body.precio) body.precio = Number(body.precio)
         if (body.descuento) body.descuento = Number(body.descuento)
         if (body.stock) body.stock = Number(body.stock)
-        if (body.activo !== undefined) body.activo = body.activo === "true" || body.activo === true
+        if (body.activo !== undefined) {
+            body.activo = body.activo === "true" || body.activo === "1" || body.activo === true || body.activo === 1;
+        }
 
         const result = validateProducto(body)
         if (!result.success) return res.status(400).json({ error: JSON.parse(result.error.message) })

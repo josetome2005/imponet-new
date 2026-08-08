@@ -87,11 +87,18 @@ export class ProductoModel {
     }
 
     static async update({ id, object }) {
-        const { categoria_ids, imagenes, ...fields } = object
+        const { categoria_ids, imagenes, marca_id, ...fields } = object
 
         const conn = await pool.getConnection()
         try {
             await conn.beginTransaction()
+
+            if (marca_id !== undefined) {
+                await conn.query(
+                    "UPDATE productos SET marca_id = UUID_TO_BIN(?) WHERE id = UUID_TO_BIN(?)",
+                    [marca_id, id]
+                )
+            }
 
             if (Object.keys(fields).length) {
                 await conn.query(

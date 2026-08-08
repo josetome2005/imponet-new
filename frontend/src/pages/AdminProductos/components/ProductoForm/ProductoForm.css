@@ -1,0 +1,93 @@
+/*--- Labels e inputs base -------------------------------------------*/
+
+.producto__form label {
+    font-size: 14px;
+    color: #111;
+}
+
+.producto__form label .mandatory_mark {
+    font-size: 16px;
+    color: red;
+}
+
+.producto__form input,
+.producto__form textarea {
+    width: 100%;
+    display: block;
+    margin: 8px 0 20px 0;
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 5px;
+}
+
+.producto__form input:focus {
+    transition: 0.5s all;
+    outline: 2px solid var(--main-blue);
+}
+
+.producto__form input[type="file"] {
+    display: none;
+}
+
+.producto__form .error {
+    font-size: 13px;
+    font-weight: 500;
+    color: #b40000;
+}
+
+
+/*--- Botones --------------------------------------------------------*/
+
+.producto__form .button__container {
+    width: 50%;
+    margin-left: 50%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.producto__form .button__container button {
+    width: 50%;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    border: 2px solid transparent;
+}
+
+.producto__form .submit__button {
+    background-color: var(--main-blue);
+    color: #fff;
+    border: 2px solid var(--main-blue);
+}
+
+.producto__form .submit__button:hover {
+    background-color: #fff;
+    color: var(--main-blue);
+    border: 2px solid var(--main-blue);
+    transition: 0.3s all;
+}
+
+.producto__form .submit__button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.producto__form .exit__button {
+    background-color: #fff;
+    border: 2px solid #e5e7eb;
+    color: #333;
+}
+
+.producto__form .exit__button:hover {
+    background-color: var(--main-blue);
+    color: #fff;
+    border: 2px solid var(--main-blue);
+    transition: 0.3s all;
+}

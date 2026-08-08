@@ -75,7 +75,7 @@ export const buildProductosColumns = ({onEdit, onDelete}) => [
         )
     },
     {
-        key: "actions",
+        key: "actions__container",
         name: "",
         render: p => (
             <div className="flex--16 y-center actions__container">
@@ -101,17 +101,18 @@ function parsePrecio(precio){
 export const buildProductoInputs = ({ marcas, categorias }) => [
     { id: "nombre", name: "nombre", type: "text", label: "Nombre", mappedProp: "nombre", is_mandatory: true },
     { id: "sku", name: "sku", type: "text", label: "SKU", mappedProp: "sku" },
-    { id: "descripcion", name: "descripcion", type: "textarea", label: "Descripción", mappedProp: "descripcion" },
     { id: "precio", name: "precio", type: "number", label: "Precio", mappedProp: "precio", is_mandatory: true },
     { id: "descuento", name: "descuento", type: "number", label: "Descuento (%)", mappedProp: "descuento" },
+    { id: "descripcion", name: "descripcion", type: "textarea", label: "Descripción", mappedProp: "descripcion", width: "100" },
     { id: "stock", name: "stock", type: "number", label: "Stock", mappedProp: "stock", is_mandatory: true },
     {
         id: "marca_id", name: "marca_id", type: "select", label: "Marca", mappedProp: "marca_id",
-        options: marcas.map((m) => ({ label: m.nombre, value: m.id }))
+        options: marcas.map((m) => ({ label: m.nombre, value: m.id })),
     },
     {
         id: "categoria_ids", name: "categoria_ids", type: "checkbox_list", label: "Categorías", mappedProp: "categoria_ids",
-        options: categorias.map((c) => ({ label: c.nombre, value: c.id }))
+        options: categorias.map((c) => ({ label: c.nombre, value: c.id })),
+        width: "100"
     },
     { id: "activo", name: "activo", type: "boolean", label: "Producto activo", mappedProp: "activo" }
 ]

@@ -16,10 +16,18 @@ export function ProductoForm({ title, inputsConfig, editingElem, onSubmit, onExi
     const initialData = editingElem
         ? {
             id: editingElem.id,
-            inputs: inputsConfig.map((input) => ({
-                ...input,
-                value: editingElem[input.mappedProp]
-            }))
+            inputs: inputsConfig.map((input) => {
+                let value = editingElem[input.mappedProp];
+
+                if (input.mappedProp === "categoria_ids") {
+                    value = editingElem.categorias?.map((c) => c.id) ?? [];
+                }
+                if (input.type === "boolean") {
+                    value = Boolean(value);
+                }
+
+                return { ...input, value };
+            })
         }
         : { id: null, inputs: inputsConfig };
 

@@ -41,7 +41,6 @@ export function AdminProductos() {
 
     const producto_inputs = buildProductoInputs({ marcas, categorias })
 
-    // le paso openEditForm/handleDelete a las columnas para que la tabla tenga acciones por fila
     const productos_columns = buildProductosColumns({ onEdit: openEditForm, onDelete: handleDelete })
 
     return (

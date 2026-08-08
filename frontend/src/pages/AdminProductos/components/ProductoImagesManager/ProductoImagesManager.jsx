@@ -1,5 +1,6 @@
 // components/ProductoImagesManager/ProductoImagesManager.jsx
 import { useState, useRef } from "react";
+import { API_URL } from "../../../../shared/services/http.services";
 import "./ProductoImagesManager.css";
 
 // item: { key, type: "existing" | "new", url (preview), file? (solo si es "new"), sourceUrl? (solo si es "existing") }
@@ -9,7 +10,7 @@ export function ProductoImagesManager({ initialImages = [], onChange }) {
         initialImages.map((img) => ({
             key: img.url,
             type: "existing",
-            url: img.url,       // acá asumo que es la URL absoluta o relativa servible, ej /uploads/productos/x.jpg
+            url: `${API_URL}${img.url}`,
             sourceUrl: img.url
         }))
     );
@@ -39,10 +40,12 @@ export function ProductoImagesManager({ initialImages = [], onChange }) {
         emitChange(items.filter((it) => it.key !== key));
     };
 
+    // se dispara en el elemento que empezás a arrastrar -- Guarda "desde qué posición empecé a arrastrar".
     const handleDragStart = (index) => {
         dragItemIndex.current = index;
     };
 
+    // se dispara repetidamente mientras arrastrás algo por encima de otro elemento
     const handleDragOver = (e, index) => {
         e.preventDefault();
         const from = dragItemIndex.current;
@@ -55,6 +58,7 @@ export function ProductoImagesManager({ initialImages = [], onChange }) {
         setItems(reordered);
     };
 
+    // se dispara una sola vez, cuando soltás el mouse:
     const handleDragEnd = () => {
         dragItemIndex.current = null;
         emitChange(items);
@@ -88,7 +92,7 @@ export function ProductoImagesManager({ initialImages = [], onChange }) {
                         onDragOver={(e) => handleDragOver(e, index)}
                         onDragEnd={handleDragEnd}
                     >
-                        <img src={item.url} alt="" />
+                        <img src={item.url} alt={item.url} />
                         {item.type === "new" && <span className="badge__new">Nueva</span>}
                         <button
                             type="button"
