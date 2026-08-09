@@ -1,53 +1,28 @@
 import "./ProductosDestacados.css"
 import { ProductoItem } from "../../../../shared/components/items/PropertyItem/ProductoItem"
 import { Button } from "../../../../shared/components/ui/Button/Button"
-
-const productos = [
-    {
-        id: crypto.randomUUID(),
-        img: "/img/productos/producto1.png",
-        categoria: "Audio",
-        name: "Auriculares Inalámbricos Sony Wh-1000xm4",
-        precio: 149999,
-    },
-    {
-        id: crypto.randomUUID(),
-        img: "/img/productos/producto2.png",
-        categoria: "Entretenimiento",
-        name: "DJI Mavic 4 Pro 100MP 4/3 CMOS Hasselblad",
-        precio: 449999
-    },
-    {
-        id: crypto.randomUUID(),
-        img: "/img/productos/producto3.png",
-        categoria: "Audio",
-        name: "Jbl Charge 6 Parlante Bluetooth 2026",
-        precio: 249999
-    },
-    {
-        id: crypto.randomUUID(),
-        img: "/img/productos/producto4.png",
-        categoria: "Relojes",
-        name: "Smartwatch Xiaomi Redmi Watch 5 Active",
-        precio: 129999
-    },
-    {
-        id: crypto.randomUUID(),
-        img: "/img/productos/producto1.png",
-        categoria: "Audio",
-        name: "Auriculares Inalámbricos Sony Wh-1000xm4",
-        precio: 149999
-    },
-]
+import { getProductosDestacados } from "../../../../shared/services/productos.services"
+import { useState, useEffect } from "react"
 
 export function ProductosDestacados(){
 
+    const [productos, setProductos] = useState([])
+
+    useEffect(() => {
+        async function fetchAll() {
+
+            const data = await getProductosDestacados()
+            setProductos(data)
+        }
+        fetchAll()
+    }, [])
+
     return(
 
-        <div className="productos__destacadas">
+        <div className="productos__section">
 
-            <h3 className="section__title">Ofertas de tiempo limitado</h3>
-            <p className="section__subtitle">Aprovecha los mejores descuentos en nuestros productos.</p>
+            <h3 className="section__title">Productos Destacados</h3>
+            <p className="section__subtitle">Los productos más elegidos por nuestros clientes</p>
 
             <div className="productos__container">
                 {

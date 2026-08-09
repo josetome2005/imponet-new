@@ -1,3 +1,7 @@
+.property__item{
+    cursor: pointer;
+}
+
 .img__container{
     width: 100%;
     background-color: var(--muted-pink);

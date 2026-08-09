@@ -1,4 +1,4 @@
-import { API_URL, handleResponse, getToken, authHeaders } from "./http.services";
+import { API_URL, handleResponse, authHeaders } from "./http.services";
 
 export const getProductos = async () => {
     const res = await fetch(`${API_URL}/productos`);
@@ -14,6 +14,16 @@ export const getProductosAdmin = async () => {
     const res = await fetch(`${API_URL}/productos/admin/all`, {
         headers: authHeaders()
     });
+    return handleResponse(res);
+};
+
+export const getProductosDestacados = async () => {
+    const res = await fetch(`${API_URL}/productos?destacado=true&limit=8`);
+    return handleResponse(res);
+};
+
+export const getProductosEnOferta = async () => {
+    const res = await fetch(`${API_URL}/productos?con_descuento=true&limit=6`);
     return handleResponse(res);
 };
 

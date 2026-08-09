@@ -8,7 +8,13 @@ export class ProductoController {
 
     // Público: solo productos activos
     getAll = async (req, res) => {
-        const productos = await this.productoModel.getAll({ activo: true })
+        const { destacado, con_descuento, limit } = req.query
+        const productos = await this.productoModel.getAll({
+            activo: true,
+            destacado: destacado === "true" ? true : undefined,
+            conDescuento: con_descuento === "true",
+            limit
+        })
         res.json(productos)
     }
 

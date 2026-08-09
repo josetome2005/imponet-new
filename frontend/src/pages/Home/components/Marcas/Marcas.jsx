@@ -52,8 +52,8 @@ export function Marcas(){
 
             <div className="marcas__container" ref={containerRef}>
                 {
-                    marcas?.map(m => (
-                        <img key={m.id} src={m.img} alt={m.name} draggable={false}/>
+                    marcas?.map((m, index) => (
+                        <img key={`${m.id}-${index}`} src={m.img} alt={m.name} draggable={false}/>
                     ))
                 }
             </div>

@@ -24,10 +24,30 @@ const attachRelations = async (producto) => {
 
 export class ProductoModel {
 
-    static async getAll({ activo } = {}) {
-        const where = activo === undefined ? "" : "WHERE p.activo = ?"
-        const params = activo === undefined ? [] : [activo ? 1 : 0]
-        const [productos] = await pool.query(`${SELECT_FIELDS} ${where}`, params)
+    static async getAll({ activo, destacado, conDescuento, limit } = {}) {
+
+        const conditions = [];
+        const params = [];
+
+        if(activo !== undefined) {
+            conditions.push("p.activo = ?")
+            params.push(activo ? 1 : 0)
+        }
+
+        if(destacado !== undefined) {
+            conditions.push("p.destacado = ?")
+            params.push(destacado ? 1 : 0)
+        }
+
+        if (conDescuento) {
+            conditions.push("p.descuento > 0")
+        }
+
+
+        const where = conditions.length ? `WHERE ${conditions.join(" AND ")}` : ""
+        const limitClause = limit ? `LIMIT ${Number(limit)}` : ""
+
+        const [productos] = await pool.query(`${SELECT_FIELDS} ${where} ORDER BY p.created_at DESC ${limitClause}`, params)
         return Promise.all(productos.map(attachRelations))
     }
 

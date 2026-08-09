@@ -1,4 +1,6 @@
 import "./ProductoItem.css"
+import { useNavigate } from "react-router-dom"
+import { API_URL } from "../../../services/http.services"
 
 function parsePrice(price){
 
@@ -15,12 +17,16 @@ export function ProductoItem({producto}){
     const precio_con_descuento_numero = parseFloat(producto.precio) * (100 - producto.descuento) / 100
     const precio_con_descuento = parsePrice(precio_con_descuento_numero)
 
+    const navigate = useNavigate()
+
+    const main_img = producto.imagenes[0]
+
     return(
 
-        <div className="property__item">
+        <div className="property__item" onClick={() => navigate(`/productos/${producto.id}`)}>
 
             <div className="img__container">
-                <img  src={producto.img} alt={producto.name}/>
+                <img src={`${API_URL}${main_img.url}`} alt={producto.name}/>
             </div>  
 
             <span className="producto__categoria">{producto.categoria}</span>

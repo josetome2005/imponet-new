@@ -10,6 +10,7 @@ import { AdminMarcas } from "./pages/AdminMarcas/AdminMarcas"
 import { AdminCategorias } from "./pages/AdminCategorias/AdminCategorias"
 import { Login } from './pages/Login/Login'
 import { ToastProvider } from "./shared/components/toast/ToastContext"
+import { ProductoView } from './pages/ProductoView/ProductoView'
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
     <Routes>
       <Route path="/" element={<HomeDashboard />} />
       <Route path="/productos" element={<Productos />} />
+      <Route path="/productos/:producto_id" element={<ProductoView />} />
 
       <Route element={<ProtectedRoute />}>
         <Route path="/admin" element={<AdminDashboard />}>
