@@ -1,11 +1,13 @@
 import "./ProductoView.css"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ProductoSlider from "./components/ProductoSlider/ProductoSlider"
 import { getProductoById } from "../../shared/services/productos.services";
 import { Header } from "../../shared/components/layout/Header/Header";
 import { Footer } from "../../shared/components/layout/Footer/Footer";
+import { Button } from "../../shared/components/ui/Button/Button";
+import { useToast } from "../../shared/components/toast/ToastContext"
 
 const formatMoneda = () => {
     return new Intl.NumberFormat('es-AR', {
@@ -19,6 +21,11 @@ export function ProductoView() {
 
     const { producto_id } = useParams();
     const [producto, setProducto] = useState()
+    const [amount, setAmount] = useState(1)
+
+    const navigate = useNavigate()
+    const toast = useToast()
+
 
     useEffect(() => {
         async function fetchProd(){
@@ -26,12 +33,83 @@ export function ProductoView() {
             setProducto(data) 
         }
         fetchProd()        
-    }, [producto_id])
+    }, [producto_id])   
     
+    /*--------------------------------------------------------------------------*/
+
+    if(!producto) return (
+        <>
+            <div className="producto__no__page">
+                <div>
+                    <span>404</span>
+                    <h3>Producto no encontrado</h3>
+                    <p>El producto que buscás no existe o fue eliminado.</p>
+                    <Button 
+                        text={"Volver al inicio"}
+                        onClick={() => navigate("/")}/>
+                </div>
+            </div>
+        </>
+    );
+
+    /*--------------------------------------------------------------------------*/
     
-    if(!producto) return;
+    let precio_mostrado = 0
+    let precio_original = 0
     
-    let precio = formatMoneda("ARS").format(producto.precio)
+    if(producto.descuento > 0){
+        let precio_con_descuento = parseFloat(producto.precio)*(100 - producto.descuento)/100
+        precio_mostrado = formatMoneda("ARS").format(precio_con_descuento);
+        
+        precio_original = formatMoneda("ARS").format(producto.precio);
+    }else{
+        precio_mostrado = formatMoneda("ARS").format(producto.precio);
+    }
+
+    /*--------------------------------------------------------------------------*/
+
+
+    const handleChange = (e) => {
+        const { value } = e.target
+    
+        const valor = parseInt(value)
+    
+        if(isNaN(valor)){
+            setAmount(1)
+            return
+        }
+    
+        if(valor >= producto.stock){
+            setAmount(producto.stock)
+            toast.info(`La cantidad de productos no puede superar el stock: ${producto.stock}`)
+        }else if(valor <= 0){
+            setAmount(1)
+        }else{
+            setAmount(valor)
+        }
+    }
+    
+    const handleDecrement = () => {
+        setAmount(prev => Math.max(1, prev - 1))
+    }
+    
+    const handleIncrement = () => {
+        setAmount(prev => Math.min(producto.stock, prev + 1))
+    }
+
+    const handleAgregarAlCarrito = () => {
+        const carrito = JSON.parse(localStorage.getItem("carrito")) || []
+
+        const index = carrito.findIndex(item => item.id === producto.id)
+
+        if(index !== -1){
+            carrito[index].cantidad += amount
+        }else {
+            carrito.push({ id: producto.id, cantidad: amount })
+        }
+
+        localStorage.setItem("carrito", JSON.stringify(carrito))
+    }
 
     return(
 
@@ -54,13 +132,47 @@ export function ProductoView() {
                     <div className="producto_main_content">
                         <ProductoSlider images={producto.imagenes}/>
 
-                        {<div className="producto_info">
-                            <p className="producto_title">{producto.nombre}</p>
-                            <span className="producto_price">{precio}</span>
-
-                            
-                            <a className="producto_button">Agregar al Carrito</a>
-                        </div>}
+                        {
+                            <div className="producto_info">
+                                <span className="producto_marca">{producto.marca_nombre}</span>
+                                <p className="producto_nombre">{producto.nombre}</p>
+                                <div className="categorias__container">
+                                    {
+                                        producto?.categorias?.map(c => (
+                                            <span key={c.nombre} className="producto_categoria">
+                                                {c.nombre}
+                                            </span>     
+                                        ))
+                                    }
+                                </div>
+                                <div className="precio_container">
+                                    <span className="producto_precio">{precio_mostrado}</span>
+                                    {   
+                                        precio_original && 
+                                        <span className="producto_ex_precio">{precio_original}</span>
+                                    }
+                                </div>
+                                <p className="producto_stock">Stock Disponible: {producto.stock}</p>
+                                
+                                <div className="producto_button_shopping">
+                                    <div className="manage__amount">
+                                        <span className="material-symbols-outlined" onClick={handleDecrement}>
+                                            remove
+                                        </span>
+                                        <input type="number" onChange={handleChange} value={amount} />
+                                        <span className="material-symbols-outlined" onClick={handleIncrement}>
+                                            add
+                                        </span>
+                                    </div>
+                                    <Button 
+                                        mode={"pink"}
+                                        text={"Agregar al carrito"}
+                                        iconPosition={"right"}
+                                        icon={"shopping_cart"}
+                                        onClick={handleAgregarAlCarrito}/>                            
+                                    </div>
+                                </div>
+                        }
                     </div>
                     
                     {

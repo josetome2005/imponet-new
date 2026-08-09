@@ -47,12 +47,34 @@
   
 /*////////////////////////////////////////////////////////////////////////*/
 
-
-.producto_info{
+.producto_main_content .producto_info{
     min-width: 40%;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    height: 390px;
 }
 
-.producto_view__content .producto_tag{
+.producto_info .producto_marca{
+    font-size: 1rem;
+    color: #333333;
+}
+
+.producto_info .producto_nombre{
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--main-blue);
+    margin-bottom: 0.75rem;
+}
+
+.producto_info .categorias__container{
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.producto_info .producto_categoria{
     display: inline-block;
     padding: 4px 10px;
     font-size: 0.75rem;
@@ -61,46 +83,80 @@
     border: 1px solid var(--main-color);
     background-color: #F1F0EE;
     margin-bottom: 20px;
+    text-align: center;
 }
 
-.producto_view__content .producto_price{
+.producto_info .producto_precio{
     display: block;
-    font-family: var(  --title-font-family);
-    font-size: 1.75rem;
+    font-size: 2rem;
     font-weight: bold;
-    color: var(--main-color);
+    color: var(--main-blue);
+}
+
+.producto_info .producto_ex_precio{
+    display: block;
+    font-size: 1.125rem;
+    color: #666666;
+    text-decoration: line-through;
+    margin-bottom: 3rem;
+}
+
+.producto_stock{
+    font-size: 1rem;
+    color: #666666;
     margin-bottom: 0.5rem;
 }
 
-.producto_view__content .producto_title{
-    display: block;
-    font-family: var(  --title-font-family);
-    font-size: 1rem;
-    font-weight: 500;
-    color: #262626;
+/*-------------------------------------------------------------*/
+
+.producto_button_shopping{
+    display: flex;
+    gap: 1rem;
 }
 
-.producto_button{
-    display: inline-block;
-    background-color: var(--main-blue);
-    color: #fff;
-    border-radius: 0.75rem;
-    padding: 8px 12px;
-    outline: none;
-    border: none;
+.producto_button_shopping .button{
+    width: 100%;
+    font-weight: 600;
+}
+
+/* Chrome, Safari, Edge y Opera */
+.producto_button_shopping  input[type=number]::-webkit-inner-spin-button, 
+.producto_button_shopping  input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.producto_button_shopping  input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.manage__amount{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem;
+    border-radius: 8px;
+    border: 1px solid #cccccc;
+    background-color: #f0f0f066;
+}
+
+.manage__amount span{
+    font-size: 1.5rem;
+    width: 1.5rem;
+    color: #111111;
     cursor: pointer;
-    font-size: 1rem;
-    font-weight: 400;
-    margin-top: 30px;
-    border: 2px solid #fff;
+    user-select: none;
 }
 
-.producto_button:hover{
-    transition: 0.3s all;
-    background-color: #fff;
-    color: var(--main-blue);
-    border: 2px solid var(--main-blue);
+.manage__amount input{
+    border: none;
+    outline: none;
+    width: 50px;
+    text-align: center;
+    font-size: 1.125rem;
+    color: #333333;
+    background-color: transparent;
 }
+
 
 /*////////////////////////////////////////////////////////////////////////*/
 
@@ -114,8 +170,8 @@
     font-family: var(--title-font-family);
     font-size: 1.25rem;
     color: #262626;
-    margin-bottom: 1.5rem;
     font-weight: 500;
+    margin-bottom: 0.5rem;
 }
 
 .producto_description{
@@ -126,6 +182,43 @@
     text-align: justify;
 }
 
+
+/*////////////////////////////////////////////////////////////////////////////*/
+
+.producto__no__page{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #F5F5F5;
+}
+
+.producto__no__page span{
+    display: block;
+    font-size: 4rem;
+    font-weight: 700;
+    text-align: center;
+    color: #222222;
+}
+
+.producto__no__page h3{
+    text-align: center;
+    font-size: 1.125rem;
+    color: #111111;
+    margin-bottom: 0.5rem;
+}
+
+.producto__no__page p{
+    text-align: center;
+    font-size: 1rem;
+    color: #666666;
+    margin-bottom: 2rem;
+}
+
+.producto__no__page .button{
+    margin: 0 auto;
+}
 
 
 /*//////////////////////////////////////////////////////////////////////////

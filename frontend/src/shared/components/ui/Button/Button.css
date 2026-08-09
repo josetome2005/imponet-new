@@ -23,7 +23,7 @@
 
 .button--default:hover{
     border: 2px solid var(--main-blue);
-    background-color: #ffffff;
+    background-color: #ffffff00;
     color: var(--main-blue);
 }
 
