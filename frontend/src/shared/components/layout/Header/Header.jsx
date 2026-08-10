@@ -1,10 +1,11 @@
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import "./Header.css"
+import { useNavigate } from "react-router-dom"
+import { useCarrito } from "../../../contexts/CarritoContext"
 
 
 export function Header(){
 
-    const [cartAmount, setCardAmout] = useState(0)
     const [categorias, setCategorias] = useState([
         {
             id: crypto.randomUUID(),
@@ -33,6 +34,9 @@ export function Header(){
         },
     ])
 
+    const navigate = useNavigate()
+    const { cantidadTotal } = useCarrito()
+    
     return(
 
         <>
@@ -45,7 +49,7 @@ export function Header(){
             </div>
 
             <header className="header">
-                <img src="/img/resources/logo.png" alt="Logo Imponet" className="header__logo"/>
+                <img src="/img/resources/logo.png" alt="Logo Imponet" className="header__logo" onClick={() => navigate("/")}/>
 
                 <div className="searchbar__container">
                     <input type="text" placeholder="Buscar por modelo, ej: Notebook Lenovo 15'" />
@@ -55,11 +59,11 @@ export function Header(){
                 </div>
 
 
-                <div className="cart__container">
+                <div className="cart__container" onClick={() => navigate("/cart")}>
                     <span className="material-symbols-outlined icon">
                         shopping_cart
                     </span>
-                    <span className="cart__amount">{cartAmount}</span>
+                    <span className="cart__amount">{cantidadTotal}</span>
                 </div>
 
             </header>

@@ -60,6 +60,17 @@ export class ProductoModel {
         return attachRelations(productos[0])
     }
 
+    static async getByIds({ ids }) {
+        if (!ids?.length) return []
+    
+        const placeholders = ids.map(() => "UUID_TO_BIN(?)").join(", ")
+        const [productos] = await pool.query(
+            `${SELECT_FIELDS} WHERE p.id IN (${placeholders})`,
+            ids
+        )
+        return Promise.all(productos.map(attachRelations))
+    }
+
     static async create({ object }) {
         const { nombre, descripcion, precio, descuento, stock, dimensiones, extra, activo, marca_id, categoria_ids, imagenes, sku } = object
 

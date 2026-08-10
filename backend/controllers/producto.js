@@ -1,4 +1,4 @@
-import { validateProducto, validatePartialProducto } from "../schemas/producto.js"
+import { validateProducto, validatePartialProducto, validateIds } from "../schemas/producto.js"
 
 export class ProductoController {
 
@@ -29,6 +29,14 @@ export class ProductoController {
         const producto = await this.productoModel.getById({ id })
         if (!producto) return res.status(404).json({ message: "Producto not found" })
         res.json(producto)
+    }
+
+    getByIds = async (req, res) => {
+        const result = validateIds(req.body)
+        if (!result.success) return res.status(400).json({ error: JSON.parse(result.error.message) })
+    
+        const productos = await this.productoModel.getByIds({ ids: result.data.ids })
+        res.json(productos)
     }
 
     create = async (req, res) => {

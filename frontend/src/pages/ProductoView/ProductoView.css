@@ -129,7 +129,7 @@
   -moz-appearance: textfield;
 }
 
-.manage__amount{
+.producto__view .manage__amount{
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -139,7 +139,7 @@
     background-color: #f0f0f066;
 }
 
-.manage__amount span{
+.producto__view .manage__amount span{
     font-size: 1.5rem;
     width: 1.5rem;
     color: #111111;
@@ -147,7 +147,7 @@
     user-select: none;
 }
 
-.manage__amount input{
+.producto__view .manage__amount input{
     border: none;
     outline: none;
     width: 50px;

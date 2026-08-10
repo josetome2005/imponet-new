@@ -47,7 +47,11 @@ export const createApp = (
     console.log("cors ok")
 
     app.use((req, res, next) => {
-        if (req.path.startsWith('/productos') && req.method === 'POST') {
+        const isProductoConArchivos =
+            req.path === '/productos' && req.method === 'POST' ||
+            req.path.match(/^\/productos\/[^/]+$/) && req.method === 'PATCH'
+    
+        if (isProductoConArchivos) {
             return next() // saltear json parser para upload de imágenes
         }
         json()(req, res, next)

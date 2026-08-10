@@ -8,14 +8,8 @@ import { Header } from "../../shared/components/layout/Header/Header";
 import { Footer } from "../../shared/components/layout/Footer/Footer";
 import { Button } from "../../shared/components/ui/Button/Button";
 import { useToast } from "../../shared/components/toast/ToastContext"
-
-const formatMoneda = () => {
-    return new Intl.NumberFormat('es-AR', {
-        style: 'currency',
-        currency: 'ARS',
-    });
-}
-
+import { useCarrito } from "../../shared/contexts/CarritoContext";
+import { formatMoneda } from "../../shared/utils/formatMoneda"
 
 export function ProductoView() {
 
@@ -25,7 +19,7 @@ export function ProductoView() {
 
     const navigate = useNavigate()
     const toast = useToast()
-
+    const carrito = useCarrito()
 
     useEffect(() => {
         async function fetchProd(){
@@ -98,17 +92,7 @@ export function ProductoView() {
     }
 
     const handleAgregarAlCarrito = () => {
-        const carrito = JSON.parse(localStorage.getItem("carrito")) || []
-
-        const index = carrito.findIndex(item => item.id === producto.id)
-
-        if(index !== -1){
-            carrito[index].cantidad += amount
-        }else {
-            carrito.push({ id: producto.id, cantidad: amount })
-        }
-
-        localStorage.setItem("carrito", JSON.stringify(carrito))
+        carrito.addItem(producto.id, amount)
     }
 
     return(

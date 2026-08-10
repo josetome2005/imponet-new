@@ -23,7 +23,7 @@ export function ProductoItem({producto}){
 
     return(
 
-        <div className="property__item" onClick={() => navigate(`/productos/${producto.id}`)}>
+        <div className="producto__item" onClick={() => navigate(`/productos/${producto.id}`)}>
 
             <div className="img__container">
                 <img src={`${API_URL}${main_img.url}`} alt={producto.name}/>

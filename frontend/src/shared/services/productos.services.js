@@ -27,6 +27,15 @@ export const getProductosEnOferta = async () => {
     return handleResponse(res);
 };
 
+export const getProductosPorIds = async (ids) => {
+    const res = await fetch(`${API_URL}/productos/por-ids`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ids })
+    });
+    return handleResponse(res);
+};
+
 export const createProducto = async({object, imagenes = []}) => {
 
     const formData = new FormData();

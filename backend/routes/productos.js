@@ -37,6 +37,7 @@ export const createProductoRouter = ({ productoModel }) => {
 
     // públicos
     productoRouter.get('/', productoController.getAll);
+    productoRouter.post('/por-ids', productoController.getByIds);
     productoRouter.get('/:id', productoController.getById);
 
     // admin

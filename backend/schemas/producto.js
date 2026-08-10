@@ -17,3 +17,8 @@ const productoSchema = z.object({
 
 export const validateProducto = (object) => productoSchema.safeParse(object)
 export const validatePartialProducto = (object) => productoSchema.partial().safeParse(object)
+
+const idsSchema = z.object({
+    ids: z.array(z.string().uuid()).min(1).max(50)
+})
+export const validateIds = (object) => idsSchema.safeParse(object)
