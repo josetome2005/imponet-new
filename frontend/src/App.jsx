@@ -13,6 +13,7 @@ import { ToastProvider } from "./shared/components/toast/ToastContext"
 import { ProductoView } from './pages/ProductoView/ProductoView'
 import { Carrito } from './pages/Carrito/Carrito'
 import { CarritoProvider } from './shared/contexts/CarritoContext'
+import { AdminVentas } from './pages/AdminVentas/AdminVentas'
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
               <Route path='productos' element={<AdminProductos/>} />
               <Route path='marcas' element={<AdminMarcas />} />
               <Route path='categorias' element={<AdminCategorias />} />
+              <Route path='ventas' element={<AdminVentas />} />
             </Route>
           </Route>
 

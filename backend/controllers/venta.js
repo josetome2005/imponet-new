@@ -57,4 +57,11 @@ export class VentaController {
             res.status(400).json({ error: error.message })
         }
     }
+
+    getByCodigo = async (req, res) => {
+        const { codigo } = req.params
+        const venta = await this.ventaModel.getByCodigo({ codigo })
+        if (!venta) return res.status(404).json({ message: "Venta not found" })
+        res.json(venta)
+    }
 }

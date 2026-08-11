@@ -8,7 +8,8 @@ export function useAdminCRUD({
     update,
     remove,
     entityName,
-    inputsConfig
+    inputsConfig,
+    removeMode = "delete" // "delete" | "cancel
 }){
 
     const [items, setItems] = useState([])
@@ -56,6 +57,26 @@ export function useAdminCRUD({
                 ...prev.slice(index)
             ])
             toast.error(`Ha ocurrido un error al eliminar la ${entityName}.`)
+        }
+    }
+
+    // Cancela: el item se queda en la lista, solo cambia de estado (ventas)
+    const handleCancelItem = async (id, mensajeConfirm) => {
+        const ok = await confirm(
+            mensajeConfirm ?? `Esta acción no se puede deshacer. ¿Estás seguro que querés cancelar esta ${entityName}?`
+        )
+        if (!ok) return;
+
+        const index = items.findIndex(it => it.id === id)
+        if (index === -1) return;
+
+        try {
+            const updated = await remove(id) // remove = cancelarVenta, devuelve la venta ya actualizada
+            setItems(prev => prev.map(it => it.id === id ? { ...it, ...updated } : it))
+            toast.success(`Se ha cancelado la ${entityName} correctamente.`)
+        } catch (e) {
+            console.log(e)
+            toast.error(e.message ?? `Ha ocurrido un error al cancelar la ${entityName}.`)
         }
     }
 
@@ -108,6 +129,7 @@ export function useAdminCRUD({
         closeNewForm,
         closeEditForm,
         handleDelete,
+        handleCancelItem,
         handleRequestEdit,
         handleSubmitEdit,
         handleSubmitNew,

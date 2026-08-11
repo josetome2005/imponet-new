@@ -9,6 +9,7 @@ export const createVentaRouter = ({ ventaModel }) => {
 
     // público: cualquiera compra, sin necesidad de cuenta
     ventaRouter.post('/', ventaController.create);
+    ventaRouter.get('/codigo/:codigo', ventaController.getByCodigo);
 
     // admin
     ventaRouter.get('/', authenticate, ventaController.getAll);

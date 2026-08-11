@@ -51,7 +51,9 @@ export function SelectInput({name_input, activeOption, options, onSelect, disabl
             
             <div className="select__header" onClick={handleClick}>
                 <span className="">{activeOptionLabel}</span>
-                <img src="/img/arrow_down_666.png" alt="" />
+                <span className="material-symbols-outlined icon"> 
+                    keyboard_arrow_down
+                </span>
             </div>
 
             <div className="dropdown__menu">

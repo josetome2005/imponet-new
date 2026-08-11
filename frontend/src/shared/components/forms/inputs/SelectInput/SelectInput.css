@@ -1,6 +1,7 @@
 .select__input{
     width: 100%;
     position: relative;
+    z-index: 1000000;
 }
 
 .select__header{
@@ -18,8 +19,15 @@
     background-color: #fafafa;
 }
 
-.select__header img{
-    width: 17px;
+.select__header .icon{
+    font-size: 1.125rem;
+    width: 1.125rem;
+    color: #333333;
+    transition: 0.3s all;
+}
+
+.select__input.open .icon{
+    transform: rotate(180deg);
 }
 
 
@@ -45,7 +53,7 @@
     border-radius: 8px;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
     padding: 10px;
-    z-index: 200;
+    z-index: 20000;
     opacity: 0;
     transform: translateY(-5px);
     pointer-events: none;
@@ -73,7 +81,7 @@
 }
 
 .dropdown__menu .select__option:hover{
-    background-color:var(--main-color);
+    background-color:var(--main-blue);
     color: #fff;
     font-weight: 500;
     transition: all 0.3s ease;

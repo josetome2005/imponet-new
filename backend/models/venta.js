@@ -1,7 +1,16 @@
 import { pool } from "../config/connection_db.js"
 
+const CODIGO_CHARS = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ" // sin 0,1,I,O para evitar confusiones al leerlo
+const generarCodigo = () => {
+    let codigo = "IMP-"
+    for (let i = 0; i < 6; i++) {
+        codigo += CODIGO_CHARS[Math.floor(Math.random() * CODIGO_CHARS.length)]
+    }
+    return codigo
+}
+
 const SELECT_FIELDS = `
-    SELECT BIN_TO_UUID(v.id) id, BIN_TO_UUID(v.usuario_id) usuario_id,
+    SELECT BIN_TO_UUID(v.id) id, v.codigo, BIN_TO_UUID(v.usuario_id) usuario_id,
            v.nombre, v.email, v.telefono,
            v.direccion_calle, v.direccion_ciudad, v.direccion_provincia, v.direccion_cp,
            v.total, v.estado, v.fecha
@@ -47,6 +56,16 @@ export class VentaModel {
             const [uuidResult] = await conn.query("SELECT UUID() uuid")
             const [{ uuid }] = uuidResult
 
+            // Genero el código y verifico que no exista
+            let codigo;
+            let intentos
+            do {
+                codigo = generarCodigo()
+                const [existe] = await conn.query("SELECT id FROM ventas WHERE codigo = ?", [codigo])
+                if (existe.length === 0) break
+                intentos++
+            } while (intentos < 5)
+
             let total = 0
             const detalleAInsertar = []
 
@@ -80,8 +99,8 @@ export class VentaModel {
             }
 
             await conn.query(
-                `INSERT INTO ventas (id, usuario_id, nombre, email, telefono, direccion_calle, direccion_ciudad, direccion_provincia, direccion_cp, total, estado)
-                 VALUES (UUID_TO_BIN(?), UUID_TO_BIN(?), ?, ?, ?, ?, ?, ?, ?, ?, 'pendiente')`,
+                `INSERT INTO ventas (id, codigo, usuario_id, nombre, email, telefono, direccion_calle, direccion_ciudad, direccion_provincia, direccion_cp, total, estado)
+                 VALUES (UUID_TO_BIN(?), ?, UUID_TO_BIN(?), ?, ?, ?, ?, ?, ?, ?, ?, 'pendiente')`,
                 [uuid, usuario_id ?? null, nombre, email, telefono ?? null, direccion_calle ?? null, direccion_ciudad ?? null, direccion_provincia ?? null, direccion_cp ?? null, total]
             )
 
@@ -157,5 +176,14 @@ export class VentaModel {
         }
 
         return this.getById({ id })
+    }
+
+    static async getByCodigo({ codigo }) {
+        const [ventas] = await pool.query(
+            `${SELECT_FIELDS} WHERE v.codigo = ?`,
+            [codigo]
+        )
+        if (!ventas[0]) return null
+        return attachDetalle(ventas[0])
     }
 }

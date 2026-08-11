@@ -95,6 +95,7 @@ INSERT INTO usuarios (id, nombre, email, password, telefono, rol) VALUES
 -- Ventas (cabecera)
 CREATE TABLE ventas (
   id BINARY(16) NOT NULL,
+  codigo VARCHAR(12) NOT NULL,
   usuario_id BINARY(16) DEFAULT NULL,
   nombre VARCHAR(100) NOT NULL,
   email VARCHAR(100) NOT NULL,
@@ -107,6 +108,7 @@ CREATE TABLE ventas (
   estado ENUM('pendiente','pagado','enviado','entregado','cancelado') NOT NULL DEFAULT 'pendiente',
   fecha DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
+  UNIQUE KEY uq_venta_codigo (codigo),
   KEY idx_venta_usuario (usuario_id),
   CONSTRAINT fk_venta_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;

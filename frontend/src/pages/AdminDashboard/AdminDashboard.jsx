@@ -7,6 +7,7 @@ const sections = [
     { label: "Productos",  value: "productos",  icon: "package_2",  to: "/admin/productos" },
     { label: "Categorías", value: "categorias", icon: "stacks",     to: "/admin/categorias" },
     { label: "Marcas",     value: "marcas",     icon: "sell",       to: "/admin/marcas" },
+    { label: "Ventas",     value: "ventas",     icon: "attach_money", to: "/admin/ventas"}
 ]
 
 export function AdminDashboard(){
