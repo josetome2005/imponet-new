@@ -1,6 +1,6 @@
 import "./DataTable.css"
 
-export function DataTable({data, columns, messageNoSearch, handleClick, rowClassName}) {
+export function DataTable({ data, columns, messageNoSearch, messageNoResults, handleClick, rowClassName, isFiltering}) {
 
     const numberOfColumns = columns?.length;
 
@@ -43,7 +43,13 @@ export function DataTable({data, columns, messageNoSearch, handleClick, rowClass
 
                         ))
                     
-                        : <span className="no__elems__text">{messageNoSearch}</span>
+                        : (
+                            <span className="no__elems__text">
+                                {isFiltering
+                                    ? (messageNoResults ?? "No se encontraron resultados con ese filtro o búsqueda.")
+                                    : messageNoSearch}
+                            </span>
+                        )
                 }
 
                

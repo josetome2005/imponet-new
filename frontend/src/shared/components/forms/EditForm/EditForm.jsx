@@ -18,7 +18,9 @@ export function EditForm({ title, editingElem, onSubmit, onExit, mode, width = 3
                     onClick={onExit}
                 >
                     close
-                </span>                <h3>{title}</h3>
+                </span>                
+                
+                <h3>{title}</h3>
 
                 <DynamicForm
                     initialData={editingElem}

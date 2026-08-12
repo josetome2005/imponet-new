@@ -35,26 +35,44 @@ export function useTableFilters(data, searchFields, filters, initialFilter, tabs
     }, [filters])
 
     const [activeFilters, setActiveFilters] = useState(() => {
-
         const initial = {};
         filterGroups.forEach(group => {
             initial[group.field] = initialFilter ?? group.options[0]?.filter
         })
         return initial;
-
     })
 
-    const setActiveFilter = (fieldOrValue, value) => {
+    // Guardamos cuáles son los valores "por defecto" de cada grupo de filtros para luego poder saber si hubo cambio
+    const defaultActiveFilters = useMemo(() => {
+        const initial = {};
+        filterGroups.forEach(group => {
+            initial[group.field] = initialFilter ?? group.options[0]?.filter
+        })
+        return initial;
+    }, [filterGroups, initialFilter])
 
+    // true si hay búsqueda de texto, algún filtro distinto al default, O un tab distinto al inicial
+    const isFiltering = useMemo(() => {
+        if (normalizedSearch) return true;
+
+        const filterChanged = filterGroups.some(
+            group => activeFilters[group.field] !== defaultActiveFilters[group.field]
+        );
+        if (filterChanged) return true;
+
+        const tabChanged = tabs?.length > 0 && activeTab !== tabs[0]?.key;
+        if (tabChanged) return true;
+
+        return false;
+    }, [normalizedSearch, filterGroups, activeFilters, defaultActiveFilters, tabs, activeTab])
+
+    const setActiveFilter = (fieldOrValue, value) => {
         if(value === undefined){
             if(filterGroups.length !== 1) return
             setActiveFilters(prev => ({...prev, [filterGroups[0].field]: fieldOrValue}))
             return
         }
-
         setActiveFilters(prev => ({...prev, [fieldOrValue]: value}))
-
-
     }
 
 
@@ -132,7 +150,8 @@ export function useTableFilters(data, searchFields, filters, initialFilter, tabs
         activeFilters,
         setActiveFilter,
         filteredData,
-        filterGroups
+        filterGroups,
+        isFiltering
     }
 
 }

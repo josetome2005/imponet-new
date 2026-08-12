@@ -1,0 +1,140 @@
+/*----------------------------------------------------*/
+
+.detalle__venta__layout {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.detalle__modal {
+    width: 65%;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 24px;
+    position: relative;
+    z-index: 1000;
+    max-height: 80vh;
+    overflow-y: scroll;
+}
+
+.detalle__modal .icon__close {
+    font-size: 24px;
+    width: 24px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////*/
+
+.detalle__modal .venta__titulo__container{
+    margin-bottom: 1.25rem;
+}
+
+.detalle__modal .venta__titulo{
+    font-size: 1.5rem;
+    color: var(--main-blue);
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.detalle__modal .venta__titulo__container .venta__fecha{
+    margin-bottom: 4px;
+    color: #333333;
+    font-size: 0.925rem;
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////*/
+
+.info__section{
+    margin-bottom: 0.875rem;
+}
+
+.info__section h3{
+    font-size: 1.125rem;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #cccccc;
+    margin-bottom: 0.5rem;
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////*/
+
+.detalle__modal .items__container{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.detalle__modal .venta__item{
+    width: 30%;
+    margin-bottom: 1rem;
+}
+
+.detalle__modal .venta__item label {
+    display: block;
+    font-size: 0.875rem;
+    color: #333333;
+    margin-bottom: 4px;
+}
+
+.detalle__modal .venta__item .venta__item__value {
+    display: block;
+    font-size: 1rem;
+    color: #111111;
+    font-weight: 500;
+    border-radius: 5px;
+    padding: 0 4px;
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////*/
+
+.venta__productos__tabla {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+}
+
+.venta__productos__tabla th {
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 8px 12px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.venta__productos__tabla td {
+    padding: 10px 12px;
+    font-size: 14px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.venta__productos__tabla th:not(:first-child),
+.venta__productos__tabla td:not(:first-child) {
+    text-align: right;
+}
+
+.venta__productos__tabla tfoot td {
+    font-weight: 700;
+    border-bottom: none;
+    padding-top: 14px;
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////*/
+
+.buttons__container{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2.5rem;
+    gap: 1rem;
+}

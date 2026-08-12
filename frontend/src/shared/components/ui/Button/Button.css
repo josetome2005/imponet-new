@@ -39,14 +39,14 @@
 }
 
 .button--red {
-    background-color: #e80000;
+    background-color: #aa0000;
     color: #ffffff;
 }
 
 .button--red:hover {
-    border: 2px solid #e80000;
+    border: 2px solid #aa0000;
     background-color: #ffffff00;
-    color: #e80000;
+    color: #aa0000;
 }
 
 .button--grey {

@@ -205,3 +205,36 @@ export function isYesterday(dateString) {
         date.getDate() === yesterday.getDate()
     )
 }
+
+/*//////////////////////////////////////////////////////////////////////////////////*/
+
+export function formatFecha(fechaISO) {
+    if (!fechaISO) return ""
+
+    const date = new Date(fechaISO)
+
+    const fecha_completa = new Intl.DateTimeFormat("es-AR", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+    }).format(date)
+
+    const fecha = new Intl.DateTimeFormat("es-AR", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+    }).format(date)
+
+    const hora = new Intl.DateTimeFormat("es-AR", {
+        hour: "2-digit",
+        minute: "2-digit"
+    }).format(date)
+
+    return {
+        fecha_completa, 
+        fecha, 
+        hora
+    }
+}

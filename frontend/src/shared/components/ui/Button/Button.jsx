@@ -1,7 +1,7 @@
 import "./Button.css"
 
 export function Button({
-    mode = "default", 
+    mode = "default",   // red-pink-default-
     text, 
     icon, 
     iconPosition="left", 

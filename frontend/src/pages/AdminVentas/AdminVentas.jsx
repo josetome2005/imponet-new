@@ -5,21 +5,12 @@ import { cancelarVenta, crearVenta, getVentas, updateEstadoVenta } from "../../s
 import { useEffect, useState } from "react"
 import { useAdminCRUD } from "../../shared/hooks/useAdminCRUD"
 import { EditForm } from "../../shared/components/forms/EditForm/EditForm"
-import { NewElemForm } from "../../shared/components/forms/NewElemForm/NewElemForm"
 import { ConfirmModal } from "../../shared/components/modals/ConfirmModal/ConfirmModal"
-import { ventas_columns, searchFields } from "./data/ventas.config"
+import { ventas_columns, searchFields, inputs, tabs } from "./data/ventas.config"
+import { DetalleVentaModal } from "./components/DetalleVentaModal/DetalleVentaModal"
 
-const opciones_estado = [
-    { id: "pendiente", label: "Pendiente", value: "pendiente" },
-    { id: "pagado", label: "Pagado", value: "pagado" },
-    { id: "enviado", label: "Enviado", value: "enviado" },
-    { id: "entregado", label: "Entregado", value: "entregado" },
 
-]
 
-const inputs = [
-    { id: "venta__estado", label: "Estado de Venta", type: "select", mappedProp: "estado", is_mandatory: true, options: opciones_estado }
-]
 
 export function AdminVentas(){
     
@@ -43,6 +34,12 @@ export function AdminVentas(){
         inputsConfig: inputs
     })
 
+    const [ventaVistaId, setVentaVistaId] = useState(null)
+
+    const ventaVista = ventaVistaId
+        ? items.find((v) => v.id === ventaVistaId)
+        : null 
+
     const handleCancelarVenta = (venta) => {
         handleCancelItem(
             venta.id,
@@ -50,7 +47,11 @@ export function AdminVentas(){
         )
     }
 
-    const columns = ventas_columns(handleRequestEdit, handleCancelarVenta)
+    const handleSeeVenta = (venta) => {
+        setVentaVistaId(venta.id)
+    }
+
+    const columns = ventas_columns(handleRequestEdit, handleCancelarVenta, handleSeeVenta)
 
     return(
 
@@ -66,7 +67,9 @@ export function AdminVentas(){
                 columns={columns}
                 searchFields={searchFields}
                 placeholderInput={"Buscar por nombre o código de venta"}
-                messageNoSearch={"No tienes ventas realizadas aún."}/>
+                messageNoSearch={"No tienes ventas realizadas aún."}
+                tabs={tabs}
+            />
 
             {
                 confirmState &&
@@ -83,6 +86,15 @@ export function AdminVentas(){
                     editingElem={editingElem}
                     onSubmit={handleSubmitEdit}
                     onExit={closeEditForm}/>
+            }
+
+            {
+                ventaVista &&
+                <DetalleVentaModal 
+                    venta={ventaVista}
+                    onClose={() => setVentaVistaId(null)}
+                    onCancel={handleCancelarVenta}
+                    onEdit={handleRequestEdit}/>
             }
 
         </div>

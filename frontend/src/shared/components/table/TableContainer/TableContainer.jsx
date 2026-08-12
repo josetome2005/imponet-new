@@ -30,8 +30,8 @@ export function TableContainer(
     activeFilters,
     setActiveFilter,
     filteredData,
-    filterGroups
-    
+    filterGroups,
+    isFiltering
   } = useTableFilters(data, searchFields, filters, initialFilter, tabs, activeTab);
 
   return (
@@ -61,6 +61,7 @@ export function TableContainer(
             messageNoSearch={messageNoSearch}
             handleClick={handleClick}
             rowClassName={rowClassName}
+            isFiltering={isFiltering}
       />
     </>
   );

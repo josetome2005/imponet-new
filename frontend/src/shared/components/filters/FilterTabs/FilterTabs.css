@@ -14,13 +14,13 @@
 }
 
 .filter__tab--active{
-    color: #005DAC;
-    border-bottom-color: #005DAC;
+    color: var(--main-blue);
+    border-bottom-color: var(--main-blue);
 }
 
 .filter__tab:hover{
     transition: 0.3s all;
-    background-color: #005DAC;
+    background-color: var(--main-blue);
     color: #fff;
 }
 
