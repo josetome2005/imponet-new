@@ -100,4 +100,19 @@ export class ProductoController {
         if (deleted) return res.status(204).end()
         res.status(404).json({ message: "Producto not found" })
     }
+
+    search = async (req, res) => {
+        const { q, marca, categoria, precioMin, precioMax, orden, limit } = req.query
+
+        const productos = await this.productoModel.search({
+            query: q?.trim() || undefined,
+            marcaSlugs: marca ? marca.split(",") : undefined,
+            categoriaSlugs: categoria ? categoria.split(",") : undefined,
+            precioMin,
+            precioMax,
+            orden,
+            limit
+        })
+        res.json(productos)
+    }
 }

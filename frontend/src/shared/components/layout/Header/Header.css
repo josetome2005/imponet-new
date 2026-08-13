@@ -38,30 +38,6 @@
     cursor: pointer;
 }
 
-/*-----------------------------------------------*/
-
-.searchbar__container{
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 4px;
-    border-bottom: 1px solid var(--grey-blue);
-}
-
-.searchbar__container input{
-    width: 525px;
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-    outline: none;
-    border: none;
-}
-
-.searchbar__container span{
-    font-size: 1.5rem;
-    width: 1rem;
-    color: var(--main-blue);
-    margin-right: 1rem;
-}
 
 /*-----------------------------------------------*/
 

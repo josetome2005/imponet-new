@@ -20,17 +20,18 @@ export function ProductoItem({producto}){
     const navigate = useNavigate()
 
     const main_img = producto.imagenes[0]
+    
 
     return(
 
-        <div className="producto__item" onClick={() => navigate(`/productos/${producto.id}`)}>
+        <div className="producto__item" onClick={() => navigate(`/producto/${producto.id}`)}>
 
             <div className="img__container">
-                <img src={`${API_URL}${main_img.url}`} alt={producto.name}/>
+                <img src={`${API_URL}${main_img.url}`} alt={producto.nombre}/>
             </div>  
 
             <span className="producto__categoria">{producto.categoria}</span>
-            <span className="producto__name">{producto.name}</span>
+            <span className="producto__name">{producto.nombre}</span>
 
             {
                 producto.descuento && producto.descuento > 0

@@ -48,7 +48,7 @@ export function CarritoItem({
                 <span className="producto__nombre">{item.nombre}</span>
                 <div className="flex--8 y-center">
                     <span className="producto__precio">{precio_mostrado}</span>
-                    {precio_original && <span className="producto__ex__precio">{precio_original}</span> }
+                    {precio_original > 0 && <span className="producto__ex__precio">{precio_original}</span> }
                 </div>
                 <div className="manage__amount">
                     <span className="material-symbols-outlined" onClick={() => onDecrementAmount(item.id)}>
@@ -59,7 +59,7 @@ export function CarritoItem({
                         onChange={(e) => onChangeAmount(item.id, e)} 
                         value={item.cantidad} 
                     />
-                    <span className="material-symbols-outlined" onClick={() => onDecrementAmount(item.id)}>
+                    <span className="material-symbols-outlined" onClick={() => onIncrementAmount(item.id)}>
                         add
                     </span>
                 </div>

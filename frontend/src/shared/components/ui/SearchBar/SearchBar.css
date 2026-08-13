@@ -1,0 +1,128 @@
+.searchbar__container {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+}
+
+.searchbar__container form {
+    display: flex;
+    align-items: center;
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 24px;
+    padding: 4px 4px 4px 16px;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.searchbar__container form:focus-within {
+    border-color: #999;
+    background-color: #fff;
+}
+
+.searchbar__container input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 14px;
+    padding: 8px 0;
+    color: #222;
+}
+
+.searchbar__container input::placeholder {
+    color: #999;
+}
+
+.searchbar__container button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background-color: transparent;
+    color: #666;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.searchbar__container button:hover {
+    background-color: #ececec;
+}
+
+.searchbar__container button .material-symbols-outlined {
+    font-size: 20px;
+}
+
+/* Dropdown */
+
+.search__dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    z-index: 1000;
+    max-height: 380px;
+    overflow-y: auto;
+}
+
+.search__loading,
+.search__empty {
+    display: block;
+    padding: 16px;
+    font-size: 13px;
+    color: #888;
+    text-align: center;
+}
+
+.search__result__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.search__result__item:hover {
+    background-color: #f5f5f5;
+}
+
+.search__result__item span:first-child {
+    font-size: 14px;
+    color: #222;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.search__result__precio {
+    font-size: 13px;
+    font-weight: 600;
+    color: #444;
+    flex-shrink: 0;
+}
+
+.searchbar__container .search__ver__todos {
+    width: 100%;
+    padding: 12px 16px;
+    border: none;
+    border-top: 1px solid #eee;
+    background-color: #fafafa;
+    color: #333;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.searchbar__container .search__ver__todos:hover {
+    background-color: #f0f0f0;
+}

@@ -23,7 +23,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomeDashboard />} />
           <Route path="/productos" element={<Productos />} />
-          <Route path="/productos/:producto_id" element={<ProductoView />} />
+          <Route path="/producto/:producto_id" element={<ProductoView />} />
           <Route path='/cart' element={<Carrito />}></Route>
 
           <Route element={<ProtectedRoute />}>

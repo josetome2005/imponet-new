@@ -21,11 +21,11 @@ SET @marca_adidas = UUID_TO_BIN(UUID());
 SET @marca_puma = UUID_TO_BIN(UUID());
 SET @marca_generic = UUID_TO_BIN(UUID());
 
-INSERT INTO marcas (id, nombre) VALUES
-(@marca_nike,    'Nike'),
-(@marca_adidas,  'Adidas'),
-(@marca_puma,    'Puma'),
-(@marca_generic, 'Sin marca');
+INSERT INTO marcas (id, nombre, slug) VALUES
+(@marca_nike,    'Nike', "nike"),
+(@marca_adidas,  'Adidas', "adidas"),
+(@marca_puma,    'Puma', "puma"),
+(@marca_generic, 'Sin marca', "sin_marca");
 
 -- =========================
 -- CATEGORIAS
@@ -36,12 +36,12 @@ SET @cat_pantalones = UUID_TO_BIN(UUID());
 SET @cat_accesorios = UUID_TO_BIN(UUID());
 SET @cat_running    = UUID_TO_BIN(UUID());
 
-INSERT INTO categorias (id, nombre) VALUES
-(@cat_zapatillas, 'Zapatillas'),
-(@cat_remeras,    'Remeras'),
-(@cat_pantalones, 'Pantalones'),
-(@cat_accesorios, 'Accesorios'),
-(@cat_running,    'Running');
+INSERT INTO categorias (id, nombre, slug) VALUES
+(@cat_zapatillas, 'Zapatillas', "zapatillas"),
+(@cat_remeras,    'Remeras', "remeras"),
+(@cat_pantalones, 'Pantalones', "pantalones"),
+(@cat_accesorios, 'Accesorios', "accesorios"),
+(@cat_running,    'Running', "running");
 
 -- =========================
 -- PRODUCTOS

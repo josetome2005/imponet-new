@@ -42,13 +42,13 @@ export function Carrito(){
     const handleDecrement = (id) => {
         const producto = carrito.find(i => i.id === id);
         if(!producto) return;
-        updateCantidad(id, Math.minproducto.cantidad - 1)
+        updateCantidad(id, Math.max(producto.cantidad - 1))
     }
 
     const handleIncrement = (id) => {
         const producto = carrito.find(i => i.id === id);
         if(!producto) return;
-        updateCantidad(id, producto.cantidad + 1)
+        updateCantidad(id, Math.min(producto.cantidad + 1, producto.stock))
     }
 
     return(

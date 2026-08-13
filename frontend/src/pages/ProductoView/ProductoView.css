@@ -98,13 +98,13 @@
     font-size: 1.125rem;
     color: #666666;
     text-decoration: line-through;
-    margin-bottom: 3rem;
 }
 
 .producto_stock{
     font-size: 1rem;
     color: #666666;
     margin-bottom: 0.5rem;
+    margin-top: 3rem;;
 }
 
 /*-------------------------------------------------------------*/
@@ -129,7 +129,7 @@
   -moz-appearance: textfield;
 }
 
-.producto__view .manage__amount{
+.producto_view .manage__amount{
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -139,7 +139,7 @@
     background-color: #f0f0f066;
 }
 
-.producto__view .manage__amount span{
+.producto_view .manage__amount span{
     font-size: 1.5rem;
     width: 1.5rem;
     color: #111111;
@@ -147,7 +147,7 @@
     user-select: none;
 }
 
-.producto__view .manage__amount input{
+.producto_view .manage__amount input{
     border: none;
     outline: none;
     width: 50px;

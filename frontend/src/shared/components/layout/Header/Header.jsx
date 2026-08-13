@@ -2,6 +2,7 @@ import { useMemo, useState } from "react"
 import "./Header.css"
 import { useNavigate } from "react-router-dom"
 import { useCarrito } from "../../../contexts/CarritoContext"
+import { SearchBar } from "../../ui/SearchBar/SearchBar"
 
 
 export function Header(){
@@ -51,12 +52,7 @@ export function Header(){
             <header className="header">
                 <img src="/img/resources/logo.png" alt="Logo Imponet" className="header__logo" onClick={() => navigate("/")}/>
 
-                <div className="searchbar__container">
-                    <input type="text" placeholder="Buscar por modelo, ej: Notebook Lenovo 15'" />
-                    <span className="material-symbols-outlined">
-                        search
-                    </span>
-                </div>
+                <SearchBar/>
 
 
                 <div className="cart__container" onClick={() => navigate("/cart")}>

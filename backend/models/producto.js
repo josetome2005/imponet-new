@@ -1,12 +1,12 @@
 import { pool } from "../config/connection_db.js"
 
-const SELECT_FIELDS = `
-    SELECT BIN_TO_UUID(p.id) id, BIN_TO_UUID(p.marca_id) marca_id, m.nombre marca_nombre,
-           p.nombre, p.descripcion, p.precio, p.descuento, p.stock,
-           p.dimensiones, p.extra, p.activo, p.created_at, p.updated_at, p.sku
-    FROM productos p
-    LEFT JOIN marcas m ON m.id = p.marca_id
+const SELECT_FIELDS_COLUMNS = `
+    BIN_TO_UUID(p.id) id, BIN_TO_UUID(p.marca_id) marca_id, m.nombre marca_nombre,
+    p.nombre, p.descripcion, p.precio, p.descuento, p.stock,
+    p.dimensiones, p.extra, p.activo, p.created_at, p.updated_at, p.sku
 `
+
+const SELECT_FIELDS = `SELECT ${SELECT_FIELDS_COLUMNS} FROM productos p LEFT JOIN marcas m ON m.id = p.marca_id`
 
 const attachRelations = async (producto) => {
     const [imagenes] = await pool.query(
@@ -176,5 +176,64 @@ export class ProductoModel {
             [id]
         )
         return result.affectedRows > 0
+    }
+
+    static async search({ query, marcaSlugs, categoriaSlugs, precioMin, precioMax, orden, limit }) {
+
+        const conditions = ["p.activo = 1"]
+        const params = []
+
+        // Precio final, aplicando descuento (si lo tiene)
+        const precioFinalExpr = "ROUND(p.precio * (1 - p.descuento / 100), 2)"
+
+
+        if(query){
+            const term = `%${query}%`   
+            conditions.push(`(p.nombre LIKE ? OR p.descripcion LIKE ? OR m.nombre LIKE ? OR c.nombre LIKE ?)`)
+            params.push(term, term, term, term)
+        }
+
+        if (marcaSlugs?.length) {
+            conditions.push(`m.slug IN (${marcaSlugs.map(() => "?").join(", ")})`)
+            params.push(...marcaSlugs)
+        }
+
+        if (categoriaSlugs?.length) {
+            conditions.push(`c.slug IN (${categoriaSlugs.map(() => "?").join(", ")})`)
+            params.push(...categoriaSlugs)
+        }
+
+        if (precioMin !== undefined) {
+            conditions.push(`${precioFinalExpr} >= ?`)
+            params.push(Number(precioMin))
+        }
+
+        if (precioMax !== undefined) {
+            conditions.push(`${precioFinalExpr} <= ?`)
+            params.push(Number(precioMax))
+        }
+
+        const orderMap = {
+            "menor-precio": "p.precio ASC",
+            "mayor-precio": "p.precio DESC",
+            "nombre-asc": "p.nombre ASC",
+            "nombre-desc": "p.nombre DESC"
+        }
+        const orderClause = orderMap[orden] ?? "p.nombre ASC"
+        const limitClause = limit ? `LIMIT ${Number(limit)}` : ""
+
+        const [productos] = await pool.query(
+            `SELECT DISTINCT ${SELECT_FIELDS_COLUMNS}
+            FROM productos p
+            LEFT JOIN marcas m ON m.id = p.marca_id
+            LEFT JOIN producto_categorias pc ON pc.producto_id = p.id
+            LEFT JOIN categorias c ON c.id = pc.categoria_id
+            WHERE ${conditions.join(" AND ")}
+            ORDER BY ${orderClause}
+            ${limitClause}`,
+            params
+        )
+
+        return Promise.all(productos.map(attachRelations))
     }
 }

@@ -132,7 +132,7 @@ export function ProductoView() {
                                 <div className="precio_container">
                                     <span className="producto_precio">{precio_mostrado}</span>
                                     {   
-                                        precio_original && 
+                                        precio_original > 0 && 
                                         <span className="producto_ex_precio">{precio_original}</span>
                                     }
                                 </div>

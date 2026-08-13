@@ -6,18 +6,22 @@ USE imponet;
 CREATE TABLE categorias (
   id BINARY(16) NOT NULL,
   nombre VARCHAR(100) NOT NULL,
+  slug VARCHAR(120) NOT NULL DEFAULT '',
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
-  UNIQUE KEY uq_categoria_nombre (nombre)
+  UNIQUE KEY uq_categoria_nombre (nombre),
+  UNIQUE KEY uq_categoria_slug (slug)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
 -- Marcas
 CREATE TABLE marcas (
   id BINARY(16) NOT NULL,
   nombre VARCHAR(100) NOT NULL,
+  slug VARCHAR(120) NOT NULL DEFAULT '',
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
-  UNIQUE KEY uq_marca_nombre (nombre)
+  UNIQUE KEY uq_marca_nombre (nombre),
+  UNIQUE KEY uq_categoria_slug (slug)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
 -- Productos (ya sin listas *-separadas)

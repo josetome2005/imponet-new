@@ -1,6 +1,6 @@
 import { pool } from "../config/connection_db.js"
 
-const SELECT_FIELDS = "SELECT BIN_TO_UUID(id) id, nombre, created_at FROM categorias"
+const SELECT_FIELDS = "SELECT BIN_TO_UUID(id) id, nombre, slug, created_at FROM categorias"
 
 export class CategoriaModel {
 
@@ -54,7 +54,7 @@ export class CategoriaModel {
 
     static async getAllWithCount() {
         const [categorias] = await pool.query(`
-            SELECT BIN_TO_UUID(c.id) id, c.nombre, c.created_at,
+            SELECT BIN_TO_UUID(c.id) id, c.nombre, c.slug, c.created_at,
                    COUNT(pc.producto_id) cantidad_productos
             FROM categorias c
             LEFT JOIN producto_categorias pc ON pc.categoria_id = c.id
