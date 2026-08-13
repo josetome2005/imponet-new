@@ -89,6 +89,7 @@ export function CarritoProvider({ children }) {
 
     return (
         <CarritoContext.Provider value={{
+            itemsRaw,
             carrito,
             total,
             cantidadTotal,

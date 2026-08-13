@@ -1,5 +1,6 @@
 .carrito{
     padding: 40px var(--lateral-padding);
+    background-color: #F5F5F5;
 }
 
 .carrito__header{
@@ -59,13 +60,13 @@
     width: calc(35% - 24px);
     padding: 1.125rem;
     border-radius: 12px;
-    border: 1px solid #eeeeee;
-    background-color: var(--main-blue);
+    border: 1px solid #dddddd;
+    background-color: #f6f6f6;
 }
 
 .carrito__resumen h3{
     font-size: 1.125rem;
-    color: #ffffff;
+    color: #222222;
     margin-bottom: 0.75rem;
 }
 
@@ -77,12 +78,12 @@
 }
 
 .carrito__resumen .resumen__row .left{
-    color: #999999;
+    color: #666666;
     font-size: 0.875rem;
 }
 
 .carrito__resumen .resumen__row .right{
-    color: #cccccc;
+    color: #333333;
     font-size: 0.925rem;
     font-weight: 600;
 }
@@ -98,7 +99,7 @@
 }
 
 .carrito__resumen .resumen__row .precio__final{
-    font-size: 1.25rem;
+    font-size: 1.375rem;
     color: var(--main-pink);
     font-weight: 800;
 }
@@ -114,7 +115,8 @@
 .carrito__no__productos{
     width: 100%;
     border-radius: 12px;
-    background-color: var(--main-blue);
+    background-color: #FFFFFF;
+    border: 1px solid #cccccc;
     padding: 3rem 1.5rem;
 }
 
@@ -125,20 +127,20 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #ffffff0f;
-    border: 1px solid #ffffff33;
+    background-color: #eeeeee;
+    border: 1px solid #dddddd;
     margin: 0 auto 1.5rem auto;
 }
 
 .carrito__no__productos .carrito__icon span{
     font-size: 2.25rem;
     width: 2.25rem;
-    color: var(--muted-blue);
+    color: var(--grey-blue);
 }
 
 .carrito__no__productos h3{
     text-align: center;
-    color: #ffffff;
+    color: #222222;
     font-size: 1.25rem;
     margin-bottom: 0.5rem;
 }

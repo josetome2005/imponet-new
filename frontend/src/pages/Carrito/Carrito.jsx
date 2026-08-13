@@ -10,11 +10,32 @@ import { useToast } from "../../shared/components/toast/ToastContext"
 import { CarritoItem } from "./components/CarritoItem"
 import { Button } from "../../shared/components/ui/Button/Button"
 import { NewElemForm } from "../../shared/components/forms/NewElemForm/NewElemForm"
+import { crearVenta } from "../../shared/services/ventas.services.js"
+
+const inputs = [
+    {
+        title: "Datos Personales",
+        inputs: [
+            { name: "input_nombre", type: "text", label: "Nombre Completo", mappedProp: "nombre", is_mandatory: true, width: "50" },
+            { name: "input_email", type: "email", label: "Email", mappedProp: "email", is_mandatory: true, width: "50" },
+            { name: "input_telefono", type: "phone", label: "Teléfono", mappedProp: "nombre", is_mandatory: true, width: "50" },
+        ]
+    },
+    {
+        title: "Dirección",
+        inputs: [
+            { name: "input_provincia", type: "text", label: "Provincia", mappedProp: "direccion_provincia", is_mandatory: true, width: "50" },
+            { name: "input_ciudad", type: "text", label: "Ciudad", mappedProp: "direccion_ciudad", is_mandatory: true, width: "50" },
+            { name: "input_calle", type: "text", label: "Calle y Numeración", mappedProp: "direccion_calle", is_mandatory: true, width: "50" },
+            { name: "input_cp", type: "text", label: "Código Postal", mappedProp: "direccion_cp", is_mandatory: true, width: "50" },
+        ]
+    }
+]
 
 export function Carrito(){
 
     const [showForm, setShowForm] = useState(false)
-    const { carrito, cantidadTotal, updateCantidad, removeItem, total } = useCarrito()
+    const { itemsRaw, carrito, cantidadTotal, updateCantidad, removeItem, total } = useCarrito()
     const toast = useToast()
     const navigate = useNavigate()
 
@@ -49,6 +70,33 @@ export function Carrito(){
         const producto = carrito.find(i => i.id === id);
         if(!producto) return;
         updateCantidad(id, Math.min(producto.cantidad + 1, producto.stock))
+    }
+
+    console.log(itemsRaw)
+
+    
+    const handleSubmitData = async (formData) => {
+
+        const { nombre, email, telefono, direccion_provincia, direccion_ciudad, direccion_calle, direccion_cp } = formData
+
+        try{
+            const new_venta = await crearVenta({
+                nombre,
+                email,
+                telefono,
+                direccion_provincia,
+                direccion_ciudad,
+                direccion_calle,
+                direccion_cp,
+                items: itemsRaw
+            })
+            toast.success("Se ha registrado su compra correctamente")
+        }catch(e){
+            console.log(e)
+            toast.error("Ha ocurrido un error al registrar su compra.")
+        }
+
+        
     }
 
 
@@ -104,7 +152,8 @@ export function Carrito(){
                                     icon={"lock"}
                                     mode={"pink"}
                                     text={"Finalizar Compra"}
-                                    disabled={cantidadTotal === 0}/>
+                                    disabled={cantidadTotal === 0}
+                                    onClick={() => setShowForm(true)}/>
                             </div>
                         </>
                     }
@@ -121,7 +170,6 @@ export function Carrito(){
                             <p>Descubrí consolas, drones, audio premium y gadgets seleccionados con los mejores precios.</p>
                         
                             <Button 
-                                mode={"pink"}
                                 icon={"arrow_right_alt"}
                                 iconPosition={"right"}
                                 text={"Ver Catálogo"}
@@ -131,6 +179,17 @@ export function Carrito(){
 
                     
                 </div>
+
+
+                {
+                    showForm &&
+                    <NewElemForm 
+                        title={"Datos necesarios para tu compra"}
+                        handleExit={() => setShowForm(false)}
+                        handleSubmit={handleSubmitData}
+                        sections={inputs}
+                        />
+                }
             </div>
 
             <Footer />

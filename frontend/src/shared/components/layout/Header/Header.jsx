@@ -19,7 +19,7 @@ export function Header(){
             setCategorias(categoriasDestacadsa)
         }
         fetchCategorias()
-    })
+    }, [])
 
     const navigate = useNavigate()
     const { cantidadTotal } = useCarrito()

@@ -8,7 +8,6 @@ const itemSchema = z.object({
 const ventaSchema = z.object({
     nombre: z.string().min(1).max(100),
     email: z.string().email(),
-    codigo: z.string().min(1).max(12),
     telefono: z.string().max(20).optional(),
     direccion_calle: z.string().max(150).optional(),
     direccion_ciudad: z.string().max(100).optional(),

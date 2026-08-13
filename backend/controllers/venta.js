@@ -25,7 +25,7 @@ export class VentaController {
         if (!result.success) return res.status(400).json({ error: JSON.parse(result.error.message) })
 
         // si vino con token válido, lo asociamos al usuario. Si no, queda como invitado.
-        //const usuario_id = req.user?.id ?? null
+        const usuario_id = req.user?.id ?? null
 
         try {
             const newVenta = await this.ventaModel.create({ object: result.data, usuario_id })

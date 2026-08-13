@@ -1,0 +1,2 @@
+export LD_LIBRARY_PATH=/tmp/libfix:$LD_LIBRARY_PATH
+/tmp/mysql/bin/mysql --socket=/tmp/mysql-data/mysql.sock -u root

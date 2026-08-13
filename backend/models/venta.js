@@ -66,6 +66,8 @@ export class VentaModel {
                 intentos++
             } while (intentos < 5)
 
+            console.log(codigo)
+
             let total = 0
             const detalleAInsertar = []
 
@@ -101,7 +103,7 @@ export class VentaModel {
             await conn.query(
                 `INSERT INTO ventas (id, codigo, usuario_id, nombre, email, telefono, direccion_calle, direccion_ciudad, direccion_provincia, direccion_cp, total, estado)
                  VALUES (UUID_TO_BIN(?), ?, UUID_TO_BIN(?), ?, ?, ?, ?, ?, ?, ?, ?, 'pendiente')`,
-                [uuid, usuario_id ?? null, nombre, email, telefono ?? null, direccion_calle ?? null, direccion_ciudad ?? null, direccion_provincia ?? null, direccion_cp ?? null, total]
+                [uuid, codigo, usuario_id ?? null, nombre, email, telefono ?? null, direccion_calle ?? null, direccion_ciudad ?? null, direccion_provincia ?? null, direccion_cp ?? null, total]
             )
 
             for (const d of detalleAInsertar) {

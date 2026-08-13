@@ -6,8 +6,8 @@
     gap: 1rem;
     padding: 0.75rem;
     border-radius: 12px;
-    border: 1px solid #eeeeee;
-    background-color: var(--main-blue);
+    border: 1px solid #dddddd;
+    background-color: #f6f6f6;
 }
 
 .carrito .item__data{
@@ -36,14 +36,14 @@
     display: block;
     font-size: 1.125rem;
     font-weight: 600;
-    color: #ffffff;
+    color: #222222;
     margin-bottom: 0.25rem;
 }
 
 .carrito .producto__precio{
     font-size: 1rem;
     font-weight: 500;
-    color: #cccccc;
+    color: #444444;
     margin-bottom: 0.25rem;
 }
 
@@ -73,14 +73,14 @@
     gap: 0.5rem;
     padding: 0.25rem 0.5rem;
     border-radius: 8px;
-    border: 1px solid var(--grey-blue);
-    background-color: #f0f0f033;
+    border: 1px solid #cccccc;
+    background-color: #eeeeee;
 }
 
 .carrito .manage__amount span{
     font-size: 1.125rem;
     width: 1.125rem;
-    color: #cccccc;
+    color: #333333;
     cursor: pointer;
     user-select: none;
 }
@@ -91,7 +91,7 @@
     width: 35px;
     text-align: center;
     font-size: 0.875rem;
-    color: #cccccc;
+    color: #222222;
     background-color: transparent;
 }
 
@@ -103,7 +103,7 @@
     top: 0.75rem;
     font-size: 1.375rem;
     width: 1.375rem;
-    color: #cccccc;
+    color: #444444;
     transition: 0.3s all;
     cursor: pointer;
 }
@@ -118,5 +118,5 @@
     bottom: 0.75rem;
     font-size: 1.125rem;
     font-weight: 700;
-    color: #ffffff;
+    color: #222222;
 }

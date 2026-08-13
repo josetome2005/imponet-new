@@ -14,6 +14,7 @@ import { ProductoView } from './pages/ProductoView/ProductoView'
 import { Carrito } from './pages/Carrito/Carrito'
 import { CarritoProvider } from './shared/contexts/CarritoContext'
 import { AdminVentas } from './pages/AdminVentas/AdminVentas'
+import { VistaCompra } from "./pages/VistaCompra/VistaCompra"
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
           <Route path="/productos" element={<Productos />} />
           <Route path="/producto/:producto_id" element={<ProductoView />} />
           <Route path='/cart' element={<Carrito />}></Route>
+          <Route path='/order/:order_codigo' element={<VistaCompra />} />
 
           <Route element={<ProtectedRoute />}>
             <Route path="/admin" element={<AdminDashboard />}>

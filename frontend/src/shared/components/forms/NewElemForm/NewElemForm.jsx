@@ -3,7 +3,18 @@ import { DynamicForm } from "../DynamicForm/DynamicForm";
 import { useScrollLock } from "../../../hooks/useScrollLock";
 import { useEscapeKey } from "../../../hooks/useEscapeKey";
 
-export function NewElemForm({ handleSubmit, handleExit, title, inputs, sections, usesFiles, typeFile, formMode, width = 38, flex = false }) {
+export function NewElemForm({ 
+    handleSubmit, 
+    handleExit, 
+    title, 
+    inputs, 
+    sections, 
+    usesFiles, 
+    typeFile, 
+    formMode, 
+    width = 38, 
+    flex = false 
+}) {
 
     // Normalizo la entrada al mismo formato que espera DynamicForm
     const initialData = sections ? { sections } : { inputs };
