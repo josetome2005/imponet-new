@@ -1,43 +1,31 @@
-import { useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import "./Header.css"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useCarrito } from "../../../contexts/CarritoContext"
 import { SearchBar } from "../../ui/SearchBar/SearchBar"
-
+import { getCategoriasConCantidad } from "../../../services/categorias.services"
 
 export function Header(){
 
-    const [categorias, setCategorias] = useState([
-        {
-            id: crypto.randomUUID(),
-            name: "Drones",
-            label: "Drones"
-        },
-        {
-            id: crypto.randomUUID(),
-            name: "Parlantes",
-            label: "Parlantes"
-        },
-        {
-            id: crypto.randomUUID(),
-            name: "Auriculares",
-            label: "Auriculares"
-        },
-        {
-            id: crypto.randomUUID(),
-            name: "Notebooks",
-            label: "Notebooks"
-        },
-        {
-            id: crypto.randomUUID(),
-            name: "Relojes",
-            label: "Relojes"
-        },
-    ])
+    const [categorias, setCategorias] = useState()
+
+    useEffect(() => {
+        async function fetchCategorias(){
+            const data = await getCategoriasConCantidad()
+            const categoriasDestacadsa = data
+                .slice()
+                .sort((a, b) => b.cantidad_productos - a.cantidad_productos)
+                .slice(0, 5)
+            setCategorias(categoriasDestacadsa)
+        }
+        fetchCategorias()
+    })
 
     const navigate = useNavigate()
     const { cantidadTotal } = useCarrito()
     
+    const telefono = 3513747022;
+
     return(
 
         <>
@@ -46,7 +34,7 @@ export function Header(){
                 <span className="material-symbols-outlined icon">
                     chat_bubble
                 </span>
-                <a href="">Contacto</a>
+                <a href={`https://wa.me/${telefono}`} target="_blank">Contacto</a>
             </div>
 
             <header className="header">
@@ -65,14 +53,23 @@ export function Header(){
             </header>
 
             <div className="bottom__header">
-                <span className="link__products">Productos</span>
+                
+                    <span className="link__products">
+                        <Link to={`/productos`}>
+                            Explorar Productos
+                        </Link>
+                    </span>
+                
 
                 <div className="flex--32 y-center ">
                     {
                         categorias?.map(c => (
-                            <span key={c.id}>
-                                {c.label}
-                            </span>
+                            <Link to={`/productos?categoria=${c.slug}`}>
+                                <span key={c.id}>
+                                    {c.nombre}
+                                </span>
+                            </Link>
+                            
                         ))
                     }
                 </div>

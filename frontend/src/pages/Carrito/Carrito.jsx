@@ -51,6 +51,7 @@ export function Carrito(){
         updateCantidad(id, Math.min(producto.cantidad + 1, producto.stock))
     }
 
+
     return(
         <>
             <Header />

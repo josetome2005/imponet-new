@@ -32,6 +32,17 @@ export function useCarrito(){
         try{
             const data = await getProductosPorIds(items.map((i) => i.producto_id))
             setProductos(data);
+
+            // Si algún id pedido no vino en la respuesta, el producto ya no existe/está inactivo
+            const idsEncontrados = new Set(data.map((p) => p.id));
+            const hayFantasmas = idsValidos.some((id) => !idsEncontrados.has(id));
+            if (hayFantasmas) {
+                setItemsRaw((prev) => {
+                    const limpio = prev.filter((i) => idsEncontrados.has(i.producto_id));
+                    writeCarritoStorage(limpio);
+                    return limpio;
+                });
+            }
         }finally{
             setLoading(false)
         }
@@ -86,7 +97,9 @@ export function useCarrito(){
         return acc + precioFinal * item.cantidad
     }, 0) 
 
-    const cantidadTotal = itemsRaw.reduce((acc, item) => acc + item.cantidad, 0);
+    const cantidadTotal = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+
+
 
     return { 
         carrito, 
