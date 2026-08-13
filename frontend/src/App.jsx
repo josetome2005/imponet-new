@@ -26,7 +26,7 @@ function App() {
           <Route path="/productos" element={<Productos />} />
           <Route path="/producto/:producto_id" element={<ProductoView />} />
           <Route path='/cart' element={<Carrito />}></Route>
-          <Route path='/order/:order_codigo' element={<VistaCompra />} />
+          <Route path='/order/:order_codigo?' element={<VistaCompra />} />
 
           <Route element={<ProtectedRoute />}>
             <Route path="/admin" element={<AdminDashboard />}>

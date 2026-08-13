@@ -1,7 +1,7 @@
 .vista__compra{
     width: 100%;
     min-height: 50vh;
-    padding: 50px calc(var(--lateral-padding) * 2.5);
+    padding: 50px calc(var(--lateral-padding) * 1.5);
     background-color: #f4f1fa;
 }
 
@@ -16,6 +16,10 @@
     font-size: 1.25rem;
     color: #222222;
     margin-bottom: 1rem;
+}
+
+.vista__compra .right_row .vista__compra__card h3{
+    font-size: 1.125rem;
 }
 
 /*//////////////////////////////////////////////////////////////////////////////////*/
@@ -178,4 +182,64 @@
 }
 
 /*////////////////////////////////////////////////////////////////////////////////////*/
+
+.vista__compra__card.resumen .resumen__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+.vista__compra__card.resumen .resumen__row .left {
+    color: #666666;
+    font-size: 0.875rem;
+}
+
+.vista__compra__card.resumen .resumen__row .right {
+    color: #333333;
+    font-size: 0.925rem;
+    font-weight: 600;
+}
+
+.vista__compra__card.resumen .resumen__row .envio_gratis {
+    color: rgb(0, 212, 146);
+}
+
+.vista__compra__card.resumen .resumen__row.precio__final__container {
+    padding-top: 10px;
+    margin-top: 10px;
+    border-top: 1px solid var(--grey-blue);
+}
+
+.vista__compra__card.resumen .resumen__row .precio__final {
+    font-size: 1.125rem;
+    color: #111111;
+    font-weight: 700;
+}
+
+/*////////////////////////////////////////////////////////////////////////////////////*/
+
+.vista__compra__card.datos{
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem
+}
+
+.vista__compra__card.datos .dato__item{
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.vista__compra__card.datos .dato__item span{
+    font-size: 1.25rem;
+    width: 1.125rem;
+    color: var(--main-blue);
+    padding-top: 2px;
+}
+
+
+/*////////////////////////////////////////////////////////////////////////////////////////*/
 

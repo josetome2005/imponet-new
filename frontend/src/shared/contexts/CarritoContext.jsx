@@ -35,6 +35,18 @@ export function CarritoProvider({ children }) {
         try {
             const data = await getProductosPorIds(idsValidos);
             setProductos(data);
+
+            // Si algún id pedido no vino en la respuesta, el producto ya no existe/está inactivo
+            const idsEncontrados = new Set(data.map((p) => p.id));
+            const hayFantasmas = idsValidos.some((id) => !idsEncontrados.has(id));
+
+            if (hayFantasmas) {
+                setItemsRaw((prev) => {
+                    const limpio = prev.filter((i) => idsEncontrados.has(i.producto_id));
+                    writeCarritoStorage(limpio);
+                    return limpio;
+                });
+            }
         } finally {
             setLoading(false);
         }
@@ -72,6 +84,11 @@ export function CarritoProvider({ children }) {
         });
     };
 
+    const clearCarrito = () => {
+        setItemsRaw([]);
+        writeCarritoStorage([]);
+    };
+
     const carrito = itemsRaw
         .map((item) => {
             const producto = productos.find((p) => p.id === item.producto_id);
@@ -85,7 +102,7 @@ export function CarritoProvider({ children }) {
         return acc + precioFinal * item.cantidad;
     }, 0);
 
-    const cantidadTotal = itemsRaw.reduce((acc, item) => acc + item.cantidad, 0);
+    const cantidadTotal = carrito.reduce((acc, item) => acc + item.cantidad, 0);
 
     return (
         <CarritoContext.Provider value={{
@@ -96,7 +113,8 @@ export function CarritoProvider({ children }) {
             loading,
             addItem,
             removeItem,
-            updateCantidad
+            updateCantidad,
+            clearCarrito
         }}>
             {children}
         </CarritoContext.Provider>

@@ -93,6 +93,7 @@ export function ProductoView() {
 
     const handleAgregarAlCarrito = () => {
         carrito.addItem(producto.id, amount)
+        toast.success("Se ha agregado al carrito exitosamente.")
     }
 
     return(

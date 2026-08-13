@@ -156,3 +156,31 @@
 .carrito__no__productos .button{
     margin: 0 auto;
 }
+
+/*//////////////////////////////////////////////////////////////////////////////////////*/
+
+.bottom__carrito{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bottom__carrito div{
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: #666666;
+    cursor: pointer;
+}
+
+.bottom__carrito div span{
+    font-size: 1.125rem;
+}
+
+.bottom__carrito .vaciar__carrito{
+    font-size: 0.875rem;
+}
+
+.bottom__carrito .vaciar__carrito:hover{
+    color: #a80000;
+}

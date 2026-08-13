@@ -1,0 +1,71 @@
+.empty__state {
+    width: 100%;
+    border-radius: 12px;
+    background-color: #FFFFFF;
+    border: 1px solid #cccccc;
+    padding: 3rem 1.5rem;
+}
+
+.empty__state .empty__state__icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #eeeeee;
+    border: 1px solid #dddddd;
+    margin: 0 auto 1.5rem auto;
+}
+
+.empty__state .empty__state__icon span {
+    font-size: 2.25rem;
+    width: 2.25rem;
+    color: #444444;
+}
+
+.empty__state h3 {
+    text-align: center;
+    color: #222222;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.empty__state p {
+    margin: 0 auto;
+    max-width: 400px;
+    text-align: center;
+    color: var(--grey-blue);
+    margin-bottom: 2rem;
+}
+
+.empty__state .input__container {
+    width: 60%;
+    margin: 10px auto;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.empty__state .input__container input {
+    border: 1px solid #cccccc;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    padding: 0.4rem 1.1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s all;
+    min-width: 125px;
+}
+
+.empty__state .input__container input:focus {
+    border: 1px solid var(--main-blue);
+}
+
+.no__order__found .button {
+    margin: 0 auto;
+}

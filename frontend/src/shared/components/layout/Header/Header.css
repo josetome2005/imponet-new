@@ -38,6 +38,18 @@
     cursor: pointer;
 }
 
+/*--------------------------------------------------*/
+
+.seguir__compra{
+    font-size: 0.875rem;
+    color: #444444;
+    border-bottom: 1px solid transparent;
+    transition: 0.3s all;
+}
+
+.seguir__compra:hover{
+    border-bottom: 1px solid #cccccc;    
+}
 
 /*-----------------------------------------------*/
 

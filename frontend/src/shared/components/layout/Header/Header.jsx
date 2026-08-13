@@ -42,13 +42,19 @@ export function Header(){
 
                 <SearchBar/>
 
-
-                <div className="cart__container" onClick={() => navigate("/cart")}>
-                    <span className="material-symbols-outlined icon">
-                        shopping_cart
+                <div className="flex--24">
+                    <span className="seguir__compra">
+                        <Link to={"/order"}>Seguí tu compra</Link>
                     </span>
-                    <span className="cart__amount">{cantidadTotal}</span>
+
+                    <div className="cart__container" onClick={() => navigate("/cart")}>
+                        <span className="material-symbols-outlined icon">
+                            shopping_cart
+                        </span>
+                        <span className="cart__amount">{cantidadTotal}</span>
+                    </div>
                 </div>
+                
 
             </header>
 

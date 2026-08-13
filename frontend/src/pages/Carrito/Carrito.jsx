@@ -18,7 +18,7 @@ const inputs = [
         inputs: [
             { name: "input_nombre", type: "text", label: "Nombre Completo", mappedProp: "nombre", is_mandatory: true, width: "50" },
             { name: "input_email", type: "email", label: "Email", mappedProp: "email", is_mandatory: true, width: "50" },
-            { name: "input_telefono", type: "phone", label: "Teléfono", mappedProp: "nombre", is_mandatory: true, width: "50" },
+            { name: "input_telefono", type: "phone", label: "Teléfono", mappedProp: "telefono", is_mandatory: true, width: "50" },
         ]
     },
     {
@@ -35,7 +35,7 @@ const inputs = [
 export function Carrito(){
 
     const [showForm, setShowForm] = useState(false)
-    const { itemsRaw, carrito, cantidadTotal, updateCantidad, removeItem, total } = useCarrito()
+    const { carrito, cantidadTotal, updateCantidad, removeItem, total, clearCarrito } = useCarrito()
     const toast = useToast()
     const navigate = useNavigate()
 
@@ -72,12 +72,40 @@ export function Carrito(){
         updateCantidad(id, Math.min(producto.cantidad + 1, producto.stock))
     }
 
-    console.log(itemsRaw)
+    /*----------------------------------------------------------------------------------*/
 
-    
+    const WHATSAPP_NUMBER = "5493513747022"
+    const SITE_URL = "http://localhost:5173"
+
+    const buildWhatsappMessage = (venta) => {
+        const lineas = venta.detalle.map((item) =>
+            `• ${item.cantidad}x ${item.producto_nombre} — ${formatMoneda("ARS").format(item.subtotal)}`
+        ).join("\n")
+
+        const linkSeguimiento = `${SITE_URL}/order/${venta.codigo}`
+
+        return (
+            `¡Hola! Quiero confirmar mi pedido *${venta.codigo}*\n\n` +
+            `*Productos:*\n${lineas}\n\n` +
+            `*Total: ${formatMoneda("ARS").format(venta.total)}*\n\n` +
+            `*Datos de envío:*\n` +
+            `${venta.nombre}\n` +
+            `${venta.direccion_calle}, ${venta.direccion_ciudad}, ${venta.direccion_provincia} (CP ${venta.direccion_cp})\n` +
+            `Tel: ${venta.telefono}\n` +
+            `Email: ${venta.email}\n\n` +
+            `🔗 Seguimiento de mi pedido:\n${linkSeguimiento}\n\n` +
+            `Quedo atento/a para coordinar el pago y la entrega. ¡Gracias!`
+        )
+    }
+   
     const handleSubmitData = async (formData) => {
 
         const { nombre, email, telefono, direccion_provincia, direccion_ciudad, direccion_calle, direccion_cp } = formData
+
+        const items = carrito.map((p) => ({
+            producto_id: p.id,
+            cantidad: p.cantidad
+        }))
 
         try{
             const new_venta = await crearVenta({
@@ -88,12 +116,20 @@ export function Carrito(){
                 direccion_ciudad,
                 direccion_calle,
                 direccion_cp,
-                items: itemsRaw
+                items
             })
             toast.success("Se ha registrado su compra correctamente")
+
+            const mensaje = buildWhatsappMessage(new_venta)
+            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`
+            window.open(whatsappUrl, "_blank")
+
+            clearCarrito()
+            setShowForm(false)
+            navigate(`/order/${new_venta.codigo}`)
         }catch(e){
             console.log(e)
-            toast.error("Ha ocurrido un error al registrar su compra.")
+            toast.error(e.message ?? "Ha ocurrido un error al registrar su compra.")
         }
 
         
@@ -132,6 +168,15 @@ export function Carrito(){
                                                 onDelete={removeItem}/>    
                                     )
                                 }
+                                <div className="bottom__carrito">
+                                    <div>
+                                        <span className="material-symbols-outlined">arrow_back</span>
+                                        <Link to={"/productos"}>Seguir comprando</Link>
+                                    </div>
+                                    <div>
+                                        <span className="vaciar__carrito" onClick={() => clearCarrito()}>Vaciar Carrito</span>
+                                    </div>
+                                </div>
                             </div>
 
                             <div className="carrito__resumen">
