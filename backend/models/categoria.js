@@ -18,14 +18,14 @@ export class CategoriaModel {
     }
 
     static async create({ object }) {
-        const { nombre } = object
+        const { nombre, slug } = object
         const [uuidResult] = await pool.query("SELECT UUID() uuid")
         const [{ uuid }] = uuidResult
 
         try {
             await pool.query(
-                "INSERT INTO categorias (id, nombre) VALUES (UUID_TO_BIN(?), ?)",
-                [uuid, nombre]
+                "INSERT INTO categorias (id, nombre, slug) VALUES (UUID_TO_BIN(?), ?, ?)",
+                [uuid, nombre, slug]
             )
         } catch (error) {
             if (error.code === 'ER_DUP_ENTRY') throw new Error("Ya existe una categoría con ese nombre")

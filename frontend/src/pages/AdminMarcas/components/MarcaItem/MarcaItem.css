@@ -34,7 +34,7 @@
     color: #333333;
 }
 
-.marca__item .marca__tag{
+.marca__item .marca__slug{
     display: block;
     font-size: 0.875rem;
     color: var(--grey-blue);

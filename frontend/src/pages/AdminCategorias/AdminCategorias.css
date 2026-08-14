@@ -16,6 +16,11 @@
     font-size: 0.875rem;
 }
 
+.categoria__slug{
+    font-size: 0.875rem;
+    color: #666666;
+}
+
 .admin__categorias .actions__container span{
     width: 2rem;
     height: 2rem;

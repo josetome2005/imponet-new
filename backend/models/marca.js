@@ -1,6 +1,6 @@
 import { pool } from "../config/connection_db.js"
 
-const SELECT_FIELDS = "SELECT BIN_TO_UUID(id) id, nombre, slug, ccreated_at FROM marcas"
+const SELECT_FIELDS = "SELECT BIN_TO_UUID(id) id, nombre, slug, created_at FROM marcas"
 
 export class MarcaModel {
 
@@ -18,7 +18,7 @@ export class MarcaModel {
     }
 
     static async create({ object }) {
-        const { nombre } = object
+        const { nombre, slug } = object
         const [uuidResult] = await pool.query("SELECT UUID() uuid")
         const [{ uuid }] = uuidResult
 

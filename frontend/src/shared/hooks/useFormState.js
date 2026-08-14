@@ -57,6 +57,9 @@ export function shouldShowInput(item, formData) {
 
 export function useFormState(initialData, {persistOptions = false} = {}){
 
+    // Opcion que se usa con inputs con generatedFrom
+    const [manuallyEdited, setManuallyEdited] = useState({});
+
     const [formData, setFormData] = useState(() => {
         const sections = normalizeToSections(initialData);
         return {
@@ -103,9 +106,33 @@ export function useFormState(initialData, {persistOptions = false} = {}){
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        updateInputs(input =>
-            input.name === name ? { ...input, value } : input
-        );
+
+        updateInputs(input => {
+
+            if (input.name === name) {
+                return {
+                    ...input,
+                    value
+                };
+            }
+
+            if (
+                input.autoGenerateFrom === name &&
+                !manuallyEdited[input.name]
+            ) {
+                return {
+                    ...input,
+                    value: input.generationFunction(value)
+                };
+            }
+
+            return input;
+        });
+
+        setManuallyEdited(prev => ({
+            ...prev,
+            [name]: true
+        }));
     };
 
     const handleSelectOption = (option_selected, name_input) => {

@@ -6,9 +6,12 @@ import { ConfirmModal } from "../../shared/components/modals/ConfirmModal/Confir
 import { NewElemForm } from "../../shared/components/forms/NewElemForm/NewElemForm"
 import { EditForm } from "../../shared/components/forms/EditForm/EditForm"
 import { useAdminCRUD } from "../../shared/hooks/useAdminCRUD"
+import { generateSlug } from "../../shared/utils/generateSlug"
 
 const marca_inputs = [
-    { id: "marca_nombre", name: "marca_nombre", type: "text", label: "Nombre de la Marca", mappedProp: "nombre", is_mandatory: true }
+    { id: "marca_nombre", name: "marca_nombre", type: "text", label: "Nombre de la Marca", mappedProp: "nombre", is_mandatory: true },
+    { id: "marca_slug", name: "marca_slug", type: "text", label: "Slug", mappedProp: "slug", is_mandatory: true, autoGenerateFrom: "marca_nombre", generationFunction: generateSlug }
+
 ]
 
 

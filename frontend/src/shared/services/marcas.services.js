@@ -11,26 +11,26 @@ export const getMarcaById = async (id) => {
     return handleResponse(res);
 };
 
-export const createMarca = async ({ nombre }) => {
+export const createMarca = async ({ nombre, slug }) => {
     const res = await fetch(`${API_URL}/marcas`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             ...authHeaders()
         },
-        body: JSON.stringify({ nombre })
+        body: JSON.stringify({ nombre, slug })
     });
     return handleResponse(res);
 };
 
-export const updateMarca = async ({ id, nombre }) => {
+export const updateMarca = async ({ id, nombre, slug }) => {
     const res = await fetch(`${API_URL}/marcas/${id}`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
             ...authHeaders()
         },
-        body: JSON.stringify({ nombre })
+        body: JSON.stringify({ nombre, slug })
     });
     return handleResponse(res);
 };

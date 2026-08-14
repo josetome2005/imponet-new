@@ -56,7 +56,7 @@ export function useAdminCRUD({
                 removedItem,
                 ...prev.slice(index)
             ])
-            toast.error(`Ha ocurrido un error al eliminar la ${entityName}.`)
+            toast.error(e.message ?? `Ha ocurrido un error al eliminar la ${entityName}.`)
         }
     }
 
@@ -102,7 +102,7 @@ export function useAdminCRUD({
             toast.success(`Se ha editado la ${entityName} correctamente.`)
         } catch (e) {
             console.log(e)
-            toast.error(`Ha ocurrido un error al editar la ${entityName}.`)
+            toast.error(e.message ?? `Ha ocurrido un error al editar la ${entityName}.`)
         }
     }
 
@@ -112,8 +112,7 @@ export function useAdminCRUD({
             setItems(prev => [...prev, nuevoItem])
             toast.success(`Se ha creado la ${entityName} correctamente.`)
         } catch (e) {
-            console.log(e)
-            toast.error(`Ha ocurrido un error creando la ${entityName}.`)
+            toast.error(e.message ?? `Ha ocurrido un error creando la ${entityName}.`)
         }
     }
 

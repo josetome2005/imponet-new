@@ -16,8 +16,18 @@ export const categorias_columns = (onEdit, onDelete) => [
         )
     },
     {
+        key: "slug",
+        name: "SLUG",
+        render: (c) => (
+            <span className="categoria__slug">/{c.slug}</span>
+        )
+    },
+    {
         key: "cantidad_productos",
         name: "PRODUCTOS",
+        render: (c) => (
+            <span>{c.cantidad_productos ?? 0}</span>
+        )
     },
     {
         key: "actions",

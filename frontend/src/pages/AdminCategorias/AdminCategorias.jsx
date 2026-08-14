@@ -7,10 +7,12 @@ import { useAdminCRUD } from "../../shared/hooks/useAdminCRUD"
 import { ConfirmModal } from "../../shared/components/modals/ConfirmModal/ConfirmModal"
 import { EditForm } from "../../shared/components/forms/EditForm/EditForm"
 import { NewElemForm } from "../../shared/components/forms/NewElemForm/NewElemForm"
-
+import { generateSlug } from "../../shared/utils/generateSlug"
 
 const categoria_inputs = [
-    { id: "categoria_nombre", name: "categoria_nombre", type: "text", label: "Nombre de la Categoría", mappedProp: "nombre", is_mandatory: true }
+    { id: "categoria_nombre", name: "categoria_nombre", type: "text", label: "Nombre de la Categoría", mappedProp: "nombre", is_mandatory: true },
+    { id: "categoria_slug", name: "categoria_slug", type: "text", label: "Slug", mappedProp: "slug", is_mandatory: true, autoGenerateFrom: "categoria_nombre", generationFunction: generateSlug }
+
 ]
 
 

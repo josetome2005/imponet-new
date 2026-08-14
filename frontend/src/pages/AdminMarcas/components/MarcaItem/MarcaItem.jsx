@@ -6,7 +6,7 @@ function getInitial(string){
 
 export function MarcaItem({ marca, onEdit, onDelete }){
 
-    const { nombre, cantidad_productos } = marca
+    const { nombre, slug, cantidad_productos } = marca
     
     return(
         <div className="marca__item">
@@ -15,7 +15,7 @@ export function MarcaItem({ marca, onEdit, onDelete }){
                     <span className="marca__initial">{getInitial(nombre)}</span>
                     <div>
                         <span className="marca__nombre">{nombre}</span>
-                        <span className="marca__tag">Marca</span>
+                        <span className="marca__slug">/{slug}</span>
                     </div>
                 </div>
                 <div className="actions__container">

@@ -11,26 +11,26 @@ export const getCategoriaById = async (id) => {
     return handleResponse(res);
 };
 
-export const createCategoria = async ({ nombre }) => {
+export const createCategoria = async ({ nombre, slug }) => {
     const res = await fetch(`${API_URL}/categorias`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             ...authHeaders()
         },
-        body: JSON.stringify({ nombre })
+        body: JSON.stringify({ nombre, slug })
     });
     return handleResponse(res);
 };
 
-export const updateCategoria = async ({ id, nombre }) => {
+export const updateCategoria = async ({ id, nombre, slug }) => {
     const res = await fetch(`${API_URL}/categorias/${id}`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
             ...authHeaders()
         },
-        body: JSON.stringify({ nombre })
+        body: JSON.stringify({ nombre, slug })
     });
     return handleResponse(res);
 };
