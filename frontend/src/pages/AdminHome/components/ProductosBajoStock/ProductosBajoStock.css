@@ -1,0 +1,35 @@
+.productos__bajo__stock .icon{
+    color: #a80000;
+}
+
+/*---------------------------------------------------------------*/
+
+.productos__bajo__stock .productos{
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.productos__bajo__stock .producto__item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.productos__bajo__stock .producto__item .producto__nombre{
+    font-size: 1rem;
+    color: #222222;
+}
+
+.productos__bajo__stock .producto__item .producto__cantidad{
+    font-size: 0.75rem;
+    background-color: var(--muted-blue);
+    color: #333333;
+    padding: 4px 10px;
+    border-radius: 9999px;
+}
+
+.productos__bajo__stock .producto__item .producto__cantidad.agotado{
+    background-color: #ce1f1f;
+    color: #ffa2a2;
+}

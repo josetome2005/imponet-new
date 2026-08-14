@@ -1,0 +1,23 @@
+.charts__container{
+    display: flex;
+    gap: 2rem;
+}
+
+/*------------------------------------------------*/
+
+.admin__home__section{
+    width: 100%;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.admin__home__section .header__section h3{
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+}
+
+.admin__home__section .header__section .icon{
+    font-size: 1.5rem;
+    width: 1.5rem;
+}

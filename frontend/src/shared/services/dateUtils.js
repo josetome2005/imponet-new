@@ -163,8 +163,8 @@ export function isWithinLast30Days(dateString) {
     const normalized = normalizeDateToISO(dateString)
     const saleDate = new Date(normalized)
 
-    const today = normalizeDateToISO(new Date())
-    const limitDate = normalizeDateToISO(new Date())
+    const today = new Date(normalizeDateToISO(new Date()))
+    const limitDate = new Date(normalizeDateToISO(new Date()))
     limitDate.setDate(today.getDate() - 30)
 
     return saleDate >= limitDate && saleDate <= today

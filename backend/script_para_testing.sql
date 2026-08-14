@@ -68,11 +68,11 @@ VALUES
 (@prod_campera_nike, 'NIKE-CMP-001', @marca_nike,
    'Campera Nike Windrunner',
    'Campera rompeviento liviana, ideal para entrenar.',
-   98000, 0, 18, '35x25x8 cm', 'Talles: S/M/L/XL', 1, 1),
+   98000, 0, 4, '35x25x8 cm', 'Talles: S/M/L/XL', 1, 1),
 (@prod_zapatillas_puma, 'PUM-RSX-001', @marca_puma,
    'Puma RS-X',
    'Zapatillas retro running, diseño chunky.',
-   132000, 0, 12, '40x30x15 cm', 'Colores: blanco/multicolor', 1, 1),
+   132000, 0, 0, '40x30x15 cm', 'Colores: blanco/multicolor', 1, 1),
 
 -- En oferta (descuento > 0)
 (@prod_ultraboost, 'ADI-UB22-001', @marca_adidas,

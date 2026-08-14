@@ -1,2 +1,2 @@
-chmod +x instalar-node.sh
+chmod +x guest_enviroment_instalation.sh
 ./instalar-node.sh

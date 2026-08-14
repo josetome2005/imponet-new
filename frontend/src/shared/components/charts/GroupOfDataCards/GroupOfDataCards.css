@@ -1,0 +1,8 @@
+.data__cards__container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin: 30px 0;
+}

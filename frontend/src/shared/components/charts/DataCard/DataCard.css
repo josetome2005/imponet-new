@@ -1,0 +1,62 @@
+.dataCard{
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex: 1;
+    padding: 16px;
+    margin-bottom: 24px;
+    position: relative;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background-color: #fff;
+    box-shadow: 4px 4px 2px rgba(0,0,0,0.05);
+}
+
+.dataCard__icon__container{
+    width: 36px;
+    height: 36px;
+    padding: 8px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dataCard__icon__container .icon{
+    font-size: 1.5rem;
+    width: 1.5rem;
+}
+
+.dataCard__title{
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.dataCard__info{
+    display: block;
+    font-size: 20px;
+    font-weight: 700;
+    color: #111;
+}
+
+/*------------------------------------------------------------*/
+
+.dataCard--3{
+    padding: 24px;
+}
+
+.dataCard--3 .dataCard__img__container{
+    width: 48px;
+    height: 48px;
+}
+
+.dataCard--3 .dataCard__img__container img{
+    width: 30px;
+}
+
+.dataCard--3 .dataCard__info{
+    font-size: 24px;
+}
