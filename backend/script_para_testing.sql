@@ -117,15 +117,15 @@ INSERT INTO producto_categorias (producto_id, categoria_id) VALUES
 -- PRODUCTO_IMAGENES
 -- =========================
 INSERT INTO producto_imagenes (id, producto_id, url, orden) VALUES
-(UUID_TO_BIN(UUID()), @prod_air, '/img/productos/air-max-90-1.jpg', 0),
-(UUID_TO_BIN(UUID()), @prod_air, '/img/productos/air-max-90-2.jpg', 1),
-(UUID_TO_BIN(UUID()), @prod_ultraboost, '/img/productos/ultraboost-22-1.jpg', 0),
-(UUID_TO_BIN(UUID()), @prod_remera_puma, '/img/productos/remera-puma-1.jpg', 0),
-(UUID_TO_BIN(UUID()), @prod_pantalon, '/img/productos/pantalon-jogger-1.jpg', 0),
-(UUID_TO_BIN(UUID()), @prod_medias, '/img/productos/medias-pack-1.jpg', 0),
-(UUID_TO_BIN(UUID()), @prod_zapatillas_puma, '/img/productos/puma-rsx-1.jpg', 0),
-(UUID_TO_BIN(UUID()), @prod_campera_nike, '/img/productos/campera-nike-1.jpg', 0),
-(UUID_TO_BIN(UUID()), @prod_short_adidas, '/img/productos/short-adidas-1.jpg', 0);
+(UUID_TO_BIN(UUID()), @prod_air, '/uploads/productos/air-max-90-1.jpg', 0),
+(UUID_TO_BIN(UUID()), @prod_air, '/uploads/productos/air-max-90-2.jpg', 1),
+(UUID_TO_BIN(UUID()), @prod_ultraboost, '/uploads/productos/ultraboost-22-1.jpg', 0),
+(UUID_TO_BIN(UUID()), @prod_remera_puma, '/uploads/productos/remera-puma-1.jpg', 0),
+(UUID_TO_BIN(UUID()), @prod_pantalon, '/uploads/productos/pantalon-jogger-1.jpg', 0),
+(UUID_TO_BIN(UUID()), @prod_medias, '/uploads/productos/medias-pack-1.jpg', 0),
+(UUID_TO_BIN(UUID()), @prod_zapatillas_puma, '/uploads/productos/puma-rsx-1.jpg', 0),
+(UUID_TO_BIN(UUID()), @prod_campera_nike, '/uploads/productos/campera-nike-1.jpg', 0),
+(UUID_TO_BIN(UUID()), @prod_short_adidas, '/uploads/productos/short-adidas-1.jpg', 0);
 
 -- =========================
 -- VENTAS + DETALLE_VENTAS
