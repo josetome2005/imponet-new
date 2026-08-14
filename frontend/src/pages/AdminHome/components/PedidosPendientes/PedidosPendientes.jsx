@@ -4,6 +4,7 @@ import { getVentas } from "../../../../shared/services/ventas.services"
 import { formatFecha } from "../../../../shared/services/dateUtils"
 import { StatusLabel } from "../../../../shared/components/ui/StatusLabel/StatusLabel"
 import { formatMoneda } from "../../../../shared/utils/formatMoneda"
+import { Link } from "react-router-dom"
 
 export function PedidosPendientes(){
 
@@ -22,11 +23,16 @@ export function PedidosPendientes(){
 
     return(
         <div className="pedidos__pendientes admin__home__section">
-            <div className="flex--16 header__section">
-                <span className="material-symbols-outlined icon">
-                    schedule
+            <div className="header__section">
+                <div className="flex--16">
+                    <span className="material-symbols-outlined icon">
+                        schedule
+                    </span>
+                    <h3>Últimos pedidos pendientes</h3>
+                </div>
+                <span className="link__to">
+                    <Link to={"/admin/ventas"}>Ver todos</Link>
                 </span>
-                <h3>Últimos pedidos pendientes</h3>
             </div>
 
             <div className="pedidos">
@@ -35,7 +41,7 @@ export function PedidosPendientes(){
                         <div className="pedido__item">
                             <div>
                                 <span className="pedido__nombre">{v.nombre}</span>
-                                <span className="pedido__fecha">{formatFecha(v.fecha).fecha}</span>
+                                <span className="pedido__sub_data">{v.codigo} - {formatFecha(v.fecha).fecha}</span>
                             </div>
                             <div className="flex--8">
                                 <StatusLabel 

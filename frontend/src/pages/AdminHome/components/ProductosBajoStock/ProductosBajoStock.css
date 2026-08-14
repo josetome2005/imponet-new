@@ -19,6 +19,7 @@
 .productos__bajo__stock .producto__item .producto__nombre{
     font-size: 1rem;
     color: #222222;
+    margin-bottom: 0.5rem;
 }
 
 .productos__bajo__stock .producto__item .producto__cantidad{

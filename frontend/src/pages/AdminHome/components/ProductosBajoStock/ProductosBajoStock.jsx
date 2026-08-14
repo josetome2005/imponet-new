@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import "./ProductosBajoStock.css"
 import { getProductos } from "../../../../shared/services/productos.services"
+import { Link } from "react-router-dom"
 
 export function ProductosBajoStock(){
 
@@ -19,11 +20,16 @@ export function ProductosBajoStock(){
 
     return(
         <div className="productos__bajo__stock admin__home__section">
-            <div className="header__section flex--16">
-                <span className="material-symbols-outlined icon">
-                    warning
+            <div className="header__section">
+                <div className="flex--16">
+                    <span className="material-symbols-outlined icon">
+                        warning
+                    </span>
+                    <h3>Productos con poco stock</h3>
+                </div>
+                <span className="link__to">
+                    <Link to={"/admin/productos"}>Ver todos</Link>
                 </span>
-                <h3>Productos con poco stock</h3>
             </div>
 
             <div className="productos">

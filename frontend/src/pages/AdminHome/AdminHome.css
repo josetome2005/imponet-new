@@ -12,12 +12,29 @@
     border-radius: 12px;
 }
 
+.admin__home__section .header__section{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+}
+
 .admin__home__section .header__section h3{
     font-size: 1.125rem;
-    margin-bottom: 1rem;
 }
 
 .admin__home__section .header__section .icon{
     font-size: 1.5rem;
     width: 1.5rem;
 }
+
+.admin__home__section .header__section .link__to{
+    font-size: 0.875rem;
+    color: #333333;
+    transition: all 0.3s ease;
+}
+
+.admin__home__section .header__section .link__to:hover{
+    color: var(--main-blue)
+}
+

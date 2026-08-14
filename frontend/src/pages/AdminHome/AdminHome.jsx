@@ -6,10 +6,6 @@ import { buildStatCards } from "./util/buildStatCards"
 import { ProductosBajoStock } from "./components/ProductosBajoStock/ProductosBajoStock"
 import { PedidosPendientes } from "./components/PedidosPendientes/PedidosPendientes"
 
-//img, color, title, info,
-
- 
-
 export function AdminHome(){
 
         return(
