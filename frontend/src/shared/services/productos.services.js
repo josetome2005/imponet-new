@@ -99,7 +99,7 @@ export const deleteProducto = async (id) => {
     return handleResponse(res);
 };
 
-export const searchProductos = async ({ q, marca, categoria, precioMin, precioMax, orden, limit } = {}) => {
+export const searchProductos = async ({ q, marca, categoria, precioMin, precioMax, orden, page, perPage } = {}) => {
     const params = new URLSearchParams();
     if (q) params.set("q", q);
     if (marca?.length) params.set("marca", Array.isArray(marca) ? marca.join(",") : marca);
@@ -107,7 +107,8 @@ export const searchProductos = async ({ q, marca, categoria, precioMin, precioMa
     if (precioMin) params.set("precioMin", precioMin);
     if (precioMax) params.set("precioMax", precioMax);
     if (orden) params.set("orden", orden);
-    if (limit) params.set("limit", limit);
+    if (page) params.set("page", page);
+    if (perPage) params.set("perPage", perPage);
 
     const res = await fetch(`${API_URL}/productos/buscar?${params}`);
     return handleResponse(res);

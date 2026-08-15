@@ -4,11 +4,12 @@ import { useNavigate, useSearchParams } from "react-router-dom"
 import { SelectOption } from "../../shared/components/forms/inputs/SelectOption/SelectOption"
 import "./Productos.css"
 import { useEffect, useState } from "react"
-import { getProductos, searchProductos } from "../../shared/services/productos.services"
+import { searchProductos } from "../../shared/services/productos.services"
 import { ProductoItem } from "../../shared/components/items/PropertyItem/ProductoItem"
 import { getMarcasConCantidad } from "../../shared/services/marcas.services"
 import { getCategoriasConCantidad } from "../../shared/services/categorias.services"
 import { FiltersSidebar } from "./components/FilterSidebar/FilterSidebar"
+import { Pagination } from "../../shared/components/ui/Pagination/Pagination"
 
 const order_options = [
     {
@@ -39,6 +40,7 @@ export function Productos(){
     const [searchParams] = useSearchParams()
     const [activeOrderOption, setActiveOrderOption] = useState()
     const [productos, setProductos] = useState([])
+    const [pagination, setPagination] = useState(null)
     const [loading, setLoading] = useState(false)
 
     const [marcasDisponibles, setMarcasDisponibles] = useState([])
@@ -60,6 +62,7 @@ export function Productos(){
         categoria.length ? params.set("categoria", categoria.join(",")) : params.delete("categoria");
         precioMin ? params.set("precioMin", precioMin) : params.delete("precioMin");
         precioMax ? params.set("precioMax", precioMax) : params.delete("precioMax");
+        params.set("page", "1");
         navigate(`/productos?${params.toString()}`);
     };
     
@@ -74,25 +77,38 @@ export function Productos(){
         async function fetchProductos(){
             setLoading(true)
             try{
-                const data = await searchProductos({
+                const { productos: data, pagination: pag} = await searchProductos({
                     q,
                     marca,
                     categoria,
                     precioMin,
                     precioMax,
-                    orden: activeOrderOption
+                    orden: activeOrderOption,
+                    page
                 })
                 setProductos(data)
+                setPagination(pag)
             }finally{
                 setLoading(false)
             }
         }
 
         fetchProductos()
-    }, [q, marca, categoria, activeOrderOption, precioMax, precioMin])
+    }, [q, marca, categoria, activeOrderOption, precioMax, precioMin, page])
 
     const handleChangeOrder = (item) => {
-        setActiveOrderOption(item.value)
+        setActiveOrderOption(item.value);
+        const params = new URLSearchParams(searchParams)
+        params.set("page", "1")
+        navigate(`/productos?${params.toString()}`)
+        window.scrollTo({ top: 0, behavior: "smooth" })
+    }
+
+    const irAPagina = (nuevaPagina) => {
+        const params = new URLSearchParams(searchParams)
+        params.set("page", nuevaPagina)
+        navigate(`/productos?${params.toString()}`)
+        window.scrollTo({ top: 0, behavior: "smooth" })
     }
 
     /*------------------------------------------------------------------*/
@@ -160,13 +176,18 @@ export function Productos(){
                     />
 
                     <div className="searched__productos__container">
-                        {
-                            productos.map(p =>
-                                <ProductoItem
-                                    key={p.id}
-                                    producto={p} />
-                            )
-                        }
+                        <div className="catalogo__container">
+                            {
+                                productos.map(p =>
+                                    <ProductoItem
+                                        key={p.id}
+                                        producto={p} />
+                                )
+                            }
+                        </div>
+                        <Pagination 
+                            pagination={pagination}
+                            onPageChange={irAPagina}/>
                     </div>
                     
 

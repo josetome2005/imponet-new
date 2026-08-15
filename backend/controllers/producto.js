@@ -102,17 +102,18 @@ export class ProductoController {
     }
 
     search = async (req, res) => {
-        const { q, marca, categoria, precioMin, precioMax, orden, limit } = req.query
+        const { q, marca, categoria, precioMin, precioMax, orden, page, perPage } = req.query
 
-        const productos = await this.productoModel.search({
+        const resultado = await this.productoModel.search({
             query: q?.trim() || undefined,
             marcaSlugs: marca ? marca.split(",") : undefined,
             categoriaSlugs: categoria ? categoria.split(",") : undefined,
             precioMin,
             precioMax,
             orden,
-            limit
+            page: page ? Number(page) : 1,
+            perPage: perPage ? Number(perPage) : 20
         })
-        res.json(productos)
+        res.json(resultado)
     }
 }

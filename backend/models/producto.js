@@ -178,14 +178,11 @@ export class ProductoModel {
         return result.affectedRows > 0
     }
 
-    static async search({ query, marcaSlugs, categoriaSlugs, precioMin, precioMax, orden, limit }) {
+    static async search({ query, marcaSlugs, categoriaSlugs, precioMin, precioMax, orden, page = 1, perPage = 20 }) {
 
         const conditions = ["p.activo = 1"]
         const params = []
-
-        // Precio final, aplicando descuento (si lo tiene)
         const precioFinalExpr = "ROUND(p.precio * (1 - p.descuento / 100), 2)"
-
 
         if(query){
             const term = `%${query}%`   
@@ -213,6 +210,22 @@ export class ProductoModel {
             params.push(Number(precioMax))
         }
 
+        const whereClause = conditions.join(" AND ")
+
+        // Cuento total de resultado qe matchean para saber cantidad de páginas total
+        const [countResult] = await pool.query(
+            `SELECT COUNT(DISTINCT p.id) total
+              FROM productos p
+              LEFT JOIN marcas m ON m.id = p.marca_id
+              LEFT JOIN producto_categorias pc ON pc.producto_id = p.id
+              LEFT JOIN categorias c ON c.id = pc.categoria_id
+              WHERE ${whereClause}`,
+            params
+        )
+        const total = countResult[0].total
+
+
+        // Traemos solo la página pedida
         const orderMap = {
             "menor-precio": "p.precio ASC",
             "mayor-precio": "p.precio DESC",
@@ -220,7 +233,7 @@ export class ProductoModel {
             "nombre-desc": "p.nombre DESC"
         }
         const orderClause = orderMap[orden] ?? "p.nombre ASC"
-        const limitClause = limit ? `LIMIT ${Number(limit)}` : ""
+        const offset = (Number(page) - 1) * Number(perPage)
 
         const [productos] = await pool.query(
             `SELECT DISTINCT ${SELECT_FIELDS_COLUMNS}
@@ -228,11 +241,23 @@ export class ProductoModel {
             LEFT JOIN marcas m ON m.id = p.marca_id
             LEFT JOIN producto_categorias pc ON pc.producto_id = p.id
             LEFT JOIN categorias c ON c.id = pc.categoria_id
-            WHERE ${conditions.join(" AND ")}
+            WHERE ${whereClause}
             ORDER BY ${orderClause}
-            ${limitClause}`,
-            params
+            LIMIT ? OFFSET ?`,
+            [...params, Number(perPage), offset]
         )
+
+        const productosCompletos = await Promise.all(productos.map(attachRelations))
+
+        return {
+            productos: productosCompletos,
+            pagination: {
+                page: Number(page),
+                perPage: Number(perPage),
+                total,
+                totalPages: Math.ceil(total / perPage)
+            }
+        }
 
         return Promise.all(productos.map(attachRelations))
     }
