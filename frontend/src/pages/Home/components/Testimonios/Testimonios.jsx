@@ -34,7 +34,7 @@ export function Testimonios(){
             <div className="testimonios__container">
                 {
                     testimonios?.map(t => (
-                        <TestimonioItem testimonio={t}/>
+                        <TestimonioItem key={t.text} testimonio={t}/>
                     ))
                 }
             </div>

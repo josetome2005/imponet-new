@@ -12,7 +12,7 @@ export function Header(){
     useEffect(() => {
         async function fetchCategorias(){
             const data = await getCategoriasConCantidad()
-            const categoriasDestacadsa = data
+            const categoriasDestacadsa = data.items
                 .slice()
                 .sort((a, b) => b.cantidad_productos - a.cantidad_productos)
                 .slice(0, 5)
@@ -70,8 +70,8 @@ export function Header(){
                 <div className="flex--32 y-center ">
                     {
                         categorias?.map(c => (
-                            <Link to={`/productos?categoria=${c.slug}`}>
-                                <span key={c.id}>
+                            <Link key={c.id} to={`/productos?categoria=${c.slug}`}>
+                                <span>
                                     {c.nombre}
                                 </span>
                             </Link>

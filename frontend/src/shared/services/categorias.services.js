@@ -53,7 +53,7 @@ export const deleteCategoria = async (id) => {
     return handleResponse(res);
 };
 
-export const getCategoriasConCantidad = async ({page, perPage}) => {
+export const getCategoriasConCantidad = async ({page, perPage} = {}) => {
     const query = buildPaginationParams({ page, perPage })
     const res = await fetch(`${API_URL}/categorias/con-cantidad${query ? `?${query}` : ""}`);
     return handleResponse(res);

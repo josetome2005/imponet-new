@@ -10,8 +10,7 @@ export function Ofertas(){
 
     useEffect(() => {
         async function fetchAll(){
-
-            const data = await getProductosEnOferta()
+            const { productos: data } = await getProductosEnOferta()
             setProductos(data)
         }
         fetchAll()
@@ -28,7 +27,7 @@ export function Ofertas(){
             <div className="productos__container">
                 {
                     productos?.map(p => (
-                        <ProductoItem producto={p} />
+                        <ProductoItem key={p.id} producto={p} />
                     ))
                 }
                 

@@ -5,25 +5,21 @@ import { Button } from "../../../../shared/components/ui/Button/Button"
 
 const categorias_local = [
     {
-        id: crypto.randomUUID(),
         name: "Auriculares",
         meta_categoria: "Audio",
         img: "/img/categorias/auriculares.png"
     },
     {
-        id: crypto.randomUUID(),
         name: "Drones",
         meta_categoria: "Entrenimiento",
         img: "/img/categorias/drones.png"
     },
     {
-        id: crypto.randomUUID(),
         name: "Parlantes",
         meta_categoria: "Audio",
         img: "/img/categorias/parlantes.png"
     },
     {
-        id: crypto.randomUUID(),
         name: "Smartwatchs",
         meta_categoria: "Utilidad",
         img: "/img/categorias/smartwatchs.png"
@@ -44,7 +40,7 @@ export function CategoriasDestacadas(){
             <div className="categorias__container">
                 {
                     categorias?.map(c => 
-                        <CategoriaItem categoria={c}/>
+                        <CategoriaItem key={c.name} categoria={c}/>
                     )
                 }
             </div>
