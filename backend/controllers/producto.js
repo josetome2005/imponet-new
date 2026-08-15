@@ -9,27 +9,26 @@ export class ProductoController {
     // Público: solo productos activos
     getAll = async (req, res) => {
         const { destacado, con_descuento, page, perPage } = req.query
-        const productos = await this.productoModel.getAll({
+        const resultado = await this.productoModel.search({
             activo: true,
             destacado: destacado === "true" ? true : undefined,
             conDescuento: con_descuento === "true",
             page,
             perPage
         })
-        res.json(productos)
+        res.json(resultado)
     }
+
 
     // Admin: todos, activos o no
     getAllAdmin = async (req, res) => {
-        const { activo, destacado, con_descuento, page, perPage } = req.query
-        const productos = await this.productoModel.getAll({
-            activo,
-            destacado,
-            con_descuento,
-            page, 
+        const { activo, page, perPage } = req.query
+        const resultado = await this.productoModel.search({
+            activo: activo !== undefined ? (activo === "true" || activo === "1") : undefined,
+            page,
             perPage
         })
-        res.json(productos)
+        res.json(resultado)
     }
 
     getById = async (req, res) => {
@@ -109,8 +108,9 @@ export class ProductoController {
         res.status(404).json({ message: "Producto not found" })
     }
 
+    // Público: búsqueda completa (texto + marca + categoría + precio + orden + paginación)
     search = async (req, res) => {
-        const { q, marca, categoria, precioMin, precioMax, orden, page, perPage } = req.query
+        const { q, marca, categoria, precioMin, precioMax, activo, orden, page, perPage } = req.query
 
         const resultado = await this.productoModel.search({
             query: q?.trim() || undefined,
@@ -118,9 +118,10 @@ export class ProductoController {
             categoriaSlugs: categoria ? categoria.split(",") : undefined,
             precioMin,
             precioMax,
+            activo: activo !== undefined ? (activo === "true" || activo === "1") : undefined,
             orden,
             page,
-            perPage
+            perPage,
         })
         res.json(resultado)
     }

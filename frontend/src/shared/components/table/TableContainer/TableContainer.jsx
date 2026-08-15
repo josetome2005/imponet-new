@@ -10,33 +10,28 @@ export function TableContainer(
     {   
       data, 
       columns, 
-      filters, 
-      searchFields, 
-      tabs, 
       placeholderInput, 
       messageNoSearch, 
       handleClick, 
-      rowClassName, 
+      rowClassName,
+      // Busqueda
+      search,
+      onSearchChange,
+      // Filtros Dropdown
+      activeFilters,
+      onFilterChange,
+      filterGroups,
+      // Tabs (opcional)
+      tabs,
+      activeTab,
+      onTabChange,
+      // Paginacion
       pagination,
-      onPageChange
+      onPageChange,
+      // Le dice a DataTable si hay algo activo (para mensaje de vacio vs no resultados)
+      isFiltering
     }) {
     
-  const initialFilter = "todos"
-
-  const [activeTab, setActiveTab] = useState(
-    tabs?.[0]?.key ?? null
-  );
-
-  const {
-    search,
-    setSearch,
-    activeFilters,
-    setActiveFilter,
-    filteredData,
-    filterGroups,
-    isFiltering
-  } = useTableFilters(data, searchFields, filters, initialFilter, tabs, activeTab);
-
   return (
     <>
 
@@ -44,27 +39,26 @@ export function TableContainer(
           <TableTabs
               tabs={tabs}
               active={activeTab}
-              onChange={setActiveTab}
+              onChange={onTabChange}
           />
       )}
 
       <SearchBarWithFilters
-            search={search}
-            onSearchChange={setSearch}
-            activeFilters={activeFilters}
-            filterGroups={filterGroups}
-            onFilterChange={setActiveFilter}
-            filterGroups={filterGroups}
-            placeholderInput={placeholderInput}
+          search={search}
+          onSearchChange={onSearchChange}
+          activeFilters={activeFilters}
+          filterGroups={filterGroups}
+          onFilterChange={onFilterChange}
+          placeholderInput={placeholderInput}
       />
 
-      <DataTable 
-            data={filteredData} 
-            columns={columns}
-            messageNoSearch={messageNoSearch}
-            handleClick={handleClick}
-            rowClassName={rowClassName}
-            isFiltering={isFiltering}
+      <DataTable
+          data={data}
+          columns={columns}
+          messageNoSearch={messageNoSearch}
+          handleClick={handleClick}
+          rowClassName={rowClassName}
+          isFiltering={isFiltering}
       />
 
       {

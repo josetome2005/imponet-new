@@ -10,30 +10,27 @@ export const getProductoById = async (id) => {
     return handleResponse(res);
 };
 
-export const getProductosAdmin = async ({ activo, destacado, conDescuento, page, perPage }) => {
+export const searchProductos = async ({ q, marca, categoria, precioMin, precioMax, activo, destacado, con_descuento, orden, page, perPage } = {}) => {
     const params = new URLSearchParams();
+    if (q) params.set("q", q);
+    if (marca?.length) params.set("marca", Array.isArray(marca) ? marca.join(",") : marca);
+    if (categoria?.length) params.set("categoria", Array.isArray(categoria) ? categoria.join(",") : categoria);
+    if (precioMin) params.set("precioMin", precioMin);
+    if (precioMax) params.set("precioMax", precioMax);
     if (activo !== undefined) params.set("activo", activo);
     if (destacado !== undefined) params.set("destacado", destacado);
-    if (conDescuento !== undefined) params.set("conDescuento", conDescuento);
+    if (con_descuento !== undefined) params.set("con_descuento", con_descuento);
+    if (orden) params.set("orden", orden);
     if (page) params.set("page", page);
     if (perPage) params.set("perPage", perPage);
 
-    const query = params.toString();
-    const res = await fetch(`${API_URL}/productos/admin/all${query ? `?${query}` : ""}`, {
-        headers: authHeaders()
-    });
+    const res = await fetch(`${API_URL}/productos/buscar?${params}`);
     return handleResponse(res);
 };
 
-export const getProductosDestacados = async () => {
-    const res = await fetch(`${API_URL}/productos?destacado=true&limit=8`);
-    return handleResponse(res);
-};
-
-export const getProductosEnOferta = async () => {
-    const res = await fetch(`${API_URL}/productos?con_descuento=true&limit=6`);
-    return handleResponse(res);
-};
+// Wrappers finitos, por compatibilidad con quien ya los use — delegan a searchProductos
+export const getProductosDestacados = async () => searchProductos({ activo: true, destacado: true, perPage: 8 });
+export const getProductosEnOferta = async () => searchProductos({ activo: true, con_descuento: true, perPage: 6 });
 
 export const getProductosPorIds = async (ids) => {
     const res = await fetch(`${API_URL}/productos/por-ids`, {
@@ -107,17 +104,3 @@ export const deleteProducto = async (id) => {
     return handleResponse(res);
 };
 
-export const searchProductos = async ({ q, marca, categoria, precioMin, precioMax, orden, page, perPage } = {}) => {
-    const params = new URLSearchParams();
-    if (q) params.set("q", q);
-    if (marca?.length) params.set("marca", Array.isArray(marca) ? marca.join(",") : marca);
-    if (categoria?.length) params.set("categoria", Array.isArray(categoria) ? categoria.join(",") : categoria);
-    if (precioMin) params.set("precioMin", precioMin);
-    if (precioMax) params.set("precioMax", precioMax);
-    if (orden) params.set("orden", orden);
-    if (page) params.set("page", page);
-    if (perPage) params.set("perPage", perPage);
-
-    const res = await fetch(`${API_URL}/productos/buscar?${params}`);
-    return handleResponse(res);
-};

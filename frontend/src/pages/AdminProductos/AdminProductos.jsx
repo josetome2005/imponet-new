@@ -37,9 +37,15 @@ export function AdminProductos() {
         handleDelete,
         handleSubmitNew,
         handleSubmitEdit,
+        search,
+        setSearch,
+        activeFilters,
+        setActiveFilter,
+        filterGroups,
+        isFiltering,
         pagination,
-        handleChangePage
-    } = useProductosCRUD()
+        setPage,
+    } = useProductosCRUD({ filters })
 
     const producto_inputs = buildProductoInputs({ marcas, categorias })
     const productos_columns = buildProductosColumns({ onEdit: openEditForm, onDelete: handleDelete })
@@ -48,7 +54,7 @@ export function AdminProductos() {
         <div className="admin__section admin__productos">
             <SectionTitle
                 title={"Productos"}
-                subtitle={`${pagination?.total} productos en tu catálogo.`}
+                subtitle={`${pagination?.total ?? 0} productos en tu catálogo.`}
                 buttonText={"Nuevo Producto"}
                 onClick={openNewForm}
             />
@@ -56,12 +62,20 @@ export function AdminProductos() {
             <TableContainer
                 data={productos}
                 columns={productos_columns}
-                searchFields={searchFields}
-                filters={filters}
-                placeholderInput={"Buscar por nombre o SKU"}
                 messageNoSearch={"Aún no tienes cargados productos"}
+                placeholderInput={"Buscar por nombre o SKU"}
+                
+                search={search}
+                onSearchChange={setSearch}
+
+                activeFilters={activeFilters}
+                onFilterChange={setActiveFilter}
+                filterGroups={filterGroups}
+
                 pagination={pagination}
-                onPageChange={handleChangePage}
+                onPageChange={setPage}
+
+                isFiltering={isFiltering}
             />
 
             {confirmState && (
