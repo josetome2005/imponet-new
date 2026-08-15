@@ -1,25 +1,10 @@
-import { useEffect, useState } from "react"
 import "./PedidosPendientes.css"
-import { getVentas } from "../../../../shared/services/ventas.services"
 import { formatFecha } from "../../../../shared/services/dateUtils"
 import { StatusLabel } from "../../../../shared/components/ui/StatusLabel/StatusLabel"
 import { formatMoneda } from "../../../../shared/utils/formatMoneda"
 import { Link } from "react-router-dom"
 
-export function PedidosPendientes(){
-
-    const [pedidos, setPedidos] = useState([])
-
-    useEffect(() => {
-        async function fetchProd(){
-            const data = await getVentas()
-            const ventas_pendientes = data.filter(v => v.estado === "pendiente")
-            setPedidos(ventas_pendientes)
-        }
-        fetchProd()
-    }, [])
-
-
+export function PedidosPendientes({pedidos}){
 
     return(
         <div className="pedidos__pendientes admin__home__section">

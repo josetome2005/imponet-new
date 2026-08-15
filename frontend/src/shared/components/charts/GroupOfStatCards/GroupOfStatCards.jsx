@@ -2,23 +2,12 @@ import "./GroupOfStatCards.css"
 import { StatCard } from "../StatCard/StatCard"
 import { useState, useEffect } from "react"
 
-export function GroupOfStatCards({buildFunction}){
-
-    const [statCards, setStatCards] = useState([])
-    
-    useEffect(() => {
-        async function fetchData(){
-            const data = await buildFunction();
-            setStatCards(data)
-        }
-        fetchData()
-    }, [])
-    
+export function GroupOfStatCards({ statCards }){
 
     return(
         <div className="statCards__container">            
             {
-                statCards.map((stat, index) => (
+                statCards.map((stat) => (
 
                     <StatCard 
                         key={stat.title} 

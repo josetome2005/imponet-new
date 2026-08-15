@@ -25,7 +25,7 @@ export function MyPieChart({data, colors, title, }){
     return(
         <div className="dashboard__module dashboard__module--chart">
 
-            <h3>{title}</h3>
+            <h3 className='chart__title'>{title}</h3>
             
             <PieChart style={{ width: '100%', maxWidth: '300px', margin: '0 auto' , maxHeight: '70vh', aspectRatio: 1 }} responsive>
                 <Pie

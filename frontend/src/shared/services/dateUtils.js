@@ -238,3 +238,15 @@ export function formatFecha(fechaISO) {
         hora
     }
 }
+
+export function isCurrentCalendarMonth(dateString) {
+    if (!dateString) return false
+
+    const date = new Date(dateString)
+    const today = new Date()
+
+    return (
+        date.getFullYear() === today.getFullYear() &&
+        date.getMonth() === today.getMonth()
+    )
+}

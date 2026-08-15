@@ -1,22 +1,7 @@
-import { useEffect, useState } from "react"
 import "./ProductosBajoStock.css"
-import { getProductos } from "../../../../shared/services/productos.services"
 import { Link } from "react-router-dom"
 
-export function ProductosBajoStock(){
-
-    const [productos, setProductos] = useState([])
-
-    useEffect(() => {
-        async function fetchProd(){
-            const data = await getProductos()
-            const productos_bajo_stock = data.filter(p => p.stock <= 5)
-            setProductos(productos_bajo_stock)
-        }
-        fetchProd()
-    }, [])
-
-
+export function ProductosBajoStock({productos}){
 
     return(
         <div className="productos__bajo__stock admin__home__section">

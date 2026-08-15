@@ -6,7 +6,7 @@ export function MyBarChart({data, title, xAxisTitle, yAxisTitle}){
     return(
         <div className="dashboard__module dashboard__module--chart">
 
-            <h3>{title}</h3>
+            <h3 className='chart__title'>{title}</h3>
 
             <BarChart
                 style={{ width: '100%', maxWidth: '700px', maxHeight: '70vh', aspectRatio: 1.618 }}

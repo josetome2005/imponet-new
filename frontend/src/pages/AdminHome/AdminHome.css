@@ -3,6 +3,12 @@
     gap: 2rem;
 }
 
+.chart__title{
+    font-size: 1.125rem;
+    color: #222222;
+    margin-bottom: 1.25rem;
+}
+
 /*------------------------------------------------*/
 
 .admin__home__section{
@@ -10,6 +16,7 @@
     background-color: #ffffff;
     padding: 20px;
     border-radius: 12px;
+    margin-bottom: 2rem;
 }
 
 .admin__home__section .header__section{
@@ -21,6 +28,7 @@
 
 .admin__home__section .header__section h3{
     font-size: 1.125rem;
+    color: #222222;
 }
 
 .admin__home__section .header__section .icon{
