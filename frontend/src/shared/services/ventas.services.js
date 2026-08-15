@@ -1,6 +1,15 @@
 // services/ventas.services.js
 import { API_URL, handleResponse, authHeaders } from "./http.services";
 
+const buildPaginationParams = ({ page, perPage }) => {
+    const params = new URLSearchParams()
+    if (page !== undefined) params.set("page", page)
+    if (page !== undefined) params.set("perPage", perPage)
+    const query = params.toString();
+
+    return query;
+}
+
 // Público — cualquiera puede finalizar una compra, con o sin cuenta
 export const crearVenta = async ({ nombre, email, telefono, direccion_calle, direccion_ciudad, direccion_provincia, direccion_cp, items }) => {
     const res = await fetch(`${API_URL}/ventas`, {
@@ -21,8 +30,10 @@ export const crearVenta = async ({ nombre, email, telefono, direccion_calle, dir
 };
 
 // Admin
-export const getVentas = async () => {
-    const res = await fetch(`${API_URL}/ventas`, {
+export const getVentas = async ({ page, perPage }) => {
+    const query = buildPaginationParams({page, perPage})
+
+    const res = await fetch(`${API_URL}/ventas${query ? `?${query}` : ""}`, {
         headers: authHeaders()
     });
     return handleResponse(res);

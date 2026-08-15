@@ -7,7 +7,8 @@ export class MarcaController {
     }
 
     getAll = async (req, res) => {
-        const marcas = await this.marcaModel.getAll()
+        const { page, perPage } = req.query
+        const marcas = await this.marcaModel.getAll({ page, perPage })
         res.json(marcas)
     }
 
@@ -51,7 +52,8 @@ export class MarcaController {
     }
 
     getAllWithCount = async (req, res) => {
-        const marcas = await this.marcaModel.getAllWithCount()
+        const { page, perPage } = req.query
+        const marcas = await this.marcaModel.getAllWithCount({ page, perPage })
         res.json(marcas)
     }
 }

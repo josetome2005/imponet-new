@@ -1,8 +1,18 @@
 // services/marcas.js
 import { API_URL, handleResponse, authHeaders } from "./http.services.js";
 
-export const getMarcas = async () => {
-    const res = await fetch(`${API_URL}/marcas`);
+const buildPaginationParams = ({page, perPage}) => {
+    const params = new URLSearchParams()
+    if (page !== undefined) params.set("page", page)
+    if (page !== undefined) params.set("perPage", perPage)
+    const query = params.toString();
+
+    return query;
+}
+
+export const getMarcas = async ({ page, perPage } = {}) => {
+    const query = buildPaginationParams({ page, perPage })
+    const res = await fetch(`${API_URL}/marcas${query ? `?${query}` : ""}`);
     return handleResponse(res);
 };
 
@@ -43,7 +53,8 @@ export const deleteMarca = async (id) => {
     return handleResponse(res);
 };
 
-export const getMarcasConCantidad = async () => {
-    const res = await fetch(`${API_URL}/marcas/con-cantidad`);
+export const getMarcasConCantidad = async ({ page, perPage }) => {
+    const query = buildPaginationParams({ page, perPage })
+    const res = await fetch(`${API_URL}/marcas/con-cantidad${query ? `?${query}` : ""}`);
     return handleResponse(res);
 };

@@ -1,14 +1,15 @@
-.section__title{
+.section__title__container{
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    margin-bottom: 2rem;
 }
 
-.section__title .button{
+.section__title__container .button{
     padding: 0.4rem 0.875rem;
     font-size: 0.875rem;
 }
 
-.section__title .button .icon{
+.section__title__container .button .icon{
     font-size: 1.25rem;
 }

@@ -8,7 +8,8 @@ export class VentaController {
 
     // admin: listado completo
     getAll = async (req, res) => {
-        const ventas = await this.ventaModel.getAll()
+        const { page, perPage } = req.query
+        const ventas = await this.ventaModel.getAll({ page, perPage })
         res.json(ventas)
     }
 

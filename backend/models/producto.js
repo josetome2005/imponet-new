@@ -59,13 +59,11 @@ export class ProductoModel {
         const paginar = page !== undefined
         let limitClause = ""
         if(paginar) {
-            const pp = Number(perPage) || 20
+            const pp = Number(perPage) || 10
             const offset = (Number(page) - 1) * pp
             limitClause = "LIMIT ? OFFSET ?"
             params.push(pp, offset)
         }
-
-        const offset = (Number(page) - 1) * Number(perPage)
 
         const [productos] = await pool.query(`
             ${SELECT_FIELDS} 
@@ -82,9 +80,9 @@ export class ProductoModel {
             pagination: paginar 
                 ? {
                     page: Number(page),
-                    perPage: Number(perPage) || 20,
+                    perPage: Number(perPage) || 10,
                     total,
-                    totalPages: Math.ceil(total / (Number(perPage) || 20))
+                    totalPages: Math.ceil(total / (Number(perPage) || 10))
                 }
                 : null
         }

@@ -19,7 +19,6 @@ export function useProductosCRUD() {
         async function fetchAll() {
             const {productos: data, pagination: pag} = await getProductosAdmin({ page, perPage: 10 });
             setProductos(data);
-            console.log(pag)
             setPagination(pag)
         }   
         fetchAll();

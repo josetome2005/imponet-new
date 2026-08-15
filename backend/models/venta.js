@@ -1,4 +1,5 @@
 import { pool } from "../config/connection_db.js"
+import { buildPagination } from "../utils/buildPagination.js"
 
 const CODIGO_CHARS = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ" // sin 0,1,I,O para evitar confusiones al leerlo
 const generarCodigo = () => {
@@ -32,15 +33,40 @@ const attachDetalle = async (venta) => {
 
 export class VentaModel {
 
-    static async getAll() {
-        const [ventas] = await pool.query(`${SELECT_FIELDS} ORDER BY v.fecha DESC`)
-        return Promise.all(ventas.map(attachDetalle))
+    static async getAll({ page, perPage  }) {
+        const [countResult] = await pool.query(`SELECT COUNT(*) total FROM ventas`)
+        const total = countResult[0].total
+
+        const { limitClause, limitParams, toResult } = buildPagination({ page, perPage, defaultPerPage: 9 })
+
+        const [ventas] = await pool.query(`
+            ${SELECT_FIELDS} 
+            ORDER BY v.fecha DESC
+            ${limitClause}`,
+            limitParams    
+        )
+
+        const ventas_completas = await Promise.all(ventas.map(attachDetalle))
+
+        return {
+            items: ventas_completas,
+            pagination: toResult(total)
+        }
     }
 
     static async getById({ id }) {
         const [ventas] = await pool.query(
             `${SELECT_FIELDS} WHERE v.id = UUID_TO_BIN(?)`,
             [id]
+        )
+        if (!ventas[0]) return null
+        return attachDetalle(ventas[0])
+    }
+
+    static async getByCodigo({ codigo }) {
+        const [ventas] = await pool.query(
+            `${SELECT_FIELDS} WHERE v.codigo = ?`,
+            [codigo]
         )
         if (!ventas[0]) return null
         return attachDetalle(ventas[0])
@@ -66,8 +92,6 @@ export class VentaModel {
                 intentos++
             } while (intentos < 5)
 
-            console.log(codigo)
-
             let total = 0
             const detalleAInsertar = []
 
@@ -84,7 +108,7 @@ export class VentaModel {
                 if (!producto.activo) throw new Error(`Producto "${producto.nombre}" no está disponible`)
                 if (producto.stock < item.cantidad) throw new Error(`Stock insuficiente para "${producto.nombre}" (disponible: ${producto.stock})`)
 
-                const precioFinal = Math.round(producto.precio * (1 - producto.descuento / 100))
+                const precioFinal = Math.round(producto.precio * (1 - producto.descuento / 100), 2)
                 total += precioFinal * item.cantidad
 
                 detalleAInsertar.push({
@@ -180,12 +204,5 @@ export class VentaModel {
         return this.getById({ id })
     }
 
-    static async getByCodigo({ codigo }) {
-        const [ventas] = await pool.query(
-            `${SELECT_FIELDS} WHERE v.codigo = ?`,
-            [codigo]
-        )
-        if (!ventas[0]) return null
-        return attachDetalle(ventas[0])
-    }
+
 }

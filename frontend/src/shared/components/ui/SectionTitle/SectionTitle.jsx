@@ -11,7 +11,7 @@ export function SectionTitle({
     
     return(
 
-        <div className="section__title">
+        <div className="section__title__container">
             <div>
                 <h3 className="admin__section__title">{title}</h3>
                 <p className="admin__section__subtitle">{subtitle}</p>

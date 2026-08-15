@@ -16,7 +16,7 @@ export function AdminProductos() {
 
     useEffect(() => {
         async function fetchOptions() {
-            const [m, c] = await Promise.all([getMarcas(), getCategorias()])
+            const [{items: m}, c] = await Promise.all([getMarcas(), getCategorias()])
             setMarcas(m)
             setCategorias(c)
         }

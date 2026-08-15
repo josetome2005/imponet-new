@@ -1,8 +1,18 @@
 // services/categorias.js
 import { API_URL, handleResponse, authHeaders } from "./http.services.js";
 
-export const getCategorias = async () => {
-    const res = await fetch(`${API_URL}/categorias`);
+const buildPaginationParams = ({ page, perPage }) => {
+    const params = new URLSearchParams()
+    if (page !== undefined) params.set("page", page)
+    if (page !== undefined) params.set("perPage", perPage)
+    const query = params.toString();
+
+    return query;
+}
+
+export const getCategorias = async ({ page, perPage }) => {
+    const query = buildPaginationParams({ page, perPage })
+    const res = await fetch(`${API_URL}/categorias${query ? `?${query}` : ""}`);
     return handleResponse(res);
 };
 
@@ -43,7 +53,8 @@ export const deleteCategoria = async (id) => {
     return handleResponse(res);
 };
 
-export const getCategoriasConCantidad = async () => {
-    const res = await fetch(`${API_URL}/categorias/con-cantidad`);
+export const getCategoriasConCantidad = async ({page, perPage}) => {
+    const query = buildPaginationParams({ page, perPage })
+    const res = await fetch(`${API_URL}/categorias/con-cantidad${query ? `?${query}` : ""}`);
     return handleResponse(res);
 };

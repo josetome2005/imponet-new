@@ -1,12 +1,23 @@
 import { pool } from "../config/connection_db.js"
+import { buildPagination } from "../utils/buildPagination.js"
 
 const SELECT_FIELDS = "SELECT BIN_TO_UUID(id) id, nombre, slug, created_at FROM marcas"
 
 export class MarcaModel {
 
-    static async getAll() {
-        const [marcas] = await pool.query(SELECT_FIELDS)
-        return marcas
+    static async getAll({ page, perPage }) {
+
+        const [countResult] = await pool.query(`SELECT COUNT(DISTINCT m.id) total FROM marcas m`)
+        const total = countResult[0].total
+
+        const { limitClause, limitParams, toResult } = buildPagination({ page, perPage, defaultPerPage: 9 })
+
+        const [marcas] = await pool.query(`${SELECT_FIELDS} ${limitClause}`, limitParams)
+        
+        return {
+            items: marcas,
+            pagination: toResult(total)
+        }
     }
 
     static async getById({ id }) {
@@ -52,7 +63,12 @@ export class MarcaModel {
         return result.affectedRows > 0
     }
 
-    static async getAllWithCount() {
+    static async getAllWithCount({ page, perPage }) {
+        const [countResult] = await pool.query(`SELECT COUNT(*) total FROM marcas`)
+        const total = countResult[0].total
+
+        const { limitClause, limitParams, toResult } = buildPagination({ page, perPage, defaultPerPage: 9 })
+
         const [marcas] = await pool.query(`
             SELECT BIN_TO_UUID(m.id) id, m.nombre, m.slug, m.created_at,
                    COUNT(p.id) cantidad_productos
@@ -60,7 +76,12 @@ export class MarcaModel {
             LEFT JOIN productos p ON p.marca_id = m.id
             GROUP BY m.id, m.nombre, m.created_at
             ORDER BY m.nombre
-        `)
-        return marcas
+            ${limitClause}
+        `, limitParams)
+
+        return {
+            items: marcas,
+            pagination: toResult(total)
+        }
     }
 }

@@ -13,6 +13,8 @@ export function useAdminCRUD({
 }){
 
     const [items, setItems] = useState([])
+    const [pagination, setPagination] = useState([])
+    const [page, setPage] = useState(1)
     const [showNewElemForm, setShowNewElemForm] = useState(false)
     const [showEditForm, setShowEditForm] = useState(false)
     const [editingElem, setEditingElem] = useState(null)
@@ -22,11 +24,13 @@ export function useAdminCRUD({
 
     useEffect(() => {
         async function fetchAll() {
-            const data = await getAll()
+            const {items: data, pagination: pag} = await getAll({ page, perPage: 2 })
             setItems(data)
+            console.log(data)
+            setPagination(pag)
         }
         fetchAll()
-    }, [getAll])
+    }, [getAll, page])
 
     const openNewForm = () => setShowNewElemForm(true)
     const closeNewForm = () => setShowNewElemForm(false)
@@ -116,6 +120,10 @@ export function useAdminCRUD({
         }
     }
 
+    const handleChangePage = (nuevaPage) => {
+        setPage(nuevaPage)
+    }
+
     return {
         items,
         showNewElemForm,
@@ -132,6 +140,8 @@ export function useAdminCRUD({
         handleRequestEdit,
         handleSubmitEdit,
         handleSubmitNew,
+        pagination,
+        handleChangePage
     }
 
 

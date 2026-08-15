@@ -7,6 +7,7 @@ import { NewElemForm } from "../../shared/components/forms/NewElemForm/NewElemFo
 import { EditForm } from "../../shared/components/forms/EditForm/EditForm"
 import { useAdminCRUD } from "../../shared/hooks/useAdminCRUD"
 import { generateSlug } from "../../shared/utils/generateSlug"
+import { Pagination } from "../../shared/components/ui/Pagination/Pagination"
 
 const marca_inputs = [
     { id: "marca_nombre", name: "marca_nombre", type: "text", label: "Nombre de la Marca", mappedProp: "nombre", is_mandatory: true },
@@ -31,7 +32,8 @@ export function AdminMarcas() {
         handleRequestEdit,
         handleSubmitEdit,
         handleSubmitNew,
-
+        pagination,
+        handleChangePage
     } = useAdminCRUD({
         getAll: getMarcasConCantidad,
         create: createMarca,
@@ -46,20 +48,25 @@ export function AdminMarcas() {
         <div className="admin__section admin__marcas">
             <SectionTitle 
                 title={"Marcas"}
-                subtitle={`${marcas.length} marcas registradas`}
+                subtitle={`${pagination.total} marcas registradas`}
                 buttonText={"Nueva Marca"}
                 onClick={openNewForm}/>
 
             <div className="admin__marcas__container">
-                {
-                    marcas?.map(m => (
-                        <MarcaItem
-                            key={m.id} 
-                            marca={m}
-                            onDelete={handleDelete}
-                            onEdit={handleRequestEdit}/>
-                    ))
-                }
+                <div className="marcas__items">
+                    {
+                        marcas?.map(m => (
+                            <MarcaItem
+                                key={m.id}
+                                marca={m}
+                                onDelete={handleDelete}
+                                onEdit={handleRequestEdit} />
+                        ))
+                    }
+                </div>
+                <Pagination 
+                    pagination={pagination}
+                    onPageChange={handleChangePage}/>
             </div>
 
             {

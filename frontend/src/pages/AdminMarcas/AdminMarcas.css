@@ -1,11 +1,12 @@
-.admin__marcas__container{
+.admin__marcas__container .marcas__items{
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
+    margin-bottom: 2rem;
 }
 
-.admin__marcas__container > *{
+.admin__marcas__container .marcas__items > *{
     flex: 1 1 calc((100% - 2rem) / 3);
     max-width: calc((100% - 2rem) / 3);
 }

@@ -32,7 +32,8 @@ export function AdminCategorias() {
         handleRequestEdit,
         handleSubmitEdit,
         handleSubmitNew,
-
+        pagination,
+        handleChangePage
     } = useAdminCRUD({
         getAll: getCategoriasConCantidad,
         create: createCategoria,
@@ -52,7 +53,7 @@ export function AdminCategorias() {
         <div className="admin__section admin__categorias">
             <SectionTitle 
                 title={"Categorías"}
-                subtitle={`${categorias.length} categorias activas`}
+                subtitle={`${pagination.total} categorias activas`}
                 buttonText={"Nueva Categoria"}
                 onClick={openNewForm}/>
 
@@ -61,7 +62,10 @@ export function AdminCategorias() {
                 columns={columns}
                 searchFields={searchFields}
                 placeholderInput={"Buscar por nombre"}
-                messageNoSearch={"No tienes categorías"}/>
+                messageNoSearch={"No tienes categorías"}
+                pagination={pagination}
+                onPageChange={handleChangePage}
+            />
 
             {
                 confirmState &&

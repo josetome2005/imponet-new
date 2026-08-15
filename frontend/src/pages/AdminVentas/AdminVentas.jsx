@@ -25,13 +25,15 @@ export function AdminVentas(){
         closeEditForm,
         handleRequestEdit,
         handleSubmitEdit,
+        pagination,
+        handleChangePage
     } = useAdminCRUD({
         getAll: getVentas,
         create: crearVenta,
         update: updateEstadoVenta,
         remove: cancelarVenta,
         entityName: "Venta",
-        inputsConfig: inputs
+        inputsConfig: inputs,
     })
 
     const [ventaVistaId, setVentaVistaId] = useState(null)
@@ -69,6 +71,8 @@ export function AdminVentas(){
                 placeholderInput={"Buscar por nombre o código de venta"}
                 messageNoSearch={"No tienes ventas realizadas aún."}
                 tabs={tabs}
+                pagination={pagination}
+                onPageChange={handleChangePage}
             />
 
             {

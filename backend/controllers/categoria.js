@@ -7,7 +7,8 @@ export class CategoriaController {
     }
 
     getAll = async (req, res) => {
-        const categorias = await this.categoriaModel.getAll()
+        const { page, perPage } = req.query
+        const categorias = await this.categoriaModel.getAll({ page, perPage })
         res.json(categorias)
     }
 
@@ -51,7 +52,8 @@ export class CategoriaController {
     }
 
     getAllWithCount = async (req, res) => {
-        const categorias = await this.categoriaModel.getAllWithCount()
+        const { page, perPage } = req.query
+        const categorias = await this.categoriaModel.getAllWithCount({page, perPage})
         res.json(categorias)
     }
 }
