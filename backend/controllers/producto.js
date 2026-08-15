@@ -8,19 +8,27 @@ export class ProductoController {
 
     // Público: solo productos activos
     getAll = async (req, res) => {
-        const { destacado, con_descuento, limit } = req.query
+        const { destacado, con_descuento, page, perPage } = req.query
         const productos = await this.productoModel.getAll({
             activo: true,
             destacado: destacado === "true" ? true : undefined,
             conDescuento: con_descuento === "true",
-            limit
+            page,
+            perPage
         })
         res.json(productos)
     }
 
     // Admin: todos, activos o no
     getAllAdmin = async (req, res) => {
-        const productos = await this.productoModel.getAll()
+        const { activo, destacado, con_descuento, page, perPage } = req.query
+        const productos = await this.productoModel.getAll({
+            activo,
+            destacado,
+            con_descuento,
+            page, 
+            perPage
+        })
         res.json(productos)
     }
 
@@ -111,8 +119,8 @@ export class ProductoController {
             precioMin,
             precioMax,
             orden,
-            page: page ? Number(page) : 1,
-            perPage: perPage ? Number(perPage) : 20
+            page,
+            perPage
         })
         res.json(resultado)
     }

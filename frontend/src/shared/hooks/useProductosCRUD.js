@@ -6,6 +6,8 @@ import { getProductosAdmin, createProducto, updateProducto, deleteProducto } fro
 
 export function useProductosCRUD() {
     const [productos, setProductos] = useState([]);
+    const [pagination, setPagination] = useState(null)
+    const [page, setPage] = useState(1)
     const [showNewForm, setShowNewForm] = useState(false);
     const [showEditForm, setShowEditForm] = useState(false);
     const [editingElem, setEditingElem] = useState(null);
@@ -15,11 +17,13 @@ export function useProductosCRUD() {
 
     useEffect(() => {
         async function fetchAll() {
-            const data = await getProductosAdmin();
+            const {productos: data, pagination: pag} = await getProductosAdmin({ page, perPage: 10 });
             setProductos(data);
-        }
+            console.log(pag)
+            setPagination(pag)
+        }   
         fetchAll();
-    }, []);
+    }, [page, setPagination]);
 
     const openNewForm = () => setShowNewForm(true);
     const closeNewForm = () => setShowNewForm(false);
@@ -77,6 +81,10 @@ export function useProductosCRUD() {
         }
     };
 
+    const handleChangePage = (nuevaPage) => {
+        setPage(nuevaPage)
+    }
+
     return {
         productos,
         showNewForm,
@@ -91,6 +99,8 @@ export function useProductosCRUD() {
         closeEditForm,
         handleDelete,
         handleSubmitNew,
-        handleSubmitEdit
+        handleSubmitEdit,
+        pagination,
+        handleChangePage
     };
 }

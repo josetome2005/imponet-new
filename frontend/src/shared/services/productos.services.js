@@ -10,8 +10,16 @@ export const getProductoById = async (id) => {
     return handleResponse(res);
 };
 
-export const getProductosAdmin = async () => {
-    const res = await fetch(`${API_URL}/productos/admin/all`, {
+export const getProductosAdmin = async ({ activo, destacado, conDescuento, page, perPage }) => {
+    const params = new URLSearchParams();
+    if (activo !== undefined) params.set("activo", activo);
+    if (destacado !== undefined) params.set("destacado", destacado);
+    if (conDescuento !== undefined) params.set("conDescuento", conDescuento);
+    if (page) params.set("page", page);
+    if (perPage) params.set("perPage", perPage);
+
+    const query = params.toString();
+    const res = await fetch(`${API_URL}/productos/admin/all${query ? `?${query}` : ""}`, {
         headers: authHeaders()
     });
     return handleResponse(res);

@@ -24,7 +24,7 @@ const attachRelations = async (producto) => {
 
 export class ProductoModel {
 
-    static async getAll({ activo, destacado, conDescuento, limit } = {}) {
+    static async getAll({ activo, destacado, conDescuento, page, perPage } = {}) {
 
         const conditions = [];
         const params = [];
@@ -45,10 +45,49 @@ export class ProductoModel {
 
 
         const where = conditions.length ? `WHERE ${conditions.join(" AND ")}` : ""
-        const limitClause = limit ? `LIMIT ${Number(limit)}` : ""
 
-        const [productos] = await pool.query(`${SELECT_FIELDS} ${where} ORDER BY p.created_at DESC ${limitClause}`, params)
-        return Promise.all(productos.map(attachRelations))
+        // Cuento total de productos
+        const [countResult] = await pool.query(
+            `SELECT COUNT(DISTINCT p.id) total
+            FROM productos p
+            ${where}`,
+            params
+        )
+        const total = countResult[0].total
+
+        // Traigo la página pedida si es necesario
+        const paginar = page !== undefined
+        let limitClause = ""
+        if(paginar) {
+            const pp = Number(perPage) || 20
+            const offset = (Number(page) - 1) * pp
+            limitClause = "LIMIT ? OFFSET ?"
+            params.push(pp, offset)
+        }
+
+        const offset = (Number(page) - 1) * Number(perPage)
+
+        const [productos] = await pool.query(`
+            ${SELECT_FIELDS} 
+            ${where}
+            ORDER BY p.created_at DESC 
+            ${limitClause}`, 
+             params
+        )
+
+        const productosCompletos = await Promise.all(productos.map(attachRelations))
+        
+        return {
+            productos: productosCompletos,
+            pagination: paginar 
+                ? {
+                    page: Number(page),
+                    perPage: Number(perPage) || 20,
+                    total,
+                    totalPages: Math.ceil(total / (Number(perPage) || 20))
+                }
+                : null
+        }
     }
 
     static async getById({ id }) {
@@ -259,6 +298,5 @@ export class ProductoModel {
             }
         }
 
-        return Promise.all(productos.map(attachRelations))
     }
 }

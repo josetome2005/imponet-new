@@ -4,6 +4,7 @@ import { DataTable } from "../DataTable/DataTable";
 import { TableTabs } from "../TableTabs/TableTabs";
 
 import { useState } from "react";
+import { Pagination } from "../../ui/Pagination/Pagination";
 
 export function TableContainer(
     {   
@@ -16,6 +17,8 @@ export function TableContainer(
       messageNoSearch, 
       handleClick, 
       rowClassName, 
+      pagination,
+      onPageChange
     }) {
     
   const initialFilter = "todos"
@@ -63,6 +66,17 @@ export function TableContainer(
             rowClassName={rowClassName}
             isFiltering={isFiltering}
       />
+
+      {
+        pagination && (
+          <div className="pagination__container" style={{marginTop: "2.5rem", transform: "scale(0.9)"}}>
+            <Pagination 
+              pagination={pagination}
+              onPageChange={onPageChange}/>
+          </div>
+        )
+      }
+      
     </>
   );
 }

@@ -36,18 +36,19 @@ export function AdminProductos() {
         closeEditForm,
         handleDelete,
         handleSubmitNew,
-        handleSubmitEdit
+        handleSubmitEdit,
+        pagination,
+        handleChangePage
     } = useProductosCRUD()
 
     const producto_inputs = buildProductoInputs({ marcas, categorias })
-
     const productos_columns = buildProductosColumns({ onEdit: openEditForm, onDelete: handleDelete })
 
     return (
         <div className="admin__section admin__productos">
             <SectionTitle
                 title={"Productos"}
-                subtitle={`${productos.length} productos en tu catálogo.`}
+                subtitle={`${pagination?.total} productos en tu catálogo.`}
                 buttonText={"Nuevo Producto"}
                 onClick={openNewForm}
             />
@@ -59,6 +60,8 @@ export function AdminProductos() {
                 filters={filters}
                 placeholderInput={"Buscar por nombre o SKU"}
                 messageNoSearch={"Aún no tienes cargados productos"}
+                pagination={pagination}
+                onPageChange={handleChangePage}
             />
 
             {confirmState && (
