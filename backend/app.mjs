@@ -11,6 +11,7 @@ import { createMarcaRouter } from './routes/marcas.js';
 import { createCategoriaRouter } from './routes/categorias.js';
 import { createUsuarioRouter } from './routes/usuarios.js';
 import { createVentaRouter } from './routes/ventas.js';
+import { createDashboardRouter } from './routes/dashboard.js';
 // import { createDetalleVentaRouter } from './routes/detalle_ventas.js';
 // import { createDireccionRouter } from './routes/direcciones.js';
 
@@ -32,7 +33,8 @@ export const createApp = (
         usuarioModel,
         direccionModel,
         ventaModel,
-        detalleVentaModel
+        detalleVentaModel,
+        dashboardModel
     }) => {
 
     console.log("createApp iniciando...")
@@ -65,6 +67,7 @@ export const createApp = (
     app.use('/categorias', createCategoriaRouter({ categoriaModel }))
     app.use('/usuarios', createUsuarioRouter({ usuarioModel }))
     app.use('/ventas', createVentaRouter({ ventaModel }))
+    app.use('/dashboard', createDashboardRouter({ dashboardModel }))
     // app.use('/detalle-ventas', createDetalleVentaRouter({ detalleVentaModel }))
     // app.use('/direcciones', createDireccionRouter({ direccionModel }))
 
