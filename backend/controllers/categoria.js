@@ -19,6 +19,11 @@ export class CategoriaController {
         res.json(categoria)
     }
 
+    getDestacadas = async (req, res) => {
+        const { items } = await this.categoriaModel.getAllWithCount({ destacado: true })
+        res.json(items)
+    }
+
     create = async (req, res) => {
         const result = validateCategoria(req.body)
         if (!result.success) return res.status(400).json({ error: JSON.parse(result.error.message) })

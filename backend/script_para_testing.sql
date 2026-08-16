@@ -36,12 +36,12 @@ SET @cat_pantalones = UUID_TO_BIN(UUID());
 SET @cat_accesorios = UUID_TO_BIN(UUID());
 SET @cat_running    = UUID_TO_BIN(UUID());
 
-INSERT INTO categorias (id, nombre, slug) VALUES
-(@cat_zapatillas, 'Zapatillas', "zapatillas"),
-(@cat_remeras,    'Remeras', "remeras"),
-(@cat_pantalones, 'Pantalones', "pantalones"),
-(@cat_accesorios, 'Accesorios', "accesorios"),
-(@cat_running,    'Running', "running");
+INSERT INTO categorias (id, nombre, slug, destacado) VALUES
+(@cat_zapatillas, 'Zapatillas', "zapatillas", 1),
+(@cat_remeras,    'Remeras', "remeras", 1),
+(@cat_pantalones, 'Pantalones', "pantalones", 1),
+(@cat_accesorios, 'Accesorios', "accesorios", 0),
+(@cat_running,    'Running', "running", 1);
 
 -- =========================
 -- PRODUCTOS

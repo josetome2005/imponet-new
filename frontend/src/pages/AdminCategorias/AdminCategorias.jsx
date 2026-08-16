@@ -11,8 +11,8 @@ import { generateSlug } from "../../shared/utils/generateSlug"
 
 const categoria_inputs = [
     { id: "categoria_nombre", name: "categoria_nombre", type: "text", label: "Nombre de la Categoría", mappedProp: "nombre", is_mandatory: true },
-    { id: "categoria_slug", name: "categoria_slug", type: "text", label: "Slug", mappedProp: "slug", is_mandatory: true, autoGenerateFrom: "categoria_nombre", generationFunction: generateSlug }
-
+    { id: "categoria_slug", name: "categoria_slug", type: "text", label: "Slug", mappedProp: "slug", is_mandatory: true, autoGenerateFrom: "categoria_nombre", generationFunction: generateSlug },
+    { id: "categoria_destacado", name: "categoria_destacado", type: "boolean", label: "Categoría destacada", mappedProp: "destacado" }
 ]
 
 
@@ -32,21 +32,22 @@ export function AdminCategorias() {
         handleRequestEdit,
         handleSubmitEdit,
         handleSubmitNew,
+        search,
+        setSearch,
         pagination,
-        handleChangePage
+        setPage,
+        isFiltering,
     } = useAdminCRUD({
         getAll: getCategoriasConCantidad,
         create: createCategoria,
         update: updateCategoria,
         remove: deleteCategoria,
-        entityName: "marca",
+        entityName: "categoría",
         inputsConfig: categoria_inputs,
+        searchFields,
     })
 
-
-    const columns = categorias_columns(handleRequestEdit, handleDelete)
-
-    
+    const columns = categorias_columns(handleRequestEdit, handleDelete)  
 
     return (
 
@@ -60,11 +61,16 @@ export function AdminCategorias() {
             <TableContainer
                 data={categorias}
                 columns={columns}
-                searchFields={searchFields}
-                placeholderInput={"Buscar por nombre"}
                 messageNoSearch={"No tienes categorías"}
+                placeholderInput={"Buscar por nombre"}
+
+                search={search}
+                onSearchChange={setSearch}
+
                 pagination={pagination}
-                onPageChange={handleChangePage}
+                onPageChange={setPage}
+
+                isFiltering={isFiltering}
             />
 
             {

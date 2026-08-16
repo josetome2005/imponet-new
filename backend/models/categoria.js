@@ -1,21 +1,37 @@
 import { pool } from "../config/connection_db.js"
 import { buildPagination } from "../utils/buildPagination.js"
 
-const SELECT_FIELDS = "SELECT BIN_TO_UUID(id) id, nombre, slug, created_at FROM categorias"
+const SELECT_FIELDS = "SELECT BIN_TO_UUID(id) id, nombre, slug, destacado, created_at FROM categorias"
 
 export class CategoriaModel {
 
-    static async getAll({ page, perPage }) {
-        const [countResult] = await pool.query(`SELECT COUNT(DISTINCT c.id) total FROM categorias c`)
+    static async getAll({ page, perPage, destacado } = {}) {
+        const conditions = []
+        const params = []
+    
+        if (destacado !== undefined) {
+            conditions.push("destacado = ?")
+            params.push(destacado ? 1 : 0)
+        }
+    
+        const whereClause = conditions.length ? `WHERE ${conditions.join(" AND ")}` : ""
+    
+        const [countResult] = await pool.query(
+            `SELECT COUNT(*) total FROM categorias ${whereClause}`,
+            params
+        )
         const total = countResult[0].total
-
+    
         const { limitClause, limitParams, toResult } = buildPagination({ page, perPage })
-        
-        const [categorias] = await pool.query(`${SELECT_FIELDS} ${limitClause}`, limitParams)
-        
+    
+        const [categorias] = await pool.query(
+            `${SELECT_FIELDS} ${whereClause} ${limitClause}`,
+            [...params, ...limitParams]
+        )
+    
         return {
             items: categorias,
-            pagination: toResult(total)
+            pagination: page !== undefined ? toResult(total) : null
         }
     }
 
@@ -28,14 +44,14 @@ export class CategoriaModel {
     }
 
     static async create({ object }) {
-        const { nombre, slug } = object
+        const { nombre, slug, destacado } = object
         const [uuidResult] = await pool.query("SELECT UUID() uuid")
         const [{ uuid }] = uuidResult
 
         try {
             await pool.query(
-                "INSERT INTO categorias (id, nombre, slug) VALUES (UUID_TO_BIN(?), ?, ?)",
-                [uuid, nombre, slug]
+                "INSERT INTO categorias (id, nombre, slug, destacado) VALUES (UUID_TO_BIN(?), ?, ?, ?)",
+                [uuid, nombre, slug, destacado ?? false]
             )
         } catch (error) {
             if (error.code === 'ER_DUP_ENTRY') throw new Error("Ya existe una categoría con ese nombre")
@@ -62,25 +78,39 @@ export class CategoriaModel {
         return result.affectedRows > 0
     }
 
-    static async getAllWithCount({ page, perPage }) {
-        const [countResult] = await pool.query(`SELECT COUNT(DISTINCT c.id) total FROM categorias c`)
+    static async getAllWithCount({ page, perPage, destacado } = {}) {
+        const conditions = []
+        const params = []
+    
+        if (destacado !== undefined) {
+            conditions.push("c.destacado = ?")
+            params.push(destacado ? 1 : 0)
+        }
+    
+        const whereClause = conditions.length ? `WHERE ${conditions.join(" AND ")}` : ""
+    
+        const [countResult] = await pool.query(
+            `SELECT COUNT(DISTINCT c.id) total FROM categorias c ${whereClause}`,
+            params
+        )
         const total = countResult[0].total
-
+    
         const { limitClause, limitParams, toResult } = buildPagination({ page, perPage })
-
+    
         const [categorias] = await pool.query(`
-            SELECT BIN_TO_UUID(c.id) id, c.nombre, c.slug, c.created_at,
+            SELECT BIN_TO_UUID(c.id) id, c.nombre, c.slug, c.destacado, c.created_at,
                    COUNT(pc.producto_id) cantidad_productos
             FROM categorias c
             LEFT JOIN producto_categorias pc ON pc.categoria_id = c.id
-            GROUP BY c.id, c.nombre, c.created_at
+            ${whereClause}
+            GROUP BY c.id, c.nombre, c.slug, c.destacado, c.created_at
             ORDER BY c.nombre
             ${limitClause}
-        `, limitParams)
-
+        `, [...params, ...limitParams])
+    
         return {
             items: categorias,
-            pagination: toResult(total)
+            pagination: page !== undefined ? toResult(total) : null
         }
     }
 }

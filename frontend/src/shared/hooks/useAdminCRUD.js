@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useConfirm } from "./useConfirm";
 import { useToast } from "../components/toast/ToastContext";
+import { useLocalTableData } from "./useLocalTableData";
 
 export function useAdminCRUD({
     getAll,
@@ -9,12 +10,16 @@ export function useAdminCRUD({
     remove,
     entityName,
     inputsConfig,
-    removeMode = "delete" // "delete" | "cancel
+    
+    searchFields,
+    filters,
+    initialFilter,
+    tabs,
+    initialTab
 }){
 
+
     const [items, setItems] = useState([])
-    const [pagination, setPagination] = useState([])
-    const [page, setPage] = useState(1)
     const [showNewElemForm, setShowNewElemForm] = useState(false)
     const [showEditForm, setShowEditForm] = useState(false)
     const [editingElem, setEditingElem] = useState(null)
@@ -22,15 +27,25 @@ export function useAdminCRUD({
     const { state, confirm, handleCancel, handleConfirm } = useConfirm()
     const toast = useToast()
 
+    const fetchAll = async () => {
+        const data = await getAll()
+        setItems(data)
+    }
+
     useEffect(() => {
-        async function fetchAll() {
-            const {items: data, pagination: pag} = await getAll({ page })
-            setItems(data)
-            console.log(data)
-            setPagination(pag)
-        }
         fetchAll()
-    }, [getAll, page])
+    }, [])
+
+    const table = useLocalTableData(
+        items, 
+        {  
+            searchFields,
+            filters,
+            initialFilter,
+            tabs,
+            initialTab,
+            perPage: 10
+        })
 
     const openNewForm = () => setShowNewElemForm(true)
     const closeNewForm = () => setShowNewElemForm(false)
@@ -120,12 +135,10 @@ export function useAdminCRUD({
         }
     }
 
-    const handleChangePage = (nuevaPage) => {
-        setPage(nuevaPage)
-    }
 
     return {
-        items,
+        // CRUD
+        items: table.data,
         showNewElemForm,
         showEditForm,
         editingElem,
@@ -140,9 +153,18 @@ export function useAdminCRUD({
         handleRequestEdit,
         handleSubmitEdit,
         handleSubmitNew,
-        pagination,
-        handleChangePage
+        // Table
+        search: table.search,
+        setSearch: table.setSearch,
+        activeTab: table.activeTab,
+        setActiveTab: table.setActiveTab,
+        filterGroups: table.filterGroups,
+        isFiltering: table.isFiltering,
+        pagination: table.pagination,
+        setPage: table.setPage,
     }
+
+    
 
 
 }

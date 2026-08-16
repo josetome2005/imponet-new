@@ -9,6 +9,7 @@ export const createCategoriaRouter = ({ categoriaModel }) => {
 
     categoriaRouter.get('/', categoriaController.getAll);
     categoriaRouter.get('/con-cantidad', categoriaController.getAllWithCount);
+    categoriaRouter.get('/destacadas', categoriaController.getDestacadas);
     categoriaRouter.get('/:id', categoriaController.getById);
 
     categoriaRouter.post('/', authenticate, categoriaController.create);
