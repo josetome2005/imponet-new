@@ -12,6 +12,7 @@ import { createCategoriaRouter } from './routes/categorias.js';
 import { createUsuarioRouter } from './routes/usuarios.js';
 import { createVentaRouter } from './routes/ventas.js';
 import { createDashboardRouter } from './routes/dashboard.js';
+import { createNewsletterSuscriptorRouter } from './routes/newsletterSuscriptores.js';
 // import { createDetalleVentaRouter } from './routes/detalle_ventas.js';
 // import { createDireccionRouter } from './routes/direcciones.js';
 
@@ -34,7 +35,8 @@ export const createApp = (
         direccionModel,
         ventaModel,
         detalleVentaModel,
-        dashboardModel
+        dashboardModel,
+        newsletterSuscriptorModel
     }) => {
 
     console.log("createApp iniciando...")
@@ -68,6 +70,7 @@ export const createApp = (
     app.use('/usuarios', createUsuarioRouter({ usuarioModel }))
     app.use('/ventas', createVentaRouter({ ventaModel }))
     app.use('/dashboard', createDashboardRouter({ dashboardModel }))
+    app.use('/newsletter', createNewsletterSuscriptorRouter({ newsletterSuscriptorModel }))
     // app.use('/detalle-ventas', createDetalleVentaRouter({ detalleVentaModel }))
     // app.use('/direcciones', createDireccionRouter({ direccionModel }))
 

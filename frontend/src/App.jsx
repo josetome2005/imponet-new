@@ -15,6 +15,7 @@ import { Carrito } from './pages/Carrito/Carrito'
 import { CarritoProvider } from './shared/contexts/CarritoContext'
 import { AdminVentas } from './pages/AdminVentas/AdminVentas'
 import { VistaCompra } from "./pages/VistaCompra/VistaCompra"
+import { AdminNewsletterSuscriptor } from './pages/AdminNewsletterSuscriptor/AdminNewsletterSuscriptor'
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
               <Route path='marcas' element={<AdminMarcas />} />
               <Route path='categorias' element={<AdminCategorias />} />
               <Route path='ventas' element={<AdminVentas />} />
+              <Route path='newsletter' element={<AdminNewsletterSuscriptor />} />
             </Route>
           </Route>
 

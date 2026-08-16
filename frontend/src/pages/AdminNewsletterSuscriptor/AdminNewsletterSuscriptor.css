@@ -1,0 +1,52 @@
+.admin__newsletter .email__suscriptor__container{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.admin__newsletter .email__suscriptor__container .icon{
+    font-size: 1.375rem;
+    width: 1.375rem;
+    color: var(--main-blue);
+}
+
+.admin__newsletter .email__suscriptor__container .email__sucriptor{
+    color: #444444;
+}
+
+.admin__newsletter .estado__suscriptor{
+    border-radius: 9999px;
+    padding: 4px 12px;
+    display: inline-block;
+    line-height: 1.2;
+}
+
+.admin__newsletter .estado__suscriptor.activo{
+    background-color: var(--muted-blue);
+    color: var(--main-blue);
+}
+
+.admin__newsletter .estado__suscriptor.inactivo{
+    background-color: #dddddd;
+    color: #444444;
+}
+
+.admin__newsletter .actions__container span {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.375rem;
+    border-radius: 9999px;
+    transition: 0.3s all;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin__newsletter .actions__container .edit__icon {
+    color: #980000;
+}
+
+.admin__newsletter .actions__container .edit__icon:hover {
+    background-color: #980000;
+    color: #ffffff;
+}

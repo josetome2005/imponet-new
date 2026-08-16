@@ -5,6 +5,7 @@ import { CategoriaModel } from "./models/categoria.js"
 import { UsuarioModel } from "./models/usuario.js";
 import { VentaModel } from "./models/venta.js";
 import { DashboardModel } from "./models/dashboard.js";
+import { NewsletterSuscriptorModel } from "./models/newsletterSuscriptor.js";
 
 createApp({
     productoModel: ProductoModel,
@@ -12,5 +13,6 @@ createApp({
     categoriaModel: CategoriaModel,
     usuarioModel: UsuarioModel,
     ventaModel: VentaModel,
-    dashboardModel: DashboardModel
+    dashboardModel: DashboardModel,
+    newsletterSuscriptorModel: NewsletterSuscriptorModel
 });
