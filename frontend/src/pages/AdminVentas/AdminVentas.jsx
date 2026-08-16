@@ -14,6 +14,7 @@ export function AdminVentas(){
     
     const {
         ventas,
+        totalCount,
         showEditForm,
         editingElem,
         confirmState,

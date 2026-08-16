@@ -28,13 +28,14 @@ export function useAdminCRUD({
     const toast = useToast()
 
     const fetchAll = async () => {
-        const data = await getAll()
+        const { items: data } = await getAll()
         setItems(data)
     }
 
     useEffect(() => {
         fetchAll()
     }, [])
+
 
     const table = useLocalTableData(
         items, 
@@ -139,6 +140,7 @@ export function useAdminCRUD({
     return {
         // CRUD
         items: table.data,
+        totalCount: items.length,
         showNewElemForm,
         showEditForm,
         editingElem,

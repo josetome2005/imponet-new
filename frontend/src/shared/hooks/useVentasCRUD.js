@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import { useConfirm } from "./useConfirm";
 import { useToast } from "../components/toast/ToastContext";
 import { useRemoteTableData } from "./useRemoteTableData";
-import { getVentas, crearVenta, updateEstadoVenta, cancelarVenta } from "../services/ventas.services";
+import { getVentas, crearVenta, updateEstadoVenta, cancelarVenta, getTotalVentas } from "../services/ventas.services";
 
 // Adaptador: backend devuelve { items, pagination }, el hook genérico espera { data, pagination }
 const fetchVentasAdapter = async (queryParams) => {
@@ -19,6 +19,16 @@ export function useVentasCRUD({ tabs, inputsConfig } = {}) {
 
     const { state, confirm, handleCancel, handleConfirm } = useConfirm();
     const toast = useToast();
+
+    const [totalCount, setTotalCount] = useState(0)
+    
+    useEffect(() => {
+        async function fetchTotalCount() {
+            const { pagination } = await getVentas({ page: 1, perPage: 1 })
+            setTotalCount(pagination.total)
+        }
+        fetchTotalCount()
+    }, [])
 
     const closeEditForm = () => {
         setShowEditForm(false);
@@ -64,6 +74,7 @@ export function useVentasCRUD({ tabs, inputsConfig } = {}) {
 
     return {
         ventas: table.data,
+        totalCount,
         showEditForm,
         editingElem,
         confirmState: state,

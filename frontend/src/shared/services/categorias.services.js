@@ -10,10 +10,11 @@ const buildPaginationParams = ({ page, perPage }) => {
     return query;
 }
 
-export const getCategorias = async ({ page, perPage, destacado } = {}) => {
+export const getCategorias = async ({ page, perPage, destacado, q } = {}) => {
     const params = new URLSearchParams(buildPaginationParams({ page, perPage }))
     if (destacado !== undefined) params.set("destacado", destacado)
-
+    if (q) params.set("q", q)
+    
     const query = params.toString()
     const res = await fetch(`${API_URL}/categorias${query ? `?${query}` : ""}`);
     return handleResponse(res);
@@ -57,9 +58,11 @@ export const deleteCategoria = async (id) => {
     return handleResponse(res);
 };
 
-export const getCategoriasConCantidad = async ({ page, perPage, destacado } = {}) => {
+export const getCategoriasConCantidad = async ({ page, perPage, destacado, q } = {}) => {
     const params = new URLSearchParams(buildPaginationParams({ page, perPage }))
     if (destacado !== undefined) params.set("destacado", destacado)
+    if (q) params.set("q", q)
+
 
     const query = params.toString()
     const res = await fetch(`${API_URL}/categorias/con-cantidad${query ? `?${query}` : ""}`);

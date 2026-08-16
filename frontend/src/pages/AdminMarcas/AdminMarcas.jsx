@@ -20,6 +20,7 @@ export function AdminMarcas() {
 
     const {
         items: marcas,
+        totalCount,
         showNewElemForm,
         showEditForm,
         openNewForm,
@@ -32,8 +33,11 @@ export function AdminMarcas() {
         handleRequestEdit,
         handleSubmitEdit,
         handleSubmitNew,
+        search,
+        setSearch,
         pagination,
-        handleChangePage
+        setPage,
+        isFiltering,
     } = useAdminCRUD({
         getAll: getMarcasConCantidad,
         create: createMarca,
@@ -42,13 +46,13 @@ export function AdminMarcas() {
         entityName: "marca",
         inputsConfig: marca_inputs,
     })
-      
+
     return (
 
         <div className="admin__section admin__marcas">
             <SectionTitle 
                 title={"Marcas"}
-                subtitle={`${pagination.total} marcas registradas`}
+                subtitle={`${totalCount} marcas registradas`}
                 buttonText={"Nueva Marca"}
                 onClick={openNewForm}/>
 
@@ -66,7 +70,7 @@ export function AdminMarcas() {
                 </div>
                 <Pagination 
                     pagination={pagination}
-                    onPageChange={handleChangePage}/>
+                    onPageChange={setPage}/>
             </div>
 
             {

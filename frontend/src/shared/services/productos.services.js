@@ -32,6 +32,11 @@ export const searchProductos = async ({ q, marca, categoria, precioMin, precioMa
 export const getProductosDestacados = async () => searchProductos({ activo: true, destacado: true, perPage: 8 });
 export const getProductosEnOferta = async () => searchProductos({ activo: true, con_descuento: true, perPage: 6 });
 
+export const getTotalProductos = async () => {
+    const { pagination } = await searchProductos({ page: 1, perPage: 1 })
+    return pagination.total
+}
+
 export const getProductosPorIds = async (ids) => {
     const res = await fetch(`${API_URL}/productos/por-ids`, {
         method: "POST",

@@ -20,6 +20,7 @@ export function AdminCategorias() {
   
     const {
         items: categorias,
+        totalCount,
         showNewElemForm,
         showEditForm,
         openNewForm,
@@ -54,7 +55,7 @@ export function AdminCategorias() {
         <div className="admin__section admin__categorias">
             <SectionTitle 
                 title={"Categorías"}
-                subtitle={`${pagination.total} categorias activas`}
+                subtitle={`${totalCount} categorias activas`}
                 buttonText={"Nueva Categoria"}
                 onClick={openNewForm}/>
 

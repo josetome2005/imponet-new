@@ -25,6 +25,7 @@ export function AdminProductos() {
 
     const {
         productos,
+        totalCount,
         showNewForm,
         showEditForm,
         editingElem,
@@ -54,7 +55,7 @@ export function AdminProductos() {
         <div className="admin__section admin__productos">
             <SectionTitle
                 title={"Productos"}
-                subtitle={`${pagination?.total ?? 0} productos en tu catálogo.`}
+                subtitle={`${totalCount ?? 0} productos en tu catálogo.`}
                 buttonText={"Nuevo Producto"}
                 onClick={openNewForm}
             />

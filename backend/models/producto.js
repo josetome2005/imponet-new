@@ -1,4 +1,5 @@
 import { pool } from "../config/connection_db.js"
+import { buildPagination } from "../utils/buildPagination.js"
 
 const SELECT_FIELDS_COLUMNS = `
     BIN_TO_UUID(p.id) id, BIN_TO_UUID(p.marca_id) marca_id, m.nombre marca_nombre,

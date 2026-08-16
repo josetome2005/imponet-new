@@ -49,6 +49,11 @@ export const getVentaById = async (id) => {
     return handleResponse(res);
 };
 
+export const getTotalVentas = async () => {
+    const { pagination } = await getVentas({ page: 1, perPage: 1 })
+    return pagination.total
+}
+
 export const updateEstadoVenta = async ({ id, estado }) => {
     const res = await fetch(`${API_URL}/ventas/${id}/estado`, {
         method: "PATCH",

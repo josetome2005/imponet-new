@@ -5,10 +5,16 @@ const SELECT_FIELDS = "SELECT BIN_TO_UUID(id) id, nombre, slug, destacado, creat
 
 export class CategoriaModel {
 
-    static async getAll({ page, perPage, destacado } = {}) {
+    static async getAll({ page, perPage, destacado, q } = {}) {
         const conditions = []
         const params = []
-    
+        
+        if (q) {
+            const term = `%${q}%`
+            conditions.push(`(c.nombre LIKE ? OR c.slug LIKE ?)`)
+            params.push(term, term)
+        }
+
         if (destacado !== undefined) {
             conditions.push("destacado = ?")
             params.push(destacado ? 1 : 0)
@@ -17,7 +23,7 @@ export class CategoriaModel {
         const whereClause = conditions.length ? `WHERE ${conditions.join(" AND ")}` : ""
     
         const [countResult] = await pool.query(
-            `SELECT COUNT(*) total FROM categorias ${whereClause}`,
+            `SELECT COUNT(*) total FROM categorias c ${whereClause}`,
             params
         )
         const total = countResult[0].total
@@ -78,10 +84,16 @@ export class CategoriaModel {
         return result.affectedRows > 0
     }
 
-    static async getAllWithCount({ page, perPage, destacado } = {}) {
+    static async getAllWithCount({ q, page, perPage, destacado } = {}) {
         const conditions = []
         const params = []
-    
+        
+        if (q) {
+            const term = `%${q}%`
+            conditions.push(`(c.nombre LIKE ? OR c.slug LIKE ?)`)
+            params.push(term, term)
+        }
+
         if (destacado !== undefined) {
             conditions.push("c.destacado = ?")
             params.push(destacado ? 1 : 0)

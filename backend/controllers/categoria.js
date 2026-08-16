@@ -7,8 +7,13 @@ export class CategoriaController {
     }
 
     getAll = async (req, res) => {
-        const { page, perPage } = req.query
-        const categorias = await this.categoriaModel.getAll({ page, perPage })
+        const { q, destacado, page, perPage } = req.query
+        const categorias = await this.categoriaModel.getAll({
+            q,
+            destacado: destacado !== undefined ? (destacado === "true" || destacado === "1") : undefined,
+            page,
+            perPage
+        })
         res.json(categorias)
     }
 
@@ -57,8 +62,13 @@ export class CategoriaController {
     }
 
     getAllWithCount = async (req, res) => {
-        const { page, perPage } = req.query
-        const categorias = await this.categoriaModel.getAllWithCount({page, perPage})
+        const { q, destacado, page, perPage } = req.query
+        const categorias = await this.categoriaModel.getAll({
+            q,
+            destacado: destacado !== undefined ? (destacado === "true" || destacado === "1") : undefined,
+            page,
+            perPage
+        })
         res.json(categorias)
     }
 }

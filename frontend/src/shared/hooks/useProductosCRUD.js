@@ -22,6 +22,16 @@ export function useProductosCRUD({ filters } = {})  {
     const { state, confirm, handleCancel, handleConfirm } = useConfirm();
     const toast = useToast();
 
+    const [totalCount, setTotalCount] = useState(0)
+
+    useEffect(() => {
+        async function fetchTotalCount() {
+            const { pagination } = await searchProductos({ page: 1, perPage: 1 })
+            setTotalCount(pagination.total)
+        }
+        fetchTotalCount()
+    }, [])
+
     const openNewForm = () => setShowNewForm(true);
     const closeNewForm = () => setShowNewForm(false);
 
@@ -74,6 +84,7 @@ export function useProductosCRUD({ filters } = {})  {
 
     return {
         // CRUD
+        totalCount,
         showNewForm,
         showEditForm,
         editingElem,

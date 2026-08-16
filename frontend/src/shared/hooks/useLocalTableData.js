@@ -82,14 +82,14 @@ export function useLocalTableData(data, { searchFields = [], filters, initialFil
 
     const paginatedData = useMemo(() => {
         const start = (page - 1) * perPage
-        return filteredData?.items?.slice(start, start + perPage)
+        return filteredData?.slice(start, start + perPage)
     }, [filteredData, page, perPage])
 
     const pagination = useMemo(() => ({
         page,
         perPage,
-        total: filteredData.items.length,
-        totalPages: Math.ceil(filteredData.items.length / perPage)
+        total: filteredData?.length,
+        totalPages: Math.ceil(filteredData?.length / perPage)
     }), [filteredData.length, page, perPage])
 
     const isFiltering = useMemo(() => {
