@@ -8,11 +8,15 @@ export class VentaController {
 
     // admin: listado completo
     getAll = async (req, res) => {
-        const { page, perPage } = req.query
-        const ventas = await this.ventaModel.getAll({ page, perPage })
-        res.json(ventas)
+        const { q, estado, page, perPage } = req.query
+        const resultado = await this.ventaModel.getAll({
+            query: q?.trim() || undefined,
+            estado: estado && estado !== "todos" ? estado : undefined,
+            page,
+            perPage
+        })
+        res.json(resultado)
     }
-
     getById = async (req, res) => {
         const { id } = req.params
         const venta = await this.ventaModel.getById({ id })

@@ -4,7 +4,7 @@ import { API_URL, handleResponse, authHeaders } from "./http.services";
 const buildPaginationParams = ({ page, perPage }) => {
     const params = new URLSearchParams()
     if (page !== undefined) params.set("page", page)
-    if (page !== undefined) params.set("perPage", perPage)
+    if (perPage !== undefined) params.set("perPage", perPage)
     const query = params.toString();
 
     return query;
@@ -30,9 +30,12 @@ export const crearVenta = async ({ nombre, email, telefono, direccion_calle, dir
 };
 
 // Admin
-export const getVentas = async ({ page, perPage }) => {
-    const query = buildPaginationParams({page, perPage})
+export const getVentas = async ({ q, estado, page, perPage }) => {
+    const params = new URLSearchParams(buildPaginationParams({ page, perPage }))
+    if (q) params.set("q", q)
+    if (estado) params.set("estado", estado)
 
+    const query = params.toString()
     const res = await fetch(`${API_URL}/ventas${query ? `?${query}` : ""}`, {
         headers: authHeaders()
     });

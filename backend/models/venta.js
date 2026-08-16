@@ -33,24 +33,45 @@ const attachDetalle = async (venta) => {
 
 export class VentaModel {
 
-    static async getAll({ page, perPage  }) {
-        const [countResult] = await pool.query(`SELECT COUNT(*) total FROM ventas`)
+    static async getAll({ query, estado, page, perPage = 10 } = {}) {
+
+        const conditions = []
+        const params = []
+
+        if (query) {
+            const term = `%${query}%`
+            conditions.push(`(v.nombre LIKE ? OR v.email LIKE ? OR v.codigo LIKE ?)`)
+            params.push(term, term, term)
+        }
+
+        if (estado) {
+            conditions.push("v.estado = ?")
+            params.push(estado)
+        }
+
+        const whereClause = conditions.length ? conditions.join(" AND ") : "1=1"
+
+        const [countResult] = await pool.query(
+            `SELECT COUNT(*) total FROM ventas v WHERE ${whereClause}`,
+            params
+        )
         const total = countResult[0].total
 
         const { limitClause, limitParams, toResult } = buildPagination({ page, perPage, defaultPerPage: 9 })
 
         const [ventas] = await pool.query(`
             ${SELECT_FIELDS} 
+            WHERE ${whereClause}
             ORDER BY v.fecha DESC
             ${limitClause}`,
-            limitParams    
+            [...params, ...limitParams]
         )
 
         const ventas_completas = await Promise.all(ventas.map(attachDetalle))
 
         return {
             items: ventas_completas,
-            pagination: toResult(total)
+            pagination: page !== undefined ? toResult(total) : null
         }
     }
 
@@ -84,7 +105,7 @@ export class VentaModel {
 
             // Genero el código y verifico que no exista
             let codigo;
-            let intentos
+            let intentos = 0;
             do {
                 codigo = generarCodigo()
                 const [existe] = await conn.query("SELECT id FROM ventas WHERE codigo = ?", [codigo])
@@ -108,7 +129,7 @@ export class VentaModel {
                 if (!producto.activo) throw new Error(`Producto "${producto.nombre}" no está disponible`)
                 if (producto.stock < item.cantidad) throw new Error(`Stock insuficiente para "${producto.nombre}" (disponible: ${producto.stock})`)
 
-                const precioFinal = Math.round(producto.precio * (1 - producto.descuento / 100), 2)
+                const precioFinal = Math.round(producto.precio * (1 - producto.descuento / 100) * 100) / 100
                 total += precioFinal * item.cantidad
 
                 detalleAInsertar.push({

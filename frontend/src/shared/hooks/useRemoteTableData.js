@@ -14,7 +14,9 @@ export function useRemoteTableData(
     {
         filters, 
         initialFilter = "todos",
-        perPage = 10
+        perPage = 10,
+        tabs,
+        initialTab
     } = {}
 ){
 
@@ -29,6 +31,8 @@ export function useRemoteTableData(
         })
         return initial
     })
+
+    const [activeTab, setActiveTabRaw] = useState(initialTab ?? tabs?.[0]?.key ?? null)
 
     const [page, setPage] = useState(1)
 
@@ -58,6 +62,11 @@ export function useRemoteTableData(
         setPage(1)
     }
 
+    const setActiveTab = (tabKey) => {
+        setActiveTabRaw(tabKey)
+        setPage(1)
+    }
+
     // Traduce los filtros seleccionados (ej: "activo") a los valores reales
     // que espera el backend (ej: { activo: 1 })
     const mappedFilterParams = useMemo(() => {
@@ -73,6 +82,13 @@ export function useRemoteTableData(
     }, [filterGroups, activeFilters])
 
 
+    // El tab activo se traduce a params vía su propia función (definida por quien arma "tabs")
+    const mappedTabParams = useMemo(() => {
+        if (!tabs?.length || !activeTab) return {}
+        const tab = tabs.find(t => t.key === activeTab)
+        return tab?.toParams?.() ?? {}
+    }, [tabs, activeTab])
+
     const refetch = useCallback(async () => {
         setLoading(true)
         try {
@@ -80,14 +96,15 @@ export function useRemoteTableData(
                 q: search || undefined,
                 page,
                 perPage,
-                ...mappedFilterParams
+                ...mappedFilterParams,
+                ...mappedTabParams
             })
             setData(result.data)
             setPagination(result.pagination)
         } finally {
             setLoading(false)
         }
-    }, [fetchFn, search, page, perPage, mappedFilterParams])
+    }, [fetchFn, search, page, perPage, mappedFilterParams, mappedTabParams])
 
     useEffect(() => {
         refetch()
@@ -103,8 +120,15 @@ export function useRemoteTableData(
 
     const isFiltering = useMemo(() => {
         if (search) return true
-        return filterGroups.some(group => activeFilters[group.field] !== defaultActiveFilters[group.field])
-    }, [search, filterGroups, activeFilters, defaultActiveFilters])
+
+        const filtersChange = filterGroups.some(group => activeFilters[group.field] !== defaultActiveFilters[group.field])
+        if(filtersChange) return true
+
+        const tabChanged = tabs?.length > 0 && activeTab !== tabs[0]?.key;
+        if (tabChanged) return true;
+
+        return false;
+    }, [search, filterGroups, activeFilters, defaultActiveFilters, tabs, activeTab])
 
     return {
         data,
@@ -114,6 +138,8 @@ export function useRemoteTableData(
         activeFilters,
         setActiveFilter,
         filterGroups,
+        activeTab,
+        setActiveTab,
         isFiltering,
         pagination,
         setPage,

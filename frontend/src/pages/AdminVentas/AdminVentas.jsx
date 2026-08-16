@@ -8,14 +8,12 @@ import { EditForm } from "../../shared/components/forms/EditForm/EditForm"
 import { ConfirmModal } from "../../shared/components/modals/ConfirmModal/ConfirmModal"
 import { ventas_columns, searchFields, inputs, tabs } from "./data/ventas.config"
 import { DetalleVentaModal } from "./components/DetalleVentaModal/DetalleVentaModal"
-
-
-
+import { useVentasCRUD } from "../../shared/hooks/useVentasCRUD"
 
 export function AdminVentas(){
     
     const {
-        items,
+        ventas,
         showEditForm,
         editingElem,
         confirmState,
@@ -25,16 +23,15 @@ export function AdminVentas(){
         closeEditForm,
         handleRequestEdit,
         handleSubmitEdit,
+        search,
+        setSearch,
+        activeTab,
+        setActiveTab,
+        filterGroups,
+        isFiltering,
         pagination,
-        handleChangePage
-    } = useAdminCRUD({
-        getAll: getVentas,
-        create: crearVenta,
-        update: updateEstadoVenta,
-        remove: cancelarVenta,
-        entityName: "Venta",
-        inputsConfig: inputs,
-    })
+        setPage,
+    } = useVentasCRUD({ tabs, inputsConfig: inputs })
 
     const [ventaVistaId, setVentaVistaId] = useState(null)
 
@@ -65,15 +62,23 @@ export function AdminVentas(){
             />
 
             <TableContainer
-                data={items}
+                data={ventas}
                 columns={columns}
-                searchFields={searchFields}
-                placeholderInput={"Buscar por nombre o código de venta"}
                 messageNoSearch={"No tienes ventas realizadas aún."}
+                placeholderInput={"Buscar por nombre o código de venta"}
+
+                search={search}
+                onSearchChange={setSearch}
+
                 tabs={tabs}
+                activeTab={activeTab}
+                onTabChange={setActiveTab}
+
                 pagination={pagination}
-                onPageChange={handleChangePage}
-            />
+                onPageChange={setPage}
+
+                isFiltering={isFiltering}
+            />  
 
             {
                 confirmState &&

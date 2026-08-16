@@ -151,55 +151,54 @@ export class ProductoModel {
         return result.affectedRows > 0
     }
 
-    static async search({ query, marcaSlugs, categoriaSlugs, precioMin, precioMax, activo, destacado, conDescuento, orden, page = 1, perPage = 20 } = {}) {
+    static async search({ query, marcaSlugs, categoriaSlugs, precioMin, precioMax, activo, destacado, conDescuento, orden, page, perPage } = {}) {
 
         const conditions = []
         const params = []
         const precioFinalExpr = "ROUND(p.precio * (1 - p.descuento / 100), 2)"
-    
+
         if (query) {
             const term = `%${query}%`
             conditions.push(`(p.nombre LIKE ? OR p.descripcion LIKE ? OR m.nombre LIKE ? OR c.nombre LIKE ?)`)
             params.push(term, term, term, term)
         }
-    
+
         if (marcaSlugs?.length) {
             conditions.push(`m.slug IN (${marcaSlugs.map(() => "?").join(", ")})`)
             params.push(...marcaSlugs)
         }
-    
+
         if (categoriaSlugs?.length) {
             conditions.push(`c.slug IN (${categoriaSlugs.map(() => "?").join(", ")})`)
             params.push(...categoriaSlugs)
         }
-    
+
         if (precioMin !== undefined) {
             conditions.push(`${precioFinalExpr} >= ?`)
             params.push(Number(precioMin))
         }
-    
+
         if (precioMax !== undefined) {
             conditions.push(`${precioFinalExpr} <= ?`)
             params.push(Number(precioMax))
         }
-    
+
         if (activo !== undefined) {
             conditions.push("p.activo = ?")
             params.push(activo ? 1 : 0)
         }
-    
+
         if (destacado !== undefined) {
             conditions.push("p.destacado = ?")
             params.push(destacado ? 1 : 0)
         }
-    
+
         if (conDescuento) {
             conditions.push("p.descuento > 0")
         }
-    
+
         const whereClause = conditions.length ? conditions.join(" AND ") : "1=1"
-    
-        // Total de resultados que matchean, para calcular cantidad de páginas
+
         const [countResult] = await pool.query(
             `SELECT COUNT(DISTINCT p.id) total
              FROM productos p
@@ -210,7 +209,7 @@ export class ProductoModel {
             params
         )
         const total = countResult[0].total
-    
+
         const orderMap = {
             "menor-precio": "p.precio ASC",
             "mayor-precio": "p.precio DESC",
@@ -218,8 +217,9 @@ export class ProductoModel {
             "nombre-desc": "p.nombre DESC"
         }
         const orderClause = orderMap[orden] ?? "p.created_at DESC"
-        const offset = (Number(page) - 1) * Number(perPage)
-    
+
+        const { limitClause, limitParams, toResult } = buildPagination({ page, perPage, defaultPerPage: 20 })
+
         const [productos] = await pool.query(
             `SELECT DISTINCT ${SELECT_FIELDS_COLUMNS}
              FROM productos p
@@ -228,20 +228,15 @@ export class ProductoModel {
              LEFT JOIN categorias c ON c.id = pc.categoria_id
              WHERE ${whereClause}
              ORDER BY ${orderClause}
-             LIMIT ? OFFSET ?`,
-            [...params, Number(perPage), offset]
+             ${limitClause}`,
+            [...params, ...limitParams]
         )
-    
+
         const productosCompletos = await Promise.all(productos.map(attachRelations))
-    
+
         return {
             productos: productosCompletos,
-            pagination: {
-                page: Number(page),
-                perPage: Number(perPage),
-                total,
-                totalPages: Math.ceil(total / perPage)
-            }
+            pagination: page !== undefined ? toResult(total) : null
         }
     }
 }

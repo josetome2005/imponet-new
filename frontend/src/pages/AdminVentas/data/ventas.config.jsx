@@ -8,12 +8,12 @@ export const searchFields = [
 ]
 
 export const tabs = [
-    { key: "todos", label: "Todos", filterFn: () => true },
-    { key: "pendiente", label: "Pendiente", filterFn: (v) => v.estado === "pendiente" },
-    { key: "enviado", label: "Enviado", filterFn: (v) => v.estado === "enviado" },
-    { key: "entregado", label: "Entregado", filterFn: (v) => v.estado === "entregado" },
-    { key: "pagado", label: "Pagado", filterFn: (v) => v.estado === "pagado" },
-    { key: "cancelado", label: "Cancelado", filterFn: (v) => v.estado === "cancelado" },
+    { key: "todos", label: "Todos", toParams: () => ({}) },
+    { key: "pendiente", label: "Pendientes", toParams: () => ({ estado: "pendiente" }) },
+    { key: "pagado", label: "Pagados", toParams: () => ({ estado: "pagado" }) },
+    { key: "enviado", label: "Enviados", toParams: () => ({ estado: "enviado" }) },
+    { key: "entregado", label: "Entregados", toParams: () => ({ estado: "entregado" }) },
+    { key: "cancelado", label: "Cancelados", toParams: () => ({ estado: "cancelado" }) },
 ]
 
 const opciones_estado = [
