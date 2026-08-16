@@ -3,7 +3,7 @@ import "./Header.css"
 import { Link, useNavigate } from "react-router-dom"
 import { useCarrito } from "../../../contexts/CarritoContext"
 import { SearchBar } from "../../ui/SearchBar/SearchBar"
-import { getCategoriasConCantidad } from "../../../services/categorias.services"
+import { getCategoriasDestacadas } from "../../../services/categorias.services"
 
 export function Header(){
 
@@ -11,12 +11,12 @@ export function Header(){
 
     useEffect(() => {
         async function fetchCategorias(){
-            const data = await getCategoriasConCantidad()
-            const categoriasDestacadsa = data.items
+            const data = await getCategoriasDestacadas()
+            const categoriasDestacadas = data
                 .slice()
                 .sort((a, b) => b.cantidad_productos - a.cantidad_productos)
                 .slice(0, 5)
-            setCategorias(categoriasDestacadsa)
+            setCategorias(categoriasDestacadas)
         }
         fetchCategorias()
     }, [])

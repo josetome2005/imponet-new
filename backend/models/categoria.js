@@ -119,10 +119,50 @@ export class CategoriaModel {
             ORDER BY c.nombre
             ${limitClause}
         `, [...params, ...limitParams])
-    
+            
         return {
             items: categorias,
             pagination: page !== undefined ? toResult(total) : null
         }
+    }
+
+    static async getDestacadasConImagen() {
+        const [categorias] = await pool.query(`
+            SELECT BIN_TO_UUID(c.id) id, c.nombre, c.slug
+            FROM categorias c
+            WHERE c.destacado = 1
+            ORDER BY c.nombre
+        `)
+
+        // Por cada categoría, traemos varios candidatos de imagen (no solo 1),
+        // para poder saltear los que ya se usaron en otra categoría
+        const resultado = []
+        const imagenesUsadas = new Set()
+
+        for (const cat of categorias) {
+            const [productos] = await pool.query(`
+            SELECT pi.url
+                FROM productos p
+                JOIN producto_categorias pc ON pc.producto_id = p.id
+                JOIN producto_imagenes pi ON pi.producto_id = p.id AND pi.orden = 0
+                WHERE pc.categoria_id = UUID_TO_BIN(?) AND p.activo = 1
+                ORDER BY p.created_at DESC
+                LIMIT 10
+            `, [cat.id])
+
+            // Buscamos la primera imagen que todavía no se usó en otra categoría destacada
+            const imagenLibre = productos.find(p => !imagenesUsadas.has(p.url))
+            const imagenElegida = imagenLibre?.url ?? productos[0]?.url ?? null
+
+            if (imagenElegida) imagenesUsadas.add(imagenElegida)
+
+            resultado.push({
+                nombre: cat.nombre,
+                slug: cat.slug,
+                imagen: imagenElegida
+            })
+        }
+
+        return resultado
     }
 }

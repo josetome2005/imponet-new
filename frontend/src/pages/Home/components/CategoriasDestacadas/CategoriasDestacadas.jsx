@@ -1,8 +1,11 @@
 import "./CategoriasDestacadas.css"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { CategoriaItem } from "../CategoriaItem/CategoriaItem"
 import { Button } from "../../../../shared/components/ui/Button/Button"
 import { useNavigate } from "react-router-dom"
+import { getCategoriasDestacadas, getCategoriasDestacadasConImagen } from "../../../../shared/services/categorias.services"
+import { searchProductos } from "../../../../shared/services/productos.services"
+import { API_URL } from "../../../../shared/services/http.services"
 
 const categorias_local = [
     {
@@ -29,8 +32,22 @@ const categorias_local = [
 
 export function CategoriasDestacadas(){
 
-    const [categorias, setCategorias] = useState(categorias_local)
     const navigate = useNavigate()
+
+    const [categorias, setCategorias] = useState()
+    
+    useEffect(() => {
+        async function fetchCategorias() {
+            const data = await getCategoriasDestacadasConImagen()
+            const cats = data.map(c => ({
+                name: c.nombre,
+                img: c.imagen ? `${API_URL}${c.imagen}` : "/img/placeholder-categoria.png"
+            }))
+            setCategorias(cats)
+        }
+        fetchCategorias()
+    }, [])
+
 
     const handleNavigate = (path) => {
         navigate(path)

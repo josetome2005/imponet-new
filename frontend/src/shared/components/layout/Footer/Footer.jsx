@@ -1,7 +1,30 @@
-import { Newsletter } from "../Newsletter/Newsletter"
 import "./Footer.css"
+import { Newsletter } from "../Newsletter/Newsletter"
+import { useState, useEffect } from "react"
+import { getCategoriasDestacadas } from "../../../services/categorias.services"
+import { useNavigate } from "react-router-dom"
 
 export function Footer(){
+
+    const [categorias, setCategorias] = useState()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        async function fetchCategorias(){
+            const data = await getCategoriasDestacadas()
+            const categoriasDestacadas = data
+                .slice()
+                .sort((a, b) => b.cantidad_productos - a.cantidad_productos)
+                .slice(0, 5)
+            setCategorias(categoriasDestacadas)
+        }
+        fetchCategorias()
+    }, [])
+
+    const handleGoTo = (path) => {
+        navigate(path)
+        window.scrollTo({top: 0})
+    }
 
 
     return(
@@ -34,18 +57,13 @@ export function Footer(){
                         <div>
                             <h4>Categorias</h4>
                             <ul>
-                                <li>
-                                    <a href="">Notebooks</a>
-                                </li>
-                                <li>
-                                    <a href="">Gaming</a>
-                                </li>
-                                <li>
-                                    <a href="">Audio</a>
-                                </li>
-                                <li>
-                                    <a href="">Entretenimiento</a>
-                                </li>
+                                {
+                                    categorias?.map(c => (
+                                        <li>
+                                            <a onClick={() => handleGoTo(`/productos?categoria=${c.slug}`)}>{c.nombre}</a>
+                                        </li>
+                                    ))
+                                }
                             </ul>
                         </div>
                         <div>

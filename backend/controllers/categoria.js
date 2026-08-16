@@ -29,6 +29,11 @@ export class CategoriaController {
         res.json(items)
     }
 
+    getDestacadasConImagen = async (req, res) => {
+        const categorias = await this.categoriaModel.getDestacadasConImagen()
+        res.json(categorias)
+    }
+
     create = async (req, res) => {
         const result = validateCategoria(req.body)
         if (!result.success) return res.status(400).json({ error: JSON.parse(result.error.message) })
@@ -63,7 +68,7 @@ export class CategoriaController {
 
     getAllWithCount = async (req, res) => {
         const { q, destacado, page, perPage } = req.query
-        const categorias = await this.categoriaModel.getAll({
+        const categorias = await this.categoriaModel.getAllWithCount({
             q,
             destacado: destacado !== undefined ? (destacado === "true" || destacado === "1") : undefined,
             page,

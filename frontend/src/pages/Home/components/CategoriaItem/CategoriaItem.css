@@ -12,17 +12,25 @@
     box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.17);
 }
 
+.img__container{
+    height: 80%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+}
+
 .categoria__item img{
     width: 80%;
     margin: 0 auto;
 }
 
-.categoria__meta_categoria{
+.categoria__cta{
     display: block;
     color: #cccccc;
     font-size: 0.875rem;
-    margin-top: 20px;
-    margin-bottom: 5px;
+    margin-bottom: 0.25rem;
 }
 
 .categoria__name{

@@ -72,3 +72,8 @@ export const getCategoriasDestacadas = async () => {
     const res = await fetch(`${API_URL}/categorias/destacadas`);
     return handleResponse(res);
 };
+
+export const getCategoriasDestacadasConImagen = async () => {
+    const res = await fetch(`${API_URL}/categorias/destacadas-con-imagen`);
+    return handleResponse(res);
+};

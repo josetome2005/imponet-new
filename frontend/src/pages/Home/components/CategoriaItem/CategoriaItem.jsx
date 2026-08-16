@@ -8,9 +8,11 @@ export function CategoriaItem({categoria}){
 
         <div className="categoria__item">
             
-            <img src={categoria.img} alt={categoria.name} />
-            <span className="categoria__meta_categoria">{categoria.meta_categoria}</span>
+            <div className="img__container">
+                <img src={categoria.img} alt={categoria.name} />
+            </div>
             <span className="categoria__name">{categoria.name}</span>
+            <span className="categoria__cta">Explorar</span>
         </div>
 
     )

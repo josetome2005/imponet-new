@@ -1,9 +1,7 @@
-import { useTableFilters } from "../../../hooks/UseTableFilters";
 import { SearchBarWithFilters } from "../SearchBarWithFilters/SearchBarWithFilters";
 import { DataTable } from "../DataTable/DataTable";
 import { TableTabs } from "../TableTabs/TableTabs";
 
-import { useState } from "react";
 import { Pagination } from "../../ui/Pagination/Pagination";
 
 export function TableContainer(
