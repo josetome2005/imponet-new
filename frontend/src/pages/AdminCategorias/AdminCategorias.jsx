@@ -48,6 +48,8 @@ export function AdminCategorias() {
         searchFields,
     })
 
+    
+    console.log(categorias)
     const columns = categorias_columns(handleRequestEdit, handleDelete)  
 
     return (

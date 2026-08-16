@@ -63,7 +63,6 @@ export const getCategoriasConCantidad = async ({ page, perPage, destacado, q } =
     if (destacado !== undefined) params.set("destacado", destacado)
     if (q) params.set("q", q)
 
-
     const query = params.toString()
     const res = await fetch(`${API_URL}/categorias/con-cantidad${query ? `?${query}` : ""}`);
     return handleResponse(res);
