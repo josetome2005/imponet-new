@@ -13,7 +13,7 @@ const fetchProductosAdapter = async (queryParams) => {
 
 export function useProductosCRUD({ filters } = {})  {
 
-    const table = useRemoteTableData(fetchProductosAdapter, { filters, perPage: 5 })
+    const table = useRemoteTableData(fetchProductosAdapter, { filters, perPage: 10 })
 
     const [showNewForm, setShowNewForm] = useState(false);
     const [showEditForm, setShowEditForm] = useState(false);

@@ -5,7 +5,7 @@ import { SelectOption } from "../../shared/components/forms/inputs/SelectOption/
 import "./Productos.css"
 import { useEffect, useState } from "react"
 import { searchProductos } from "../../shared/services/productos.services"
-import { ProductoItem } from "../../shared/components/items/PropertyItem/ProductoItem"
+import { ProductoItem } from "../../shared/components/items/ProductoItem/ProductoItem"
 import { getMarcasConCantidad } from "../../shared/services/marcas.services"
 import { getCategoriasConCantidad } from "../../shared/services/categorias.services"
 import { FiltersSidebar } from "./components/FilterSidebar/FilterSidebar"
@@ -49,7 +49,7 @@ export function Productos(){
 
     useEffect(() => {
         async function fetchFiltros() {
-            const [m, c] = await Promise.all([getMarcasConCantidad(), getCategoriasConCantidad()]);
+            const [{items: m}, {items: c}] = await Promise.all([getMarcasConCantidad(), getCategoriasConCantidad()]);
             setMarcasDisponibles(m);
             setCategoriasDisponibles(c);
         }
@@ -173,6 +173,7 @@ export function Productos(){
                             precioMax
                         }}
                         onApply={handleApplyFilters}
+                        onClean={() => navigate("/productos")}
                     />
 
                     <div className="searched__productos__container">

@@ -11,6 +11,7 @@ const productoSchema = z.object({
     dimensiones: z.string().max(50).optional(),
     extra: z.string().max(100).optional(),
     activo: z.boolean().default(true),
+    destacado: z.boolean().default(false),
     categoria_ids: z.array(z.string().uuid()).optional().default([]),
     sku: z.string().nullable().optional()
 })

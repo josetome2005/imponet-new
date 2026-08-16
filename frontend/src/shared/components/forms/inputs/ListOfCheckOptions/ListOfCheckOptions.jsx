@@ -10,7 +10,7 @@ export function ListOfCheckOptions({name_input, checkedOptions, options, onToggl
                 {
                     options.map(option => (
 
-                        <div key={option.id} className="option__item">
+                        <div key={option.name} className="option__item">
                             <label>
                                 <input type="checkbox" checked={checkedOptions.includes(option.value)} onChange={() => onToggle(name_input, option.value)} />
                                 <span>{option.label}</span>

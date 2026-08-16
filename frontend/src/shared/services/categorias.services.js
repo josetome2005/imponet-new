@@ -10,7 +10,7 @@ const buildPaginationParams = ({ page, perPage }) => {
     return query;
 }
 
-export const getCategorias = async ({ page, perPage }) => {
+export const getCategorias = async ({ page, perPage } = {}) => {
     const query = buildPaginationParams({ page, perPage })
     const res = await fetch(`${API_URL}/categorias${query ? `?${query}` : ""}`);
     return handleResponse(res);

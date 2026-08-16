@@ -20,13 +20,17 @@ export function ProductoItem({producto}){
     const navigate = useNavigate()
 
     const main_img = producto.imagenes[0]
-    
 
     return(
 
         <div className="producto__item" onClick={() => navigate(`/producto/${producto.id}`)}>
 
             <div className="img__container">
+                {
+                    producto.destacado > 0 &&
+                    <span className="producto__destacado__tag">Destacado</span>
+
+                }
                 <img src={`${API_URL}${main_img.url}`} alt={producto.nombre}/>
             </div>  
 

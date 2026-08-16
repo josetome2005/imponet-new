@@ -59,6 +59,15 @@
     color: #444444;
 }
 
+.destacado__tag__producto{
+    display: inline-block;
+    font-size: 0.65rem;
+    background-color: var(--main-blue);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 9999px;   
+}
+
 /*-------------------------------------------------*/
 
 .admin__productos .actions__container span {

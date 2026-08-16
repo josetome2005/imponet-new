@@ -24,7 +24,7 @@ export function useAdminCRUD({
 
     useEffect(() => {
         async function fetchAll() {
-            const {items: data, pagination: pag} = await getAll({ page, perPage: 2 })
+            const {items: data, pagination: pag} = await getAll({ page })
             setItems(data)
             console.log(data)
             setPagination(pag)

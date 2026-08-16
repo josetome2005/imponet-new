@@ -36,6 +36,10 @@ export const buildProductosColumns = ({onEdit, onDelete}) => [
                     package_2
                 </span>
                 <span className="nombre__producto">{p.nombre}</span>
+                {
+                    p.destacado !== 0 &&
+                    <span className="destacado__tag__producto">Destacado</span>
+                }
             </div>
         )
     },
@@ -114,5 +118,7 @@ export const buildProductoInputs = ({ marcas, categorias }) => [
         options: categorias.map((c) => ({ label: c.nombre, value: c.id })),
         width: "100"
     },
-    { id: "activo", name: "activo", type: "boolean", label: "Producto activo", mappedProp: "activo" }
+    { id: "activo", name: "activo", type: "boolean", label: "Producto activo", mappedProp: "activo" },
+    { id: "destacado", name: "destacado", type: "boolean", label: "Producto Destacado", mappedProp: "destacado" }
+
 ]

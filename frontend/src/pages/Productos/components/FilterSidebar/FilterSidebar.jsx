@@ -2,7 +2,7 @@ import "./FilterSidebar.css"
 import { useState } from "react";
 import { FilterGroup } from "../FilterGroup/FilterGroup";
 
-export function FiltersSidebar({ marcas, categorias, initialFilters, onApply }){
+export function FiltersSidebar({ marcas, categorias, initialFilters, onApply, onClean }){
 
     const [selectedMarcas, setSelectedMarcas] = useState(initialFilters?.marca ?? []);
     const [selectedCategorias, setSelectedCategorias] = useState(initialFilters?.categoria ?? []);
@@ -47,8 +47,17 @@ export function FiltersSidebar({ marcas, categorias, initialFilters, onApply }){
         applyWith({})
     };
 
+    const handleClean = () => {
+        setPrecioMax("")
+        setPrecioMin("")
+        setSelectedCategorias([])
+        setSelectedMarcas([])
+        onClean()
+    }
+
     return (
         <aside className="filters__sidebar">
+
             <FilterGroup
                 title="Marcas"
                 items={marcas}
@@ -89,8 +98,11 @@ export function FiltersSidebar({ marcas, categorias, initialFilters, onApply }){
                 />
             </div>
 
-            <button className="filter__apply__btn" onClick={handleAplicar}>
+            <button className="filter__sidebar__button filter__apply__btn" onClick={handleAplicar}>
                 Aplicar
+            </button>
+            <button className="filter__sidebar__button filter__clean__btn" onClick={handleClean}>
+                Limpiar Filtros
             </button>
         </aside>
     );

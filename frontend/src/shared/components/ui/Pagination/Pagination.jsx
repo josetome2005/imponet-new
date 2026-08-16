@@ -6,8 +6,6 @@ export function Pagination({ pagination, onPageChange }) {
 
     const { page, totalPages } = pagination
 
-    console.log(pagination)
-
     return (
         <div className="pagination">
             <Button 

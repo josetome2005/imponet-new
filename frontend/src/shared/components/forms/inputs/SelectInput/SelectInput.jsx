@@ -60,7 +60,7 @@ export function SelectInput({name_input, activeOption, options, onSelect, disabl
                 
                 {
                     usedOptions.map( item => (
-                        <span key={item.id} className="select__option" onClick={() => handleSelect(item)}>{item.label}</span>
+                        <span key={item.name} className="select__option" onClick={() => handleSelect(item)}>{item.label}</span>
                     ))
                 }
                 {

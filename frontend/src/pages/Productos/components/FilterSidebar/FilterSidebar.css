@@ -33,18 +33,29 @@
     border-color: #999;
 }
 
-.filter__apply__btn {
+.filter__sidebar__button {
     margin-top: 20px;
     padding: 10px;
-    background-color: #1a1a2e;
     color: #fff;
     border: none;
     border-radius: 8px;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
+    transition: 0.3s all;
 }
 
+.filter__apply__btn{
+    background-color: var(--main-blue);
+}
 .filter__apply__btn:hover {
+    opacity: 0.9;
+}
+
+.filter__clean__btn{
+    background-color: #12122e;
+}
+
+.filter__clean__btn:hover {
     background-color: #2a2a4a;
 }

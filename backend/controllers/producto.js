@@ -59,6 +59,10 @@ export class ProductoController {
         if (body.activo !== undefined) {
             body.activo = body.activo === "true" || body.activo === "1" || body.activo === true || body.activo === 1;
         }
+        if (body.destacado !== undefined) {
+            body.destacado = body.destacado === "true" || body.destacado === "1" || body.destacado === true || body.destacado === 1;
+        }
+
 
         const result = validateProducto(body)
         if (!result.success) return res.status(400).json({ error: JSON.parse(result.error.message) })
@@ -80,6 +84,8 @@ export class ProductoController {
         if (body.descuento) body.descuento = Number(body.descuento)
         if (body.stock) body.stock = Number(body.stock)
         if (body.activo !== undefined) body.activo = body.activo === "true" || body.activo === true
+        if (body.destacado !== undefined) body.destacado = body.destacado === "true" || body.destacado === true
+
 
         const result = validatePartialProducto(body)
         if (!result.success) return res.status(400).json({ error: JSON.parse(result.error.message) })
@@ -110,19 +116,42 @@ export class ProductoController {
 
     // Público: búsqueda completa (texto + marca + categoría + precio + orden + paginación)
     search = async (req, res) => {
-        const { q, marca, categoria, precioMin, precioMax, activo, orden, page, perPage } = req.query
-
+        const {
+            q,
+            marca,
+            categoria,
+            precioMin,
+            precioMax,
+            activo,
+            destacado,
+            con_descuento,
+            orden,
+            page,
+            perPage
+        } = req.query
+    
         const resultado = await this.productoModel.search({
             query: q?.trim() || undefined,
             marcaSlugs: marca ? marca.split(",") : undefined,
             categoriaSlugs: categoria ? categoria.split(",") : undefined,
             precioMin,
             precioMax,
-            activo: activo !== undefined ? (activo === "true" || activo === "1") : undefined,
+    
+            activo: activo !== undefined
+                ? (activo === "true" || activo === "1")
+                : undefined,
+    
+            destacado: destacado !== undefined
+                ? (destacado === "true" || destacado === "1")
+                : undefined,
+    
+            conDescuento: con_descuento === "true",
+    
             orden,
             page,
             perPage,
         })
+    
         res.json(resultado)
     }
 }

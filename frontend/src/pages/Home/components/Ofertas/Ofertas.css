@@ -4,12 +4,13 @@
 
 .productos__container{
     display: flex;
-    justify-content: space-between;
+    gap: 3rem;
     margin-top: 40px;
 }
 
 .productos__container > *{
-    width: 19%;
+    flex: 0 0 calc(25% - (9rem / 4));
+    width: calc();
 }
 
 .button__container{

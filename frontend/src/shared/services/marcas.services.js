@@ -53,7 +53,7 @@ export const deleteMarca = async (id) => {
     return handleResponse(res);
 };
 
-export const getMarcasConCantidad = async ({ page, perPage }) => {
+export const getMarcasConCantidad = async ({ page, perPage } = {}) => {
     const query = buildPaginationParams({ page, perPage })
     const res = await fetch(`${API_URL}/marcas/con-cantidad${query ? `?${query}` : ""}`);
     return handleResponse(res);

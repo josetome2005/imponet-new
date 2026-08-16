@@ -3,7 +3,7 @@ import { pool } from "../config/connection_db.js"
 const SELECT_FIELDS_COLUMNS = `
     BIN_TO_UUID(p.id) id, BIN_TO_UUID(p.marca_id) marca_id, m.nombre marca_nombre,
     p.nombre, p.descripcion, p.precio, p.descuento, p.stock,
-    p.dimensiones, p.extra, p.activo, p.created_at, p.updated_at, p.sku
+    p.dimensiones, p.extra, p.activo, p.destacado, p.created_at, p.updated_at, p.sku
 `
 
 const SELECT_FIELDS = `SELECT ${SELECT_FIELDS_COLUMNS} FROM productos p LEFT JOIN marcas m ON m.id = p.marca_id`

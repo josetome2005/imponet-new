@@ -1,20 +1,29 @@
 import "./Ofertas.css"
-import { ProductoItem } from "../../../../shared/components/items/PropertyItem/ProductoItem"
+import { ProductoItem } from "../../../../shared/components/items/ProductoItem/ProductoItem"
 import { Button } from "../../../../shared/components/ui/Button/Button"
 import { useEffect, useState } from "react"
 import { getProductosEnOferta } from "../../../../shared/services/productos.services"
+import { useNavigate } from "react-router-dom"
 
 export function Ofertas(){
     
     const [productos, setProductos] = useState([])
+    const navigate = useNavigate()
 
     useEffect(() => {
         async function fetchAll(){
             const { productos: data } = await getProductosEnOferta()
-            setProductos(data)
+            const productos_seleccionados = data.slice(0, 4)
+            setProductos(productos_seleccionados)
         }
         fetchAll()
     }, [])
+
+
+    const handleNavigate = (path) => {
+        navigate(path)
+        window.scrollTo({top: 0})
+    }
 
 
     return(
@@ -36,7 +45,8 @@ export function Ofertas(){
             <div className="button__container">
                 <Button 
                     mode={"pink"}
-                    text={"Ver más"}/>
+                    text={"Ver más"}
+                    onClick={() => handleNavigate("/productos")}/>
             </div>
 
         </div>

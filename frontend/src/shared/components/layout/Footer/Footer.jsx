@@ -66,7 +66,7 @@ export function Footer(){
                 </div>
 
                 <div className="bottom__footer">
-                    <p>Imponet  — Av. Colón 1234, Córdoba, Argentina. CUIT 30-71234567-8. Sitio protegido con certificado SSL. </p>
+                    <p>Imponet - Productos Tecnología </p>
                     <p>© 2026 Imponet · Todos los derechos reservados</p>
                 </div>
             </footer>

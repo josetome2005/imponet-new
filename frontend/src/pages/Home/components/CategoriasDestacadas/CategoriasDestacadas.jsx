@@ -2,6 +2,7 @@ import "./CategoriasDestacadas.css"
 import { useState } from "react"
 import { CategoriaItem } from "../CategoriaItem/CategoriaItem"
 import { Button } from "../../../../shared/components/ui/Button/Button"
+import { useNavigate } from "react-router-dom"
 
 const categorias_local = [
     {
@@ -29,6 +30,12 @@ const categorias_local = [
 export function CategoriasDestacadas(){
 
     const [categorias, setCategorias] = useState(categorias_local)
+    const navigate = useNavigate()
+
+    const handleNavigate = (path) => {
+        navigate(path)
+        window.scrollTo({top: 0})
+    }
 
     return(
 
@@ -47,7 +54,8 @@ export function CategoriasDestacadas(){
             
             <div className="button__container">
                 <Button 
-                    text={"Explorar más"}/>
+                    text={"Explorar más"}
+                    onClick={() => handleNavigate("/productos")}/>
             </div>
         </div>
 
