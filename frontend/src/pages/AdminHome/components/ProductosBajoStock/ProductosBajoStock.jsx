@@ -19,7 +19,7 @@ export function ProductosBajoStock({productos}){
 
             <div className="productos">
                 {
-                    productos.map(p => (
+                    productos?.map(p => (
                         <div className="producto__item">
                             <span className="producto__nombre">{p.nombre}</span>
                             <span className={`${p.stock === 0 ? "producto__cantidad agotado" : "producto__cantidad"}`}>

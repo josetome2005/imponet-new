@@ -22,7 +22,7 @@ export function PedidosPendientes({pedidos}){
 
             <div className="pedidos">
                 {
-                    pedidos.map(v => (
+                    pedidos?.map(v => (
                         <div className="pedido__item">
                             <div>
                                 <span className="pedido__nombre">{v.nombre}</span>

@@ -9,6 +9,7 @@ import { MyPieChart } from "../../shared/components/charts/MyPieChart/MyPieChart
 import { useDashboardData } from "./hooks/useDashboardData"
 import { rellenarVentasPorDia } from "./utils/formatVentasPorDia"
 import { formatVentasPorEstado } from "./utils/formatVentaPorEstado"
+import { SkeletonGroupOfStatCards } from "../../shared/components/charts/GroupOfStatCards/SkeletonStatCard"
 
 const ESTADO_COLORS = ["#f5b942", "#4ea1f5", "#a874f0", "#3ecf8e", "#f56565"]
 // pendiente, pagado, enviado, entregado, cancelado — mismo orden/paleta que usamos en los badges
@@ -18,11 +19,9 @@ export function AdminHome(){
 
     const { resumen, loading } = useDashboardData()
 
-    if (loading || !resumen) return <p>Cargando dashboard...</p>
-
-    const statCards = buildStatCards(resumen)
-    const dataVentasPorDia = rellenarVentasPorDia(resumen.ventasPorDia, 7)
-    const dataVentasPorEstado = formatVentasPorEstado(resumen.ventasPorEstado)
+    const statCards = resumen ? buildStatCards(resumen) : []
+    const dataVentasPorDia = resumen ? rellenarVentasPorDia(resumen.ventasPorDia, 7) : []
+    const dataVentasPorEstado = resumen ? formatVentasPorEstado(resumen.ventasPorEstado) : []
 
     return(
 
@@ -30,17 +29,23 @@ export function AdminHome(){
             <SectionTitle 
                 title={"Dashboard"}
                 subtitle={"Resumen de tu catálogo de Imponet."}/>
-
-            <GroupOfStatCards 
-                statCards={statCards}
-            />
+            {
+                loading ? (
+                    <SkeletonGroupOfStatCards />
+                ) : (
+                    <GroupOfStatCards 
+                        statCards={statCards}
+                    />
+                )
+            }
+            
 
             <div className="charts__container">
                 <ProductosBajoStock 
-                    productos={resumen.stockBajo}
+                    productos={resumen?.stockBajo}
                 />
                 <PedidosPendientes 
-                    pedidos={resumen.pedidosPendientes}
+                    pedidos={resumen?.pedidosPendientes}
                 />
             </div>
 
