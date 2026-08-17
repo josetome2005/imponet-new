@@ -45,6 +45,13 @@ export class ProductoModel {
         return Promise.all(productos.map(attachRelations))
     }
 
+    static async countAll() {
+        const [result] = await pool.query(
+            `SELECT COUNT(*) total FROM productos`
+        )
+        return result[0].total
+    }
+
     static async create({ object }) {
         const { nombre, descripcion, precio, descuento, stock, dimensiones, extra, activo, marca_id, categoria_ids, imagenes, sku } = object
 

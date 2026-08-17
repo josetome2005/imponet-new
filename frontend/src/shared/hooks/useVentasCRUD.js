@@ -30,6 +30,7 @@ export function useVentasCRUD({ tabs, inputsConfig } = {}) {
         fetchTotalCount()
     }, [])
 
+
     const closeEditForm = () => {
         setShowEditForm(false);
         setEditingElem(null);

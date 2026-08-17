@@ -1,8 +1,8 @@
 // hooks/useProductosCRUD.js
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useConfirm } from "./useConfirm";
 import { useToast } from "../components/toast/ToastContext";
-import { createProducto, updateProducto, deleteProducto, searchProductos } from "../services/productos.services";
+import { createProducto, updateProducto, deleteProducto, searchProductos, getTotalProductos } from "../services/productos.services";
 import { useRemoteTableData } from "./useRemoteTableData";
 
 // Adaptador: useRemoteTableData espera { data, pagination }, el backend nos da { productos, pagination }
@@ -22,15 +22,22 @@ export function useProductosCRUD({ filters } = {})  {
     const { state, confirm, handleCancel, handleConfirm } = useConfirm();
     const toast = useToast();
 
-    const [totalCount, setTotalCount] = useState(0)
+    const [totalCount, setTotalCount] = useState(null)
+    const [loadingTotal, setLoadingTotal] = useState(true)
+
+    const refetchTotal = useCallback(async () => {
+        setLoadingTotal(true)
+        try {
+            const { total } = await getTotalProductos()
+            setTotalCount(total)
+        } finally {
+            setLoadingTotal(false)
+        }
+    }, [])
 
     useEffect(() => {
-        async function fetchTotalCount() {
-            const { pagination } = await searchProductos({ page: 1, perPage: 1 })
-            setTotalCount(pagination.total)
-        }
-        fetchTotalCount()
-    }, [])
+        refetchTotal()
+    }, [refetchTotal])
 
     const openNewForm = () => setShowNewForm(true);
     const closeNewForm = () => setShowNewForm(false);
@@ -85,6 +92,7 @@ export function useProductosCRUD({ filters } = {})  {
     return {
         // CRUD
         totalCount,
+        loadingTotal,
         showNewForm,
         showEditForm,
         editingElem,

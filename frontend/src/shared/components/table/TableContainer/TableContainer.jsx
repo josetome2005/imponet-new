@@ -27,7 +27,9 @@ export function TableContainer(
       pagination,
       onPageChange,
       // Le dice a DataTable si hay algo activo (para mensaje de vacio vs no resultados)
-      isFiltering
+      isFiltering,
+      isLoading
+      
     }) {
     
   return (
@@ -57,6 +59,7 @@ export function TableContainer(
           handleClick={handleClick}
           rowClassName={rowClassName}
           isFiltering={isFiltering}
+          isLoading={isLoading}
       />
 
       {

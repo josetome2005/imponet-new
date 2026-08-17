@@ -9,7 +9,6 @@ import { MyPieChart } from "../../shared/components/charts/MyPieChart/MyPieChart
 import { useDashboardData } from "./hooks/useDashboardData"
 import { rellenarVentasPorDia } from "./utils/formatVentasPorDia"
 import { formatVentasPorEstado } from "./utils/formatVentaPorEstado"
-import { SkeletonGroupOfStatCards } from "../../shared/components/charts/GroupOfStatCards/SkeletonStatCard"
 
 const ESTADO_COLORS = ["#f5b942", "#4ea1f5", "#a874f0", "#3ecf8e", "#f56565"]
 // pendiente, pagado, enviado, entregado, cancelado — mismo orden/paleta que usamos en los badges
@@ -29,23 +28,19 @@ export function AdminHome(){
             <SectionTitle 
                 title={"Dashboard"}
                 subtitle={"Resumen de tu catálogo de Imponet."}/>
-            {
-                loading ? (
-                    <SkeletonGroupOfStatCards />
-                ) : (
-                    <GroupOfStatCards 
-                        statCards={statCards}
-                    />
-                )
-            }
             
-
+            <GroupOfStatCards 
+                statCards={statCards}
+                isLoading={loading}
+            />
+                
             <div className="charts__container">
                 <ProductosBajoStock 
                     productos={resumen?.stockBajo}
-                />
-                <PedidosPendientes 
+                    isLoading={loading} />
+                <PedidosPendientes
                     pedidos={resumen?.pedidosPendientes}
+                    isLoading={loading}
                 />
             </div>
 
@@ -55,13 +50,15 @@ export function AdminHome(){
                         data={dataVentasPorDia}
                         title={"Ventas últimos 7 días"}
                         xAxisTitle={"fechaLabel"}
-                        yAxisTitle={"total"} />
+                        yAxisTitle={"total"} 
+                        isLoading={loading}/>
                 </div>
                 <div className="admin__home__section">
                     <MyPieChart
                         data={dataVentasPorEstado}
                         colors={ESTADO_COLORS}
-                        title="Ventas por estado"
+                        title={"Ventas por estado"}
+                        isLoading={loading}
                     />
                 </div>
                 

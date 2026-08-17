@@ -1,6 +1,7 @@
 import { Cell, Pie, PieChart, Legend, Tooltip } from 'recharts';
+import { Skeleton } from '../../ui/Skeleton/Skeleton';
 
-export function MyPieChart({data, colors, title, }){
+export function MyPieChart({data, colors, title, isLoading }){
 
     const COLORS = colors; 
     const RADIAN = Math.PI / 180;
@@ -27,23 +28,33 @@ export function MyPieChart({data, colors, title, }){
 
             <h3 className='chart__title'>{title}</h3>
             
-            <PieChart style={{ width: '100%', maxWidth: '300px', margin: '0 auto' , maxHeight: '70vh', aspectRatio: 1 }} responsive>
-                <Pie
-                    data={data}
-                    labelLine={false}
-                    label={renderCustomizedLabel}
-                    fill="#005DAC"
-                    dataKey="value"
-                    isAnimationActive={true}
-                >
-                    {data.map((entry, index) => (
-                        <Cell key={`cell-${entry.name}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                </Pie>
-                <Tooltip />
-                <Legend verticalAlign="bottom" align="center" iconType="circle" />
+            {isLoading ? (
+                <Skeleton
+                    width="100%"
+                    height={320}
+                    radius="12px"
+                    style={{ maxWidth: '700px', display: 'block' }}
+                />
+                ) : (
+                        <PieChart style={{ width: '100%', maxWidth: '300px', margin: '0 auto', maxHeight: '70vh', aspectRatio: 1 }} responsive>
+                            <Pie
+                                data={data}
+                                labelLine={false}
+                                label={renderCustomizedLabel}
+                                fill="#005DAC"
+                                dataKey="value"
+                                isAnimationActive={true}
+                            >
+                                {data.map((entry, index) => (
+                                    <Cell key={`cell-${entry.name}`} fill={COLORS[index % COLORS.length]} />
+                                ))}
+                            </Pie>
+                            <Tooltip />
+                            <Legend verticalAlign="bottom" align="center" iconType="circle" />
 
-            </PieChart>
+                        </PieChart>
+                )
+            }
             
 
            

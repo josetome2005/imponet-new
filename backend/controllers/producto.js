@@ -19,6 +19,11 @@ export class ProductoController {
         res.json(resultado)
     }
 
+    // controller
+    getTotal = async (req, res) => {
+        const total = await this.productoModel.countAll()
+        res.json({ total })
+    }
 
     // Admin: todos, activos o no
     getAllAdmin = async (req, res) => {

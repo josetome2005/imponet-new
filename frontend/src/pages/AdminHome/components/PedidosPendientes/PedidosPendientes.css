@@ -2,6 +2,12 @@
     color: var(--main-blue);
 }
 
+.pedidos__pendientes .pedidos{
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
 .pedidos .pedido__item{
     display: flex;
     align-items: center;

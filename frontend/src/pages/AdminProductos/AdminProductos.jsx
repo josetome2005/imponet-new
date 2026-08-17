@@ -8,6 +8,7 @@ import { getMarcas } from "../../shared/services/marcas.services"
 import { getCategorias } from "../../shared/services/categorias.services"
 import { useProductosCRUD } from "../../shared/hooks/useProductosCRUD"
 import { searchFields, filters, buildProductoInputs, buildProductosColumns } from "./data/productos.config"
+import { Skeleton } from "../../shared/components/ui/Skeleton/Skeleton"
 
 export function AdminProductos() {
 
@@ -26,6 +27,7 @@ export function AdminProductos() {
     const {
         productos,
         totalCount,
+        loadingTotal,
         showNewForm,
         showEditForm,
         editingElem,
@@ -46,6 +48,7 @@ export function AdminProductos() {
         isFiltering,
         pagination,
         setPage,
+        loading
     } = useProductosCRUD({ filters })
 
     const producto_inputs = buildProductoInputs({ marcas, categorias })
@@ -55,7 +58,11 @@ export function AdminProductos() {
         <div className="admin__section admin__productos">
             <SectionTitle
                 title={"Productos"}
-                subtitle={`${totalCount ?? 0} productos en tu catálogo.`}
+                subtitle={
+                    loadingTotal
+                        ? <><Skeleton width="20px" height="0.9rem" style={{ display: "inline-block", verticalAlign: "middle" }} /> productos en tu catálogo.</>
+                        : `${totalCount ?? 0} productos en tu catálogo.`
+                }
                 buttonText={"Nuevo Producto"}
                 onClick={openNewForm}
             />
@@ -77,6 +84,7 @@ export function AdminProductos() {
                 onPageChange={setPage}
 
                 isFiltering={isFiltering}
+                isLoading={loading}
             />
 
             {confirmState && (

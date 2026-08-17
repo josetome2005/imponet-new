@@ -1,7 +1,17 @@
 import "./ProductosBajoStock.css"
 import { Link } from "react-router-dom"
+import { Skeleton } from "../../../../shared/components/ui/Skeleton/Skeleton"
 
-export function ProductosBajoStock({productos}){
+function ProductoBajoStockSkeleton(i){
+    return(
+        <div className="producto__item" key={i}>
+            <Skeleton width="40%" height="1.125rem" />
+            <Skeleton width="20%" height="1.25rem" />
+        </div>
+    )
+}
+
+export function ProductosBajoStock({productos, isLoading}){
 
     return(
         <div className="productos__bajo__stock admin__home__section">
@@ -18,16 +28,20 @@ export function ProductosBajoStock({productos}){
             </div>
 
             <div className="productos">
-                {
+                {isLoading ? (
+                    Array.from({ length: 4 }).map((_, i) => (
+                        <ProductoBajoStockSkeleton i={i}/>
+                    ))
+                ) : (
                     productos?.map(p => (
-                        <div className="producto__item">
+                        <div className="producto__item" key={p.id}>
                             <span className="producto__nombre">{p.nombre}</span>
-                            <span className={`${p.stock === 0 ? "producto__cantidad agotado" : "producto__cantidad"}`}>
-                                { p.stock === 0 ? "Agotado" : `${p.stock} unidades` }
+                            <span className={p.stock === 0 ? "producto__cantidad agotado" : "producto__cantidad"}>
+                                {p.stock === 0 ? "Agotado" : `${p.stock} unidades`}
                             </span>
                         </div>
                     ))
-                }
+                )}
                 
             </div>
         </div>

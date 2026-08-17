@@ -35,14 +35,17 @@ export const createProductoRouter = ({ productoModel }) => {
     const productoRouter = Router();
     const productoController = new ProductoController({ productoModel });
 
-    // públicos
     productoRouter.get('/', productoController.getAll);
     productoRouter.post('/por-ids', productoController.getByIds);
     productoRouter.get('/buscar', productoController.search);
+
+    // admin (rutas estáticas, deben ir ANTES de /:id)
+    productoRouter.get('/admin/all', authenticate, productoController.getAllAdmin);
+    productoRouter.get('/count', authenticate, productoController.getTotal);
+
+    // dinámica, siempre al final
     productoRouter.get('/:id', productoController.getById);
 
-    // admin
-    productoRouter.get('/admin/all', authenticate, productoController.getAllAdmin);
     productoRouter.post('/', authenticate, upload.array("imagenes", 6), productoController.create);
     productoRouter.patch('/:id', authenticate, upload.array("imagenes", 6), productoController.update);
     productoRouter.delete('/:id', authenticate, productoController.delete);

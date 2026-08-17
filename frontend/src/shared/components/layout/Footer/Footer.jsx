@@ -84,7 +84,7 @@ export function Footer(){
                 </div>
 
                 <div className="bottom__footer">
-                    <p>Imponet - Productos Tecnología </p>
+                    <p>Imponet - Productos Tecnología</p>
                     <p>© 2026 Imponet · Todos los derechos reservados</p>
                 </div>
             </footer>
