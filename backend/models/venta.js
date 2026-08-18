@@ -75,6 +75,13 @@ export class VentaModel {
         }
     }
 
+    static async countAll() {
+        const [result] = await pool.query(
+            `SELECT COUNT(*) total FROM ventas`
+        )
+        return result[0].total
+    }
+
     static async getById({ id }) {
         const [ventas] = await pool.query(
             `${SELECT_FIELDS} WHERE v.id = UUID_TO_BIN(?)`,

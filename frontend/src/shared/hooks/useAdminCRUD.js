@@ -23,13 +23,22 @@ export function useAdminCRUD({
     const [showNewElemForm, setShowNewElemForm] = useState(false)
     const [showEditForm, setShowEditForm] = useState(false)
     const [editingElem, setEditingElem] = useState(null)
+    const [loading, setLoading] = useState(false)
 
     const { state, confirm, handleCancel, handleConfirm } = useConfirm()
     const toast = useToast()
 
     const fetchAll = async () => {
-        const { items: data } = await getAll()
-        setItems(data)
+        setLoading(true)
+        try{
+            const { items: data } = await getAll()
+            setItems(data)
+        }catch(e){
+            console.log(e)
+            toast.error(e.error ?? "Ha ocurrido un error obteniendo los datos")
+        }finally{
+            setLoading(false)
+        }
     }
 
     useEffect(() => {
@@ -140,6 +149,7 @@ export function useAdminCRUD({
     return {
         // CRUD
         items: table.data,
+        loading,
         totalCount: items.length,
         showNewElemForm,
         showEditForm,

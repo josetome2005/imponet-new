@@ -15,6 +15,7 @@ export function AdminVentas(){
     const {
         ventas,
         totalCount,
+        loadingTotal,
         showEditForm,
         editingElem,
         confirmState,
@@ -32,6 +33,7 @@ export function AdminVentas(){
         isFiltering,
         pagination,
         setPage,
+        loading
     } = useVentasCRUD({ tabs, inputsConfig: inputs })
 
     const [ventaVistaId, setVentaVistaId] = useState(null)
@@ -79,6 +81,7 @@ export function AdminVentas(){
                 onPageChange={setPage}
 
                 isFiltering={isFiltering}
+                isLoading={loading}
             />  
 
             {

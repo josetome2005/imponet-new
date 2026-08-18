@@ -24,6 +24,12 @@ export class VentaController {
         res.json(venta)
     }
 
+    getTotal = async (req, res) => {
+        const total = await this.ventaModel.countAll()
+        res.json({ total })
+    }
+
+
     // público: cualquiera puede comprar, con o sin cuenta
     create = async (req, res) => {
         const result = validateVenta(req.body)

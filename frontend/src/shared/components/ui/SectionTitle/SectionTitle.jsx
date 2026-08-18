@@ -6,7 +6,8 @@ export function SectionTitle({
     subtitle,
     buttonText, 
     buttonIcon = "add",
-    onClick
+    onClick,
+    isLoading
 }){
     
     return(
@@ -22,7 +23,8 @@ export function SectionTitle({
                 <Button
                     text={buttonText}
                     onClick={onClick}
-                    icon={buttonIcon} />
+                    icon={buttonIcon}
+                    disabled={isLoading} />
             }
             
             

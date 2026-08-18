@@ -8,6 +8,8 @@ import { EditForm } from "../../shared/components/forms/EditForm/EditForm"
 import { useAdminCRUD } from "../../shared/hooks/useAdminCRUD"
 import { generateSlug } from "../../shared/utils/generateSlug"
 import { Pagination } from "../../shared/components/ui/Pagination/Pagination"
+import { MarcaSkeleton } from "./components/MarcaSkeleton/MarcaSkeleton"
+import { Skeleton } from "../../shared/components/ui/Skeleton/Skeleton"
 
 const marca_inputs = [
     { id: "marca_nombre", name: "marca_nombre", type: "text", label: "Nombre de la Marca", mappedProp: "nombre", is_mandatory: true },
@@ -38,6 +40,7 @@ export function AdminMarcas() {
         pagination,
         setPage,
         isFiltering,
+        loading
     } = useAdminCRUD({
         getAll: getMarcasConCantidad,
         create: createMarca,
@@ -52,13 +55,23 @@ export function AdminMarcas() {
         <div className="admin__section admin__marcas">
             <SectionTitle 
                 title={"Marcas"}
-                subtitle={`${totalCount} marcas registradas`}
+                subtitle={
+                    loading
+                        ? <><Skeleton width="20px" height="0.9rem" style={{ display: "inline-block", verticalAlign: "middle" }} /> productos en tu catálogo.</>
+                        : `${totalCount ?? 0} marcas registradas.`
+                }
                 buttonText={"Nueva Marca"}
-                onClick={openNewForm}/>
+                onClick={openNewForm}
+                isLoading={loading}/>
 
             <div className="admin__marcas__container">
                 <div className="marcas__items">
-                    {
+                    {loading ?
+                        (
+                            Array.from({length: 9}).map((_, i) => (
+                                <MarcaSkeleton key={i}/>
+                            ))
+                        ) :
                         marcas?.map(m => (
                             <MarcaItem
                                 key={m.id}
@@ -67,6 +80,7 @@ export function AdminMarcas() {
                                 onEdit={handleRequestEdit} />
                         ))
                     }
+
                 </div>
                 <Pagination 
                     pagination={pagination}

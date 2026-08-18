@@ -38,6 +38,7 @@ export function AdminCategorias() {
         pagination,
         setPage,
         isFiltering,
+        loading
     } = useAdminCRUD({
         getAll: getCategoriasConCantidad,
         create: createCategoria,
@@ -49,7 +50,6 @@ export function AdminCategorias() {
     })
 
     
-    console.log(categorias)
     const columns = categorias_columns(handleRequestEdit, handleDelete)  
 
     return (
@@ -59,7 +59,8 @@ export function AdminCategorias() {
                 title={"Categorías"}
                 subtitle={`${totalCount} categorias activas`}
                 buttonText={"Nueva Categoria"}
-                onClick={openNewForm}/>
+                onClick={openNewForm}
+                isLoading={loading}/>
 
             <TableContainer
                 data={categorias}
@@ -74,6 +75,7 @@ export function AdminCategorias() {
                 onPageChange={setPage}
 
                 isFiltering={isFiltering}
+                isLoading={loading}
             />
 
             {

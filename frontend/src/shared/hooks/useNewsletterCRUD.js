@@ -47,6 +47,7 @@ export function useNewsletterCRUD({ filters } = {}) {
         handleCancel,
         handleConfirm,
         handleDarDeBaja,
+        loading: table.loading,
 
         search: table.search,
         setSearch: table.setSearch,

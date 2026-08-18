@@ -50,9 +50,12 @@ export const getVentaById = async (id) => {
 };
 
 export const getTotalVentas = async () => {
-    const { pagination } = await getVentas({ page: 1, perPage: 1 })
-    return pagination.total
+    const res = await fetch(`${API_URL}/ventas/count`,{
+        headers: authHeaders()
+    });
+    return handleResponse(res);
 }
+
 
 export const updateEstadoVenta = async ({ id, estado }) => {
     const res = await fetch(`${API_URL}/ventas/${id}/estado`, {

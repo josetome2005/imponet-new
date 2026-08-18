@@ -25,6 +25,7 @@ export function AdminNewsletterSuscriptor(){
         isFiltering,
         pagination,
         setPage,
+        loading
     } = useNewsletterCRUD({ filters })
 
     const columns = buildNewsletterColumns({onDarDeBaja: handleDarDeBaja})
@@ -55,6 +56,7 @@ export function AdminNewsletterSuscriptor(){
                 onPageChange={setPage}
 
                 isFiltering={isFiltering}
+                isLoading={loading}
             />  
 
             {

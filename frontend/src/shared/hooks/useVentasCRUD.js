@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect, useCallback} from "react";
 import { useConfirm } from "./useConfirm";
 import { useToast } from "../components/toast/ToastContext";
 import { useRemoteTableData } from "./useRemoteTableData";
@@ -21,15 +21,21 @@ export function useVentasCRUD({ tabs, inputsConfig } = {}) {
     const toast = useToast();
 
     const [totalCount, setTotalCount] = useState(0)
-    
-    useEffect(() => {
-        async function fetchTotalCount() {
-            const { pagination } = await getVentas({ page: 1, perPage: 1 })
-            setTotalCount(pagination.total)
+    const [loadingTotal, setLoadingTotal] = useState(true)
+
+    const refetchTotal = useCallback(async () => {
+        setLoadingTotal(true)
+        try {
+            const { total } = await getTotalVentas()
+            setTotalCount(total)
+        } finally {
+            setLoadingTotal(false)
         }
-        fetchTotalCount()
     }, [])
 
+    useEffect(() => {
+        refetchTotal()
+    }, [refetchTotal])
 
     const closeEditForm = () => {
         setShowEditForm(false);
@@ -76,6 +82,7 @@ export function useVentasCRUD({ tabs, inputsConfig } = {}) {
     return {
         ventas: table.data,
         totalCount,
+        loadingTotal,
         showEditForm,
         editingElem,
         confirmState: state,
@@ -94,5 +101,6 @@ export function useVentasCRUD({ tabs, inputsConfig } = {}) {
         isFiltering: table.isFiltering,
         pagination: table.pagination,
         setPage: table.setPage,
+        loading: table.loading
     };
 }
