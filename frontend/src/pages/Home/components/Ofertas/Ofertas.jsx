@@ -4,17 +4,30 @@ import { Button } from "../../../../shared/components/ui/Button/Button"
 import { useEffect, useState } from "react"
 import { getProductosEnOferta } from "../../../../shared/services/productos.services"
 import { useNavigate } from "react-router-dom"
+import { ProductoItemSkeleton } from "../../../../shared/components/items/ProductoItem/ProductoItemSkeleton"
 
 export function Ofertas(){
-    
+
     const [productos, setProductos] = useState([])
+    const [notFound, setNotFound] = useState(false)
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
     useEffect(() => {
-        async function fetchAll(){
-            const { productos: data } = await getProductosEnOferta()
-            const productos_seleccionados = data.slice(0, 4)
-            setProductos(productos_seleccionados)
+                
+        async function fetchAll() {
+            setLoading(true)
+            try{
+                const { productos: data } = await getProductosEnOferta()
+                const productos_seleccionados = data.slice(0, 4)
+                setProductos(productos_seleccionados)
+            }catch(e){
+                console.log(e)
+                setNotFound(true)
+            }finally{
+                setLoading(false)
+            }
+            
         }
         fetchAll()
     }, [])
@@ -25,6 +38,7 @@ export function Ofertas(){
         window.scrollTo({top: 0})
     }
 
+    if(notFound) return;
 
     return(
 
@@ -34,10 +48,13 @@ export function Ofertas(){
             <p className="section__subtitle">Aprovecha los mejores descuentos en nuestros productos.</p>
 
             <div className="productos__container">
-                {
-                    productos?.map(p => (
-                        <ProductoItem key={p.id} producto={p} />
-                    ))
+                {loading
+                    ?
+                    Array.from({ length: 4 }).map((_, i) => (<ProductoItemSkeleton key={i}/>))
+                    :
+                        productos?.map(p => (
+                            <ProductoItem key={p.id} producto={p} />
+                        ))
                 }
                 
             </div>
@@ -46,7 +63,8 @@ export function Ofertas(){
                 <Button 
                     mode={"pink"}
                     text={"Ver más"}
-                    onClick={() => handleNavigate("/productos")}/>
+                    onClick={() => handleNavigate("/productos")}
+                    disabled={loading}/>
             </div>
 
         </div>

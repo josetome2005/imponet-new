@@ -40,13 +40,38 @@ export function CarritoProvider({ children }) {
             const idsEncontrados = new Set(data.map((p) => p.id));
             const hayFantasmas = idsValidos.some((id) => !idsEncontrados.has(id));
 
-            if (hayFantasmas) {
-                setItemsRaw((prev) => {
-                    const limpio = prev.filter((i) => idsEncontrados.has(i.producto_id));
+            setItemsRaw((prev) => {
+                const limpio = prev
+                    .filter((i) => {
+                        const producto = data.find((p) => p.id === i.producto_id);
+
+                        // Eliminar si el producto no existe o no tiene stock
+                        return producto && producto.stock > 0;
+                    })
+                    .map((i) => {
+                        const producto = data.find((p) => p.id === i.producto_id);
+
+                        // Si pidió más de lo disponible, limitar al stock
+                        return {
+                            ...i,
+                            cantidad: Math.min(i.cantidad, producto.stock)
+                        };
+                    });
+
+                const huboCambios =
+                    limpio.length !== prev.length ||
+                    limpio.some((item, index) =>
+                        item.producto_id !== prev[index]?.producto_id ||
+                        item.cantidad !== prev[index]?.cantidad
+                    );
+
+                if (huboCambios || hayFantasmas) {
                     writeCarritoStorage(limpio);
                     return limpio;
-                });
-            }
+                }
+
+                return prev;
+            });
         } finally {
             setLoading(false);
         }

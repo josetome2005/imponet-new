@@ -1,6 +1,6 @@
 import "./CarritoItem.css"
-import { API_URL } from "../../../shared/services/http.services"
-import { formatMoneda } from "../../../shared/utils/formatMoneda"
+import { API_URL } from "../../../../shared/services/http.services"
+import { formatMoneda } from "../../../../shared/utils/formatMoneda"
 
 function getPrecioAMostrar(producto){
 
@@ -35,7 +35,7 @@ export function CarritoItem({
     onDecrementAmount,
     onDelete
     }){
-
+        
     const { precio_mostrado, precio_original, precio_mostrado_valor } = getPrecioAMostrar(item)
     const main_img_url = `${API_URL}${item.imagenes[0].url}` 
 

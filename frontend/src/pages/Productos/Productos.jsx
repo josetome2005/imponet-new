@@ -92,7 +92,6 @@ export function Productos(){
                     precioMax,
                     orden: activeOrderOption,
                     page,
-                    perPage: 5
                 })
                 setProductos(data)
                 setPagination(pag)

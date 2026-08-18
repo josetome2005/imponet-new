@@ -4,17 +4,30 @@ import { Button } from "../../../../shared/components/ui/Button/Button"
 import { getProductosDestacados } from "../../../../shared/services/productos.services"
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import { ProductoItemSkeleton } from "../../../../shared/components/items/ProductoItem/ProductoItemSkeleton"
 
 export function ProductosDestacados(){
 
     const [productos, setProductos] = useState([])
+    const [notFound, setNotFound] = useState(false)
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
     useEffect(() => {
+               
         async function fetchAll() {
-            const { productos: data } = await getProductosDestacados()
-            const productos_seleccionados = data.slice(0, 4)
-            setProductos(productos_seleccionados)
+            setLoading(true)
+            try{
+                const { productos: data } = await getProductosDestacados()
+                const productos_seleccionados = data.slice(0, 4)
+                setProductos(productos_seleccionados)
+            }catch(e){
+                console.log(e)
+                setNotFound(true)
+            }finally{
+                setLoading(false)
+            }
+            
         }
         fetchAll()
     }, [])
@@ -24,6 +37,7 @@ export function ProductosDestacados(){
         window.scrollTo({top: 0})
     }
 
+    if(notFound) return;
 
     return(
 
@@ -33,10 +47,13 @@ export function ProductosDestacados(){
             <p className="section__subtitle">Los productos más elegidos por nuestros clientes</p>
 
             <div className="productos__container">
-                {
-                    productos?.map(p => (
-                        <ProductoItem key={p.id} producto={p} />
-                    ))
+                {loading
+                    ?
+                    Array.from({ length: 4 }).map((_, i) => (<ProductoItemSkeleton key={i}/>))
+                    :
+                        productos?.map(p => (
+                            <ProductoItem key={p.id} producto={p} />
+                        ))
                 }
                 
             </div>
@@ -45,7 +62,8 @@ export function ProductosDestacados(){
                 <Button 
                     mode={"pink"}
                     text={"Ver más"}
-                    onClick={() => handleNavigate("/productos")}/>
+                    onClick={() => handleNavigate("/productos")}
+                    disabled={loading}/>
             </div>
 
         </div>

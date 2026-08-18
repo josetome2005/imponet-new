@@ -4,19 +4,26 @@ import { Link, useNavigate } from "react-router-dom"
 import { useCarrito } from "../../../contexts/CarritoContext"
 import { SearchBar } from "../../ui/SearchBar/SearchBar"
 import { getCategoriasDestacadas } from "../../../services/categorias.services"
+import { Skeleton } from "../../ui/Skeleton/Skeleton"
 
 export function Header(){
 
-    const [categorias, setCategorias] = useState()
+    const [categorias, setCategorias] = useState([])
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         async function fetchCategorias(){
-            const data = await getCategoriasDestacadas()
-            const categoriasDestacadas = data
-                .slice()
-                .sort((a, b) => b.cantidad_productos - a.cantidad_productos)
-                .slice(0, 5)
-            setCategorias(categoriasDestacadas)
+            setLoading(true)
+            try{
+                const data = await getCategoriasDestacadas()
+                const categoriasDestacadas = data
+                    .slice()
+                    .sort((a, b) => b.cantidad_productos - a.cantidad_productos)
+                    .slice(0, 5)
+                setCategorias(categoriasDestacadas)
+            }finally{
+                setLoading(false)
+            }
         }
         fetchCategorias()
     }, [])
@@ -68,15 +75,20 @@ export function Header(){
                 
 
                 <div className="flex--32 y-center ">
-                    {
-                        categorias?.map(c => (
-                            <Link key={c.id} to={`/productos?categoria=${c.slug}`}>
-                                <span>
-                                    {c.nombre}
-                                </span>
-                            </Link>
-                            
-                        ))
+                    {loading
+                        ?
+                            Array.from({ length: 5 }).map((_, i) => (
+                                <Skeleton height="1rem" width="75px" key={i} style={{opacity: "0.6"}}/>
+                            ))
+                        :
+                            categorias?.map(c => (
+                                <Link key={c.id} to={`/productos?categoria=${c.slug}`} className="link__to__categoria">
+                                    <span>
+                                        {c.nombre}
+                                    </span>
+                                </Link>
+                                
+                            ))
                     }
                 </div>
             </div>

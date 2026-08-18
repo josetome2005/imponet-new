@@ -8,6 +8,7 @@
     margin-top: 40px;
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     gap: 1rem;
 }
 
@@ -15,7 +16,7 @@
     width: 21%;
 }
 
-..categorias__destacadas .button__container{
+.categorias__destacadas .button__container{
     width: 100%;
     display: flex;
     justify-content: center;

@@ -89,13 +89,16 @@
     position: relative;
 }
 
-.bottom__header span{
+.bottom__header .link__to__categoria{
     color: #ffffff;
     font-size: 0.875rem;
     cursor: pointer;
 }
 
 .bottom__header .link__products{
+    color: #ffffff;
+    font-size: 0.875rem;
+    cursor: pointer;
     position: absolute;
     left: var(--lateral-padding);
 }

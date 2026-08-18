@@ -3,47 +3,49 @@ import { useEffect, useState } from "react"
 import { CategoriaItem } from "../CategoriaItem/CategoriaItem"
 import { Button } from "../../../../shared/components/ui/Button/Button"
 import { useNavigate } from "react-router-dom"
-import { getCategoriasDestacadas, getCategoriasDestacadasConImagen } from "../../../../shared/services/categorias.services"
-import { searchProductos } from "../../../../shared/services/productos.services"
+import { getCategoriasDestacadasConImagen } from "../../../../shared/services/categorias.services"
 import { API_URL } from "../../../../shared/services/http.services"
+import { Skeleton } from "../../../../shared/components/ui/Skeleton/Skeleton"
 
-const categorias_local = [
-    {
-        name: "Auriculares",
-        meta_categoria: "Audio",
-        img: "/img/categorias/auriculares.png"
-    },
-    {
-        name: "Drones",
-        meta_categoria: "Entrenimiento",
-        img: "/img/categorias/drones.png"
-    },
-    {
-        name: "Parlantes",
-        meta_categoria: "Audio",
-        img: "/img/categorias/parlantes.png"
-    },
-    {
-        name: "Smartwatchs",
-        meta_categoria: "Utilidad",
-        img: "/img/categorias/smartwatchs.png"
-    },
-]
+function CategoriaSkeleton(){
+    return(
+        <div className="categoria__item">
+
+            <div className="img__container">
+                <Skeleton height="100%" style={{aspectRatio: "9 / 10"}}/>
+            </div>
+            <Skeleton width="150px" height="1.375rem" />
+            <Skeleton width="75px" height="0.925rem"/>
+        </div>
+    )
+}
 
 export function CategoriasDestacadas(){
 
     const navigate = useNavigate()
 
-    const [categorias, setCategorias] = useState()
+    const [categorias, setCategorias] = useState([])
+    const [loading, setLoading] = useState(false)
+    const [notFound, setNotFound] = useState(false)
     
     useEffect(() => {
         async function fetchCategorias() {
-            const data = await getCategoriasDestacadasConImagen()
-            const cats = data.map(c => ({
-                name: c.nombre,
-                img: c.imagen ? `${API_URL}${c.imagen}` : "/img/placeholder-categoria.png"
-            }))
-            setCategorias(cats)
+            setNotFound(false)
+            setLoading(true)
+            try{
+                const data = await getCategoriasDestacadasConImagen()
+                const cats = data.map(c => ({
+                    name: c.nombre,
+                    img: c.imagen ? `${API_URL}${c.imagen}` : "/img/placeholder-categoria.png"
+                }))
+                setCategorias(cats)
+            }catch(e){
+                setNotFound(true)
+                console.log(e)
+            }finally{
+                setLoading(false)
+            }
+           
         }
         fetchCategorias()
     }, [])
@@ -54,6 +56,8 @@ export function CategoriasDestacadas(){
         window.scrollTo({top: 0})
     }
 
+    if(notFound) return
+
     return(
 
         <div className="categorias__destacadas">
@@ -62,17 +66,21 @@ export function CategoriasDestacadas(){
             <p className="section__subtitle">Todo lo que necesitás, organizado como corresponde</p>
 
             <div className="categorias__container">
-                {
-                    categorias?.map(c => 
-                        <CategoriaItem key={c.name} categoria={c}/>
-                    )
+                {loading
+                    ?
+                        Array.from({ length: 4 }).map((_, i) => (<CategoriaSkeleton key={i}/>))
+                    :
+                        categorias?.map(c => 
+                            <CategoriaItem key={c.name} categoria={c}/>
+                        )
                 }
             </div>
             
             <div className="button__container">
                 <Button 
                     text={"Explorar más"}
-                    onClick={() => handleNavigate("/productos")}/>
+                    onClick={() => handleNavigate("/productos")}
+                    disabled={loading}/>
             </div>
         </div>
 

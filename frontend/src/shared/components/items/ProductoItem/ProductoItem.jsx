@@ -21,8 +21,6 @@ export function ProductoItem({producto}){
 
     const main_img = producto.imagenes[0]
 
-    console.log(producto)
-
     return(
 
         <div className="producto__item" onClick={() => navigate(`/producto/${producto.id}`)}>
