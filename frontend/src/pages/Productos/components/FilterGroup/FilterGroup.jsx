@@ -1,7 +1,8 @@
+import { Skeleton } from "../../../../shared/components/ui/Skeleton/Skeleton";
 import "./FilterGroup.css"
 import { useMemo, useState } from "react";
 
-export function FilterGroup({ title, items, selectedSlugs, onSelect, onRemove, searchable = true }){
+export function FilterGroup({ title, items, selectedSlugs, onSelect, onRemove, searchable = true, isLoading }){
 
     const [search, setSearch] = useState("")
 
@@ -50,15 +51,24 @@ export function FilterGroup({ title, items, selectedSlugs, onSelect, onRemove, s
 
             <div className="filter__options">
                 {
-                    nonSelectedItems?.map((item) => (
-                        <span 
-                            key={item.id} 
-                            className={`${selectedSlugs.includes(item.slug) ? "activo" : "inactivo" }`} 
-                            onClick={() => onSelect(item.slug)}
-                        >
-                            {item.nombre} ({item.cantidad_productos})
-                        </span>
-                    ))
+                    nonSelectedItems?.map((item) => 
+                        
+                        isLoading ?
+                        (
+                            <Skeleton width="75px" height="1.125rem" style={{marginBottom: "0.5rem"}}/>
+                        )
+                        : (
+                            <span 
+                                key={item.id} 
+                                className={`${selectedSlugs.includes(item.slug) ? "activo" : "inactivo" }`} 
+                                onClick={() => onSelect(item.slug)}
+                            >
+                                {item.nombre} ({item.cantidad_productos})
+                            </span>
+                        )
+                        
+                        
+                    )
                 }
                 {
                     filteredItems.length === 0 && (

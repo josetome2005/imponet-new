@@ -67,7 +67,8 @@ export function TableContainer(
           <div className="pagination__container" style={{marginTop: "2.5rem", transform: "scale(0.9)"}}>
             <Pagination 
               pagination={pagination}
-              onPageChange={onPageChange}/>
+              onPageChange={onPageChange}
+              isLoading={isLoading}/>
           </div>
         )
       }

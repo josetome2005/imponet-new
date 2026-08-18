@@ -8,6 +8,7 @@ import { getVentaByCodigo } from "../../shared/services/ventas.services.js"
 import { StatusLabel } from "../../shared/components/ui/StatusLabel/StatusLabel"
 import { formatMoneda } from "../../shared/utils/formatMoneda.js"
 import { EmptyState } from "../../shared/components/ui/EmptyState/EmptyState.jsx"
+import { VistaCompraSkeleton } from "./components/VistaCompraSkeleton.jsx"
 
 const states = [
     { name: "pendiente", value: "pendiente", label: "Pendiente", text: "Recibimos tu pedido y estamos esperando la confirmación del pago.", icon: "nest_clock_farsight_analog" },
@@ -19,15 +20,30 @@ const states = [
 export function VistaCompra(){
 
     const { order_codigo } = useParams()
+    const [ notFound, setNotFound ] = useState(false)
     const [ compra, setCompra ] = useState(null)
+    const [ codigoSearch, setCodigoSearch ] = useState("")
+    const [ loading, setLoading ] = useState(false)
+
     const navigate = useNavigate()
-    const [codigoSearch, setCodigoSearch] = useState("")
 
     useEffect(() => {
-        if(!order_codigo) return;
+        if(!order_codigo){
+            setLoading(false);
+            return;
+        }
         async function fetchCompra() {
-            const data = await getVentaByCodigo(order_codigo)
-            setCompra(data)
+            setLoading(true);
+            try{
+                const data = await getVentaByCodigo(order_codigo)
+                setCompra(data)
+            }catch(e){
+                console.log(e)
+                setNotFound(true)
+            }finally{
+                setLoading(false);
+            }
+            
         }
         fetchCompra()
     }, [order_codigo])
@@ -39,15 +55,16 @@ export function VistaCompra(){
         navigate(`/order/${codigoSearch}`)
     }
 
-
     return(
         <>
             <Header />
 
             <div className="vista__compra">
 
+                { loading && <VistaCompraSkeleton /> }
+
                 {
-                    compra && (
+                    !loading && compra && (
                         <>
                             <div className="vista__compra__header">
                                 <div>
@@ -145,11 +162,11 @@ export function VistaCompra(){
 
                             </div>
                         </>
-                    )
+                    ) 
                 }
 
                 {
-                    !order_codigo && (
+                    !loading && !order_codigo && (
                         <EmptyState 
                             icon={"package_2"}
                             title={"Seguí tu compra"}
@@ -170,7 +187,7 @@ export function VistaCompra(){
                 }
 
                 {
-                    !compra && order_codigo && (
+                    !loading && notFound && (
                         <EmptyState 
                             icon={"package_2"}
                             title={"No encontramos ese pedido"}

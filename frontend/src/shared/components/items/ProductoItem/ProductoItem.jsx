@@ -21,6 +21,8 @@ export function ProductoItem({producto}){
 
     const main_img = producto.imagenes[0]
 
+    console.log(producto)
+
     return(
 
         <div className="producto__item" onClick={() => navigate(`/producto/${producto.id}`)}>
@@ -34,7 +36,7 @@ export function ProductoItem({producto}){
                 <img src={`${API_URL}${main_img.url}`} alt={producto.nombre}/>
             </div>  
 
-            <span className="producto__categoria">{producto.categoria}</span>
+            <span className="producto__categoria">{producto.categorias[0].nombre}</span>
             <span className="producto__name">{producto.nombre}</span>
 
             {

@@ -10,6 +10,8 @@ import { getMarcasConCantidad } from "../../shared/services/marcas.services"
 import { getCategoriasConCantidad } from "../../shared/services/categorias.services"
 import { FiltersSidebar } from "./components/FilterSidebar/FilterSidebar"
 import { Pagination } from "../../shared/components/ui/Pagination/Pagination"
+import { ProductoItemSkeleton } from "../../shared/components/items/ProductoItem/ProductoItemSkeleton"
+import { Skeleton } from "../../shared/components/ui/Skeleton/Skeleton"
 
 const order_options = [
     {
@@ -34,7 +36,6 @@ const order_options = [
     },
 ]
 
-
 export function Productos(){
     
     const [searchParams] = useSearchParams()
@@ -42,6 +43,7 @@ export function Productos(){
     const [productos, setProductos] = useState([])
     const [pagination, setPagination] = useState(null)
     const [loading, setLoading] = useState(false)
+    const [loadingFiltros, setLoadingFiltros] = useState(false)
 
     const [marcasDisponibles, setMarcasDisponibles] = useState([])
     const [categoriasDisponibles, setCategoriasDisponibles] = useState([])
@@ -49,9 +51,14 @@ export function Productos(){
 
     useEffect(() => {
         async function fetchFiltros() {
-            const [{items: m}, {items: c}] = await Promise.all([getMarcasConCantidad(), getCategoriasConCantidad()]);
-            setMarcasDisponibles(m);
-            setCategoriasDisponibles(c);
+            setLoadingFiltros(true)
+            try{
+                const [{items: m}, {items: c}] = await Promise.all([getMarcasConCantidad(), getCategoriasConCantidad()]);
+                setMarcasDisponibles(m);
+                setCategoriasDisponibles(c);
+            }finally{
+                setLoadingFiltros(false)
+            }
         }
         fetchFiltros();
     }, []);
@@ -84,7 +91,8 @@ export function Productos(){
                     precioMin,
                     precioMax,
                     orden: activeOrderOption,
-                    page
+                    page,
+                    perPage: 5
                 })
                 setProductos(data)
                 setPagination(pag)
@@ -133,9 +141,11 @@ export function Productos(){
 
     const titulo = q
         ? `Resultados para "${q}"`
-        : formatList(nombresCategorias) ?? formatList(nombresMarcas) ?? "Todos los productos"
+        : loadingFiltros
+            ? <Skeleton width="220px" height="1.75rem" /> 
+            : formatList(nombresCategorias) ?? formatList(nombresMarcas) ?? "Todos los productos"
 
-
+    
 
     return(
 
@@ -174,21 +184,26 @@ export function Productos(){
                         }}
                         onApply={handleApplyFilters}
                         onClean={() => navigate("/productos")}
+                        isLoading={loading}
                     />
 
                     <div className="searched__productos__container">
                         <div className="catalogo__container">
-                            {
-                                productos.map(p =>
-                                    <ProductoItem
-                                        key={p.id}
-                                        producto={p} />
-                                )
+                            {loading
+                                ?
+                                    Array.from({ length: 12 }).map((_, i) => <ProductoItemSkeleton key={i} />)
+                                :
+                                    productos.map(p =>
+                                        <ProductoItem
+                                            key={p.id}
+                                            producto={p} />
+                                    )
                             }
                         </div>
                         <Pagination 
                             pagination={pagination}
-                            onPageChange={irAPagina}/>
+                            onPageChange={irAPagina}
+                            isLoading={loading}/>
                     </div>
                     
 

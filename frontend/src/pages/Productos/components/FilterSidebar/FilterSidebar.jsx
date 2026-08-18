@@ -2,7 +2,7 @@ import "./FilterSidebar.css"
 import { useState } from "react";
 import { FilterGroup } from "../FilterGroup/FilterGroup";
 
-export function FiltersSidebar({ marcas, categorias, initialFilters, onApply, onClean }){
+export function FiltersSidebar({ marcas, categorias, initialFilters, onApply, onClean, isLoading }){
 
     const [selectedMarcas, setSelectedMarcas] = useState(initialFilters?.marca ?? []);
     const [selectedCategorias, setSelectedCategorias] = useState(initialFilters?.categoria ?? []);
@@ -64,6 +64,7 @@ export function FiltersSidebar({ marcas, categorias, initialFilters, onApply, on
                 selectedSlugs={selectedMarcas}
                 onSelect={selectMarca}
                 onRemove={removeMarca}
+                isLoading={isLoading}
             />
 
             <hr />
@@ -74,6 +75,7 @@ export function FiltersSidebar({ marcas, categorias, initialFilters, onApply, on
                 selectedSlugs={selectedCategorias}
                 onSelect={selectCategoria}
                 onRemove={removeCategoria}
+                isLoading={isLoading}
             />
 
             <hr />
