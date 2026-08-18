@@ -77,7 +77,7 @@ export const createApp = (
     app.use("/uploads", express.static(path.resolve("uploads")))
 
     const PORT = process.env.PORT ?? 1234;
-    app.listen(PORT, () => {
+    app.listen(PORT,"0.0.0.0", () => {
         console.log(`Server is running on port 'http://localhost:${PORT}'`);
     })
 }
