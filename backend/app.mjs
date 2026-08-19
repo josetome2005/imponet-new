@@ -13,8 +13,6 @@ import { createUsuarioRouter } from './routes/usuarios.js';
 import { createVentaRouter } from './routes/ventas.js';
 import { createDashboardRouter } from './routes/dashboard.js';
 import { createNewsletterSuscriptorRouter } from './routes/newsletterSuscriptores.js';
-// import { createDetalleVentaRouter } from './routes/detalle_ventas.js';
-// import { createDireccionRouter } from './routes/direcciones.js';
 
 console.log("app.mjs cargando...")
 
