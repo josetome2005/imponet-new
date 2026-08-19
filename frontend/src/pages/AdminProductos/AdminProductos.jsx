@@ -27,6 +27,7 @@ export function AdminProductos() {
     const {
         productos,
         totalCount,
+        isSubmitting,
         loadingTotal,
         showNewForm,
         showEditForm,
@@ -112,6 +113,7 @@ export function AdminProductos() {
                     editingElem={editingElem}
                     onSubmit={handleSubmitEdit}
                     onExit={closeEditForm}
+                    isSubmitting={isSubmitting}
                 />
             )}
         </div>

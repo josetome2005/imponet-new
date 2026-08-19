@@ -18,6 +18,7 @@ export function useProductosCRUD({ filters } = {})  {
     const [showNewForm, setShowNewForm] = useState(false);
     const [showEditForm, setShowEditForm] = useState(false);
     const [editingElem, setEditingElem] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false)
 
     const { state, confirm, handleCancel, handleConfirm } = useConfirm();
     const toast = useToast();
@@ -55,37 +56,46 @@ export function useProductosCRUD({ filters } = {})  {
         const ok = await confirm("Esta acción no se puede deshacer. ¿Estás seguro que querés eliminar este producto?");
         if (!ok) return;
 
+        setIsSubmitting(true)
         try {
             await deleteProducto(id);
-            toast.success("Se ha eliminado el producto correctamente.");
             table.refetch()
+            toast.success("Se ha eliminado el producto correctamente.");
         } catch (e) {
             console.error(e);
             toast.error(e.message ?? "Ha ocurrido un error al eliminar el producto.");
+        }finally{
+            setIsSubmitting(false)
         }
     };
 
     // { fields, imagenesOrden, archivosNuevos } viene de ProductoForm
     const handleSubmitNew = async ({ fields, archivosNuevos }) => {
+        setIsSubmitting(true)
         try {
             await createProducto({ object: fields, imagenes: archivosNuevos });
-            toast.success("Se ha creado el producto correctamente.");
             table.refetch()
+            toast.success("Se ha creado el producto correctamente.");
         } catch (e) {
             console.error(e);
             toast.error(e.message ?? "Ha ocurrido un error al crear el producto.");
+        }finally{
+            setIsSubmitting(false)   
         }
     };
 
     const handleSubmitEdit = async ({ fields, imagenesOrden, archivosNuevos }) => {
         const { id, ...rest } = fields;
+        setIsSubmitting(true)
         try {
             await updateProducto({ id, object: rest, imagenesOrden, archivosNuevos });
-            toast.success("Se ha editado el producto correctamente.");
             table.refetch()
+            toast.success("Se ha editado el producto correctamente.");
         } catch (e) {
             console.error(e);
             toast.error(e.message ?? "Ha ocurrido un error al editar el producto.");
+        }finally{
+            setIsSubmitting(false)
         }
     };
 
@@ -93,6 +103,7 @@ export function useProductosCRUD({ filters } = {})  {
         // CRUD
         totalCount,
         loadingTotal,
+        isSubmitting,
         showNewForm,
         showEditForm,
         editingElem,
