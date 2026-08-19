@@ -40,7 +40,8 @@ export function AdminMarcas() {
         pagination,
         setPage,
         isFiltering,
-        loading
+        loading,
+        isSubmitting
     } = useAdminCRUD({
         getAll: getMarcasConCantidad,
         create: createMarca,
@@ -101,7 +102,9 @@ export function AdminMarcas() {
                     title={"Agregar Marca"}
                     inputs={marca_inputs}
                     handleSubmit={handleSubmitNew}
-                    handleExit={closeNewForm}/>
+                    handleExit={closeNewForm}
+                    isSubmitting={isSubmitting}
+                />
             }
 
             {
@@ -110,7 +113,9 @@ export function AdminMarcas() {
                     title={"Editar Marca"}
                     editingElem={editingElem}
                     onSubmit={handleSubmitEdit}
-                    onExit={closeEditForm}/>
+                    onExit={closeEditForm}
+                    isSubmitting={isSubmitting}
+                />
             }
         </div>
     )

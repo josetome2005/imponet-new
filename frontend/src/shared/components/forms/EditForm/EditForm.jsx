@@ -3,7 +3,16 @@ import { DynamicForm } from "../DynamicForm/DynamicForm";
 import { useScrollLock } from "../../../hooks/useScrollLock";
 import { useEscapeKey } from "../../../hooks/useEscapeKey";
 
-export function EditForm({ title, editingElem, onSubmit, onExit, mode, width = 38, flex = false }) {
+export function EditForm({ 
+    title, 
+    editingElem, 
+    onSubmit, 
+    onExit, 
+    mode, 
+    width = 38, 
+    flex = false,
+    isSubmitting 
+}) {
 
     useScrollLock();
     useEscapeKey(onExit);
@@ -31,6 +40,7 @@ export function EditForm({ title, editingElem, onSubmit, onExit, mode, width = 3
                     persistOptions={true}
                     flex={flex}
                     validateOnSubmit={false}
+                    isSubmitting={isSubmitting}
                 />
 
             </div>

@@ -13,8 +13,11 @@ const fetchNewsletterAdapter = async (queryParams) => {
 export function useNewsletterCRUD({ filters } = {}) {
     const table = useRemoteTableData(fetchNewsletterAdapter, { filters, perPage: 10 })
 
+    const [isSubmitting, setIsSubmitting] = useState(false)
+
     const { state, confirm, handleCancel, handleConfirm } = useConfirm();
     const toast = useToast();
+
 
     const [totalCount, setTotalCount] = useState(0)
     
@@ -30,13 +33,16 @@ export function useNewsletterCRUD({ filters } = {}) {
         const ok = await confirm(mensajeConfirm ?? "¿Estás seguro que querés dar de baja esta suscripción?");
         if (!ok) return;
 
+        setIsSubmitting(true)
         try{
             await darDeBajaNewsletter(email)
+            await table.refetch();
             toast.success("Se ha dado de baja la suscripción correctamente.");
-            table.refetch();
         }catch(e){
             console.error(e);
             toast.error(e.message ?? "Ha ocurrido un error al dar de baja la suscripción.");
+        }finally{
+            setIsSubmitting(false)
         }
     }
 
@@ -48,6 +54,7 @@ export function useNewsletterCRUD({ filters } = {}) {
         handleConfirm,
         handleDarDeBaja,
         loading: table.loading,
+        isSubmitting,
 
         search: table.search,
         setSearch: table.setSearch,

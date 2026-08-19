@@ -103,6 +103,7 @@ export function AdminProductos() {
                     editingElem={null}
                     onSubmit={handleSubmitNew}
                     onExit={closeNewForm}
+                    isSubmitting={isSubmitting}
                 />
             )}
 

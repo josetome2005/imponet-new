@@ -13,7 +13,8 @@ export function NewElemForm({
     typeFile, 
     formMode, 
     width = 38, 
-    flex = false 
+    flex = false,
+    isSubmitting 
 }) {
 
     // Normalizo la entrada al mismo formato que espera DynamicForm
@@ -45,6 +46,7 @@ export function NewElemForm({
                     flex={flex}
                     typeFile={typeFile}
                     validateOnSubmit={true}
+                    isSubmitting={isSubmitting}
                 />
 
             </div>

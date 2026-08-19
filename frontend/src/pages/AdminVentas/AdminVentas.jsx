@@ -33,7 +33,8 @@ export function AdminVentas(){
         isFiltering,
         pagination,
         setPage,
-        loading
+        loading,
+        isSubmitting
     } = useVentasCRUD({ tabs, inputsConfig: inputs })
 
     const [ventaVistaId, setVentaVistaId] = useState(null)
@@ -98,7 +99,9 @@ export function AdminVentas(){
                     title={"Editar Venta"}
                     editingElem={editingElem}
                     onSubmit={handleSubmitEdit}
-                    onExit={closeEditForm}/>
+                    onExit={closeEditForm}
+                    isSubmitting={isSubmitting}
+                />
             }
 
             {
@@ -107,7 +110,9 @@ export function AdminVentas(){
                     venta={ventaVista}
                     onClose={() => setVentaVistaId(null)}
                     onCancel={handleCancelarVenta}
-                    onEdit={handleRequestEdit}/>
+                    onEdit={handleRequestEdit}
+                    isSubmitting={isSubmitting}
+                />
             }
 
         </div>

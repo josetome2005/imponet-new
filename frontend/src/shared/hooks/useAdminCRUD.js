@@ -24,6 +24,7 @@ export function useAdminCRUD({
     const [showEditForm, setShowEditForm] = useState(false)
     const [editingElem, setEditingElem] = useState(null)
     const [loading, setLoading] = useState(false)
+    const [isSubmitting, setIsSubmitting] = useState(false)
 
     const { state, confirm, handleCancel, handleConfirm } = useConfirm()
     const toast = useToast()
@@ -73,6 +74,7 @@ export function useAdminCRUD({
 
         const removedItem = items[index]
 
+        setIsSubmitting(true)
         setItems(prev => prev.filter(it => it.id !== id))
 
         try {
@@ -86,6 +88,8 @@ export function useAdminCRUD({
                 ...prev.slice(index)
             ])
             toast.error(e.message ?? `Ha ocurrido un error al eliminar la ${entityName}.`)
+        }finally{
+            setIsSubmitting(false)
         }
     }
 
@@ -98,7 +102,8 @@ export function useAdminCRUD({
 
         const index = items.findIndex(it => it.id === id)
         if (index === -1) return;
-
+        
+        setIsSubmitting(true)
         try {
             const updated = await remove(id) // remove = cancelarVenta, devuelve la venta ya actualizada
             setItems(prev => prev.map(it => it.id === id ? { ...it, ...updated } : it))
@@ -106,6 +111,8 @@ export function useAdminCRUD({
         } catch (e) {
             console.log(e)
             toast.error(e.message ?? `Ha ocurrido un error al cancelar la ${entityName}.`)
+        }finally{
+            setIsSubmitting(false)
         }
     }
 
@@ -122,7 +129,7 @@ export function useAdminCRUD({
 
     const handleSubmitEdit = async (formData) => {
         const { id, ...rest } = formData
-
+        setIsSubmitting(true)
         try {
             const updated = await update({ id, ...rest })
             setItems(prev => prev.map(it =>
@@ -132,6 +139,8 @@ export function useAdminCRUD({
         } catch (e) {
             console.log(e)
             toast.error(e.message ?? `Ha ocurrido un error al editar la ${entityName}.`)
+        }finally{
+            setIsSubmitting(false)
         }
     }
 
@@ -142,6 +151,8 @@ export function useAdminCRUD({
             toast.success(`Se ha creado la ${entityName} correctamente.`)
         } catch (e) {
             toast.error(e.message ?? `Ha ocurrido un error creando la ${entityName}.`)
+        }finally{
+            setIsSubmitting(false)
         }
     }
 
@@ -150,6 +161,7 @@ export function useAdminCRUD({
         // CRUD
         items: table.data,
         loading,
+        isSubmitting,
         totalCount: items.length,
         showNewElemForm,
         showEditForm,

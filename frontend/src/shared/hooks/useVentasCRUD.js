@@ -16,6 +16,7 @@ export function useVentasCRUD({ tabs, inputsConfig } = {}) {
 
     const [showEditForm, setShowEditForm] = useState(false);
     const [editingElem, setEditingElem] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false)
 
     const { state, confirm, handleCancel, handleConfirm } = useConfirm();
     const toast = useToast();
@@ -55,32 +56,38 @@ export function useVentasCRUD({ tabs, inputsConfig } = {}) {
 
     const handleSubmitEdit = async (formData) => {
         const { id, ...rest } = formData;
+        setIsSubmitting(true)
         try {
             await updateEstadoVenta({ id, ...rest });
+            await table.refetch();
             toast.success("Se ha editado la venta correctamente.");
-            table.refetch();
         } catch (e) {
             console.error(e);
             toast.error(e.message ?? "Ha ocurrido un error al editar la venta.");
+        }finally{
+            setIsSubmitting(false)
         }
     };
 
     const handleCancelItem = async (id, mensajeConfirm) => {
         const ok = await confirm(mensajeConfirm ?? "¿Estás seguro que querés cancelar esta venta?");
         if (!ok) return;
-
+        setIsSubmitting(true)
         try {
             await cancelarVenta(id);
+            await table.refetch();
             toast.success("Se ha cancelado la venta correctamente.");
-            table.refetch();
         } catch (e) {
             console.error(e);
             toast.error(e.message ?? "Ha ocurrido un error al cancelar la venta.");
+        }finally{
+            setIsSubmitting(false)
         }
     };
 
     return {
         ventas: table.data,
+        isSubmitting,
         totalCount,
         loadingTotal,
         showEditForm,

@@ -83,7 +83,7 @@ export function ProductoForm({ title, inputsConfig, editingElem, onSubmit, onExi
                     {error && <span className="error">{error}</span>}
 
                     <div className="button__container">
-                        <button type="submit" className="submit__button" disabled={!isReadyToSend ||isSubmitting}>
+                        <button type="submit" className="submit__button" disabled={!isReadyToSend || isSubmitting}>
                             {isSubmitting ? "Guardando" : "Guardar"}
                         </button>
                         <button type="button" className="exit__button" onClick={onExit}>

@@ -59,7 +59,7 @@ export function useProductosCRUD({ filters } = {})  {
         setIsSubmitting(true)
         try {
             await deleteProducto(id);
-            table.refetch()
+            await table.refetch()
             toast.success("Se ha eliminado el producto correctamente.");
         } catch (e) {
             console.error(e);
@@ -74,7 +74,7 @@ export function useProductosCRUD({ filters } = {})  {
         setIsSubmitting(true)
         try {
             await createProducto({ object: fields, imagenes: archivosNuevos });
-            table.refetch()
+            await table.refetch()
             toast.success("Se ha creado el producto correctamente.");
         } catch (e) {
             console.error(e);
@@ -89,7 +89,7 @@ export function useProductosCRUD({ filters } = {})  {
         setIsSubmitting(true)
         try {
             await updateProducto({ id, object: rest, imagenesOrden, archivosNuevos });
-            table.refetch()
+            await table.refetch()
             toast.success("Se ha editado el producto correctamente.");
         } catch (e) {
             console.error(e);

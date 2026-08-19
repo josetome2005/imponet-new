@@ -38,7 +38,8 @@ export function AdminCategorias() {
         pagination,
         setPage,
         isFiltering,
-        loading
+        loading,
+        isSubmitting
     } = useAdminCRUD({
         getAll: getCategoriasConCantidad,
         create: createCategoria,
@@ -92,7 +93,8 @@ export function AdminCategorias() {
                     title={"Agregar Categoría"}
                     inputs={categoria_inputs}
                     handleSubmit={handleSubmitNew}
-                    handleExit={closeNewForm}/>
+                    handleExit={closeNewForm}
+                    isSubmitting={isSubmitting}/>
             }
 
             {
@@ -101,7 +103,8 @@ export function AdminCategorias() {
                     title={"Editar Categoría"}
                     editingElem={editingElem}
                     onSubmit={handleSubmitEdit}
-                    onExit={closeEditForm}/>
+                    onExit={closeEditForm}
+                    isSubmitting={isSubmitting}/>
             }
         </div>
     )

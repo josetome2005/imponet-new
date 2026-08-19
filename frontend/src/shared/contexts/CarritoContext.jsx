@@ -1,6 +1,6 @@
-// context/CarritoContext.jsx
-import { createContext, useContext, useCallback, useEffect, useState } from "react";
+import { createContext, useContext, useCallback, useEffect, useState, useRef } from "react";
 import { getProductosPorIds } from "../services/productos.services";
+
 
 const STORAGE_KEY = "carrito";
 
@@ -24,6 +24,7 @@ export function CarritoProvider({ children }) {
     const [itemsRaw, setItemsRaw] = useState(readCarritoStorage);
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(false);
+    const idsRef = useRef([])
 
     const refetchProductos = useCallback(async (items) => {
         const idsValidos = items.map((i) => i.producto_id).filter(Boolean);
@@ -78,8 +79,14 @@ export function CarritoProvider({ children }) {
     }, []);
 
     useEffect(() => {
-        refetchProductos(itemsRaw);
-    }, [itemsRaw, refetchProductos]);
+        const idsActuales = itemsRaw.map(i => i.producto_id).filter(Boolean).sort().join(",")
+        const idsAnteriores = idsRef.current.join(",")
+
+        if (idsActuales !== idsAnteriores) {
+            idsRef.current = itemsRaw.map(i => i.producto_id).filter(Boolean).sort()
+            refetchProductos(itemsRaw)
+        }
+    }, [itemsRaw, refetchProductos])
 
     const addItem = (producto_id, cantidad = 1) => {
         if (!producto_id) return;

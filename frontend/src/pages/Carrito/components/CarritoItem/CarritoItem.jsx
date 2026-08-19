@@ -8,9 +8,8 @@ function getPrecioAMostrar(producto){
     let precio_original = 0
     let precio_mostrado_valor = 0
     
-    
     if(producto.descuento > 0){
-        precio_mostrado_valor = parseFloat(producto.precio)*(100 - producto.descuento)/100
+        precio_mostrado_valor = Math.round(parseFloat(producto.precio) * (1 - producto.descuento / 100) * 100) / 100
         precio_mostrado = formatMoneda("ARS").format(precio_mostrado_valor);
         
         precio_original = formatMoneda("ARS").format(producto.precio);
@@ -70,7 +69,7 @@ export function CarritoItem({
             </span>
 
             <span className="item__precio">
-                {formatMoneda("ARS").format(parseInt(precio_mostrado_valor) * parseInt(item.cantidad))}
+                {formatMoneda("ARS").format(precio_mostrado_valor * parseInt(item.cantidad))}
             </span>
         </div>
     )    

@@ -73,7 +73,7 @@ export function Carrito(){
     const handleDecrement = (id) => {
         const producto = carrito.find(i => i.id === id);
         if(!producto) return;
-        updateCantidad(id, Math.max(producto.cantidad - 1))
+        updateCantidad(id, Math.max(producto.cantidad - 1, 1))
     }
 
     const handleIncrement = (id) => {

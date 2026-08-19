@@ -27,7 +27,8 @@ export function DynamicForm({
     persistOptions = false,
     flex = false,
     validateOnSubmit = true,
-    typeFile
+    typeFile,
+    isSubmitting
 }) {
 
     const { formData, allInputs, mainCategory, handlers } = useFormState(initialData, { persistOptions });
@@ -66,10 +67,10 @@ export function DynamicForm({
         return payload;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!canSubmit) return;
-        onSubmit(buildPayload());
+        await onSubmit(buildPayload());
         onCancel();
     };
 
@@ -104,8 +105,8 @@ export function DynamicForm({
             )}
 
             <div className="button__container">
-                <button type="submit" className="submit__button" disabled={!canSubmit}>
-                    {submitLabel}
+                <button type="submit" className="submit__button" disabled={!canSubmit || isSubmitting}>
+                    {isSubmitting ? "Guardando..." : submitLabel}
                 </button>
                 {onCancel && (
                     <button type="button" className="exit__button" onClick={onCancel}>
