@@ -1,4 +1,4 @@
-USE imponet;
+USE defaultdb;
 
 -- =========================
 -- LIMPIEZA (para poder re-ejecutar sin duplicados)
@@ -22,10 +22,10 @@ SET @marca_puma = UUID_TO_BIN(UUID());
 SET @marca_generic = UUID_TO_BIN(UUID());
 
 INSERT INTO marcas (id, nombre, slug) VALUES
-(@marca_nike,    'Nike', "nike"),
-(@marca_adidas,  'Adidas', "adidas"),
-(@marca_puma,    'Puma', "puma"),
-(@marca_generic, 'Sin marca', "sin_marca");
+(@marca_nike,    'Nike', 'nike'),
+(@marca_adidas,  'Adidas', 'adidas'),
+(@marca_puma,    'Puma', 'puma'),
+(@marca_generic, 'Sin marca', 'sin_marca');
 
 -- =========================
 -- CATEGORIAS
@@ -37,11 +37,11 @@ SET @cat_accesorios = UUID_TO_BIN(UUID());
 SET @cat_running    = UUID_TO_BIN(UUID());
 
 INSERT INTO categorias (id, nombre, slug, destacado) VALUES
-(@cat_zapatillas, 'Zapatillas', "zapatillas", 1),
-(@cat_remeras,    'Remeras', "remeras", 1),
-(@cat_pantalones, 'Pantalones', "pantalones", 1),
-(@cat_accesorios, 'Accesorios', "accesorios", 0),
-(@cat_running,    'Running', "running", 1);
+(@cat_zapatillas, 'Zapatillas', 'zapatillas', 1),
+(@cat_remeras,    'Remeras', 'remeras', 1),
+(@cat_pantalones, 'Pantalones', 'pantalones', 1),
+(@cat_accesorios, 'Accesorios', 'accesorios', 0),
+(@cat_running,    'Running', 'running', 1);
 
 -- =========================
 -- PRODUCTOS

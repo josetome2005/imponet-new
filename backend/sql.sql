@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS imponet;
-CREATE DATABASE imponet;
-USE imponet;
+DROP DATABASE IF EXISTS defaultdb;
+CREATE DATABASE defaultdb;
+USE defaultdb;
 
 -- Categorías
 CREATE TABLE categorias (
@@ -80,7 +80,7 @@ CREATE TABLE usuarios (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
 INSERT INTO usuarios (id, nombre, email, password, telefono, rol) VALUES
-(UUID_TO_BIN(UUID()), "José Tomé", "josetome@gmail.com", "$2a$12$FQDOlWPYow/58dD/HXg6UueQ2xa4HLdaOLiw9TnfSsO9tzEDqc6me", "3513747022", "admin");
+(UUID_TO_BIN(UUID()), 'José Tome', 'josetome@gmail.com', '$2a$12$FQDOlWPYow/58dD/HXg6UueQ2xa4HLdaOLiw9TnfSsO9tzEDqc6me', '3513747022', 'admin');
 
 -- Direcciones de envío
 /*CREATE TABLE direcciones (
