@@ -25,6 +25,7 @@ export function ProductoView() {
 
     useEffect(() => {
         async function fetchProd(){
+            setNotFound(false)
             try {
                 const data = await getProductoById(producto_id);
                 setProducto(data)

@@ -30,10 +30,13 @@ export function VistaCompra(){
     useEffect(() => {
         if(!order_codigo){
             setLoading(false);
+            setCompra(null);  
+            setNotFound(false);
             return;
         }
         async function fetchCompra() {
             setLoading(true);
+            setNotFound(false)
             try{
                 const data = await getVentaByCodigo(order_codigo)
                 setCompra(data)

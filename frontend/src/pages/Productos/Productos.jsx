@@ -138,13 +138,17 @@ export function Productos(){
         return `${nombres.slice(0, -1).join(", ")} y ${nombres[nombres.length - 1]}`
     }
 
+    const categoriaInvalida = categoriaSlugs.length > 0 && nombresCategorias.length === 0 && !loadingFiltros
+    const marcaInvalida = marcaSlugs.length > 0 && nombresMarcas.length === 0 && !loadingFiltros
+
     const titulo = q
         ? `Resultados para "${q}"`
         : loadingFiltros
-            ? <Skeleton width="220px" height="1.75rem" /> 
-            : formatList(nombresCategorias) ?? formatList(nombresMarcas) ?? "Todos los productos"
-
-    
+            ? <Skeleton width="220px" height="1.75rem" />
+            : (categoriaInvalida || marcaInvalida)
+                ? "Filtro no encontrado"
+                : formatList(nombresCategorias) ?? formatList(nombresMarcas) ?? "Todos los productos"
+  
 
     return(
 

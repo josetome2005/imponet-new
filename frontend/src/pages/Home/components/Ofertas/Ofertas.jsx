@@ -16,6 +16,7 @@ export function Ofertas(){
     useEffect(() => {
                 
         async function fetchAll() {
+            setNotFound(false)
             setLoading(true)
             try{
                 const { productos: data } = await getProductosEnOferta()

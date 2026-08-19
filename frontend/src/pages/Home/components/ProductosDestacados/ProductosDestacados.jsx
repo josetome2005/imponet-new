@@ -17,6 +17,7 @@ export function ProductosDestacados(){
                
         async function fetchAll() {
             setLoading(true)
+            setNotFound(false)
             try{
                 const { productos: data } = await getProductosDestacados()
                 const productos_seleccionados = data.slice(0, 4)

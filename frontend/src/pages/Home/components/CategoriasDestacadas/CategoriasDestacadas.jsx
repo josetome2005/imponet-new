@@ -27,7 +27,7 @@ export function CategoriasDestacadas(){
     const [categorias, setCategorias] = useState([])
     const [loading, setLoading] = useState(false)
     const [notFound, setNotFound] = useState(false)
-    
+
     useEffect(() => {
         async function fetchCategorias() {
             setNotFound(false)
@@ -36,7 +36,8 @@ export function CategoriasDestacadas(){
                 const data = await getCategoriasDestacadasConImagen()
                 const cats = data.map(c => ({
                     name: c.nombre,
-                    img: c.imagen ? `${API_URL}${c.imagen}` : "/img/placeholder-categoria.png"
+                    img: c.imagen ? `${API_URL}${c.imagen}` : "/img/placeholder-categoria.png",
+                    slug: c.slug
                 }))
                 setCategorias(cats)
             }catch(e){
@@ -79,8 +80,8 @@ export function CategoriasDestacadas(){
             <div className="button__container">
                 <Button 
                     text={"Explorar más"}
-                    onClick={() => handleNavigate("/productos")}
-                    disabled={loading}/>
+                    disabled={loading}
+                    onClick={() => handleNavigate("/productos")}/>
             </div>
         </div>
 

@@ -36,7 +36,7 @@ export function useVentasCRUD({ tabs, inputsConfig } = {}) {
 
     useEffect(() => {
         refetchTotal()
-    }, [refetchTotal])
+    }, [refetchTotal, table.data])
 
     const closeEditForm = () => {
         setShowEditForm(false);

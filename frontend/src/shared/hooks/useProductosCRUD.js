@@ -38,7 +38,7 @@ export function useProductosCRUD({ filters } = {})  {
 
     useEffect(() => {
         refetchTotal()
-    }, [refetchTotal])
+    }, [refetchTotal, table.data])
 
     const openNewForm = () => setShowNewForm(true);
     const closeNewForm = () => setShowNewForm(false);

@@ -21,9 +21,14 @@ export function ProductoItem({producto}){
 
     const main_img = producto.imagenes[0]
 
+    const handleNavigate = (path) => {
+        navigate(path)
+        window.scrollTo({top: 0})
+    }
+
     return(
 
-        <div className="producto__item" onClick={() => navigate(`/producto/${producto.id}`)}>
+        <div className="producto__item" onClick={() => handleNavigate(`/producto/${producto.id}`)}>
 
             <div className="img__container">
                 {

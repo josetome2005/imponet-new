@@ -16,7 +16,7 @@ export function ProtectedRoute(){
         checkAuth()
     }, [])
 
-    //if (status === "checking") return <div className="loading-screen">Cargando...</div>
+    if (status === "checking") return <div className="loading-screen">Cargando...</div>
     if (status === "unauthenticated") return <Navigate to="/login" replace />
 
     return <Outlet />

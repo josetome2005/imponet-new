@@ -36,6 +36,7 @@ const inputs = [
 export function Carrito(){
 
     const [showForm, setShowForm] = useState(false)
+    const [loadingVenta, setLoadingVenta] = useState(false)
     const { 
         carrito, 
         cantidadTotal, 
@@ -122,7 +123,7 @@ export function Carrito(){
             producto_id: p.id,
             cantidad: p.cantidad
         }))
-
+        setLoadingVenta(true)
         try{
             const new_venta = await crearVenta({
                 nombre,
@@ -146,6 +147,8 @@ export function Carrito(){
         }catch(e){
             console.log(e)
             toast.error(e.message ?? "Ha ocurrido un error al registrar su compra.")
+        }finally{
+            setLoadingVenta(false)
         }
 
         
@@ -263,6 +266,7 @@ export function Carrito(){
                         handleExit={() => setShowForm(false)}
                         handleSubmit={handleSubmitData}
                         sections={inputs}
+                        isSubmitting={loadingVenta}
                         />
                 }
             </div>
