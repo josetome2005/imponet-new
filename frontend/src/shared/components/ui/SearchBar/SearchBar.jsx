@@ -45,7 +45,7 @@ export function SearchBar(){
                         <span className="search__empty">Sin resultados para "{query}"</span>
                     )}
 
-                    {!loading && results.map((p) => (
+                    {!loading && results?.map((p) => (
                         <div
                             key={p.id}
                             className="search__result__item"

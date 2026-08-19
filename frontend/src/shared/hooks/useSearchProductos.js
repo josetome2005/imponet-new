@@ -21,8 +21,8 @@ export function useSearchProductos(query, { limit = 5, delay = 350 } = {}){
         debounceRef.current = setTimeout(async () => {
             setLoading(true)
             try{
-                const data = await searchProductos({ q: query, limit })
-                setResults(data)
+                const { productos } = await searchProductos({ q: query, limit })
+                setResults(productos)
             }finally{
                 setLoading(false);
             }
