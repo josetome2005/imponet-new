@@ -69,8 +69,6 @@ export const createApp = (
     app.use('/ventas', createVentaRouter({ ventaModel }))
     app.use('/dashboard', createDashboardRouter({ dashboardModel }))
     app.use('/newsletter', createNewsletterSuscriptorRouter({ newsletterSuscriptorModel }))
-    // app.use('/detalle-ventas', createDetalleVentaRouter({ detalleVentaModel }))
-    // app.use('/direcciones', createDireccionRouter({ direccionModel }))
 
     app.use("/uploads", express.static(path.resolve("uploads")))
 
