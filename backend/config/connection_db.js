@@ -11,6 +11,15 @@ export const pool = mysql.createPool({
     queueLimit: 0
 });
 
+pool.getConnection()
+    .then(connection => {
+        console.log("✅ CONEXIÓN A MYSQL EXITOSA");
+        connection.release();
+    })
+    .catch(error => {
+        console.error("❌ ERROR MYSQL:", error.message);
+    });
+
 // Para queries sueltas (sin transacción) usamos "pool" directo,
 // mysql2 con pool soporta pool.query() igual que una connection normal.
 export const connection = pool;
