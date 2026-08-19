@@ -44,7 +44,7 @@ export const createApp = (
     console.log("express creado")
 
     app.use(cors({
-        origin: ['http://localhost:5174', 'http://localhost:5173'],
+        origin: ['http://localhost:5174', 'http://localhost:5173', 'imponet.netlify.app'],
         methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
         credentials: true
     }))
